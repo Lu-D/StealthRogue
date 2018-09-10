@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyVisionScript : MonoBehaviour {
+public class EnemyControl : MonoBehaviour {
 
     private GameObject target;
     public float detectionAngle;

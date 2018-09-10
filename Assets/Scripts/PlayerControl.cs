@@ -6,6 +6,7 @@ public class PlayerControl : MonoBehaviour {
 
     public float speed;
     public bool isSpotted;
+    public bool invincible;
 
     private Rigidbody2D myRigidbody;
 
