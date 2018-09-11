@@ -294,6 +294,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114267141498049866, guid: daa8204185e479e49b62426e223bde71,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 111779116255959626, guid: daa8204185e479e49b62426e223bde71, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: daa8204185e479e49b62426e223bde71, type: 2}
