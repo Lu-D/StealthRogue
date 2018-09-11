@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class PlayerControl : MonoBehaviour {
     private Animator anim;
 
     public bool playerMoving;
+    public bool isAttacking;
     public Vector2 lastMove;
 
 	// Use this for initialization
@@ -62,13 +64,25 @@ public class PlayerControl : MonoBehaviour {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
         }
 
+        if (Input.GetKeyDown("space"))
+        {
+            isAttacking = true;
+            Invoke("setAttackBack", .5f);
+        }
+
 
 
         //assigns values to animator
         anim.SetFloat("MoveX", Input.GetAxisRaw("Horizontal"));
         anim.SetFloat("MoveY", Input.GetAxisRaw("Vertical"));
         anim.SetBool("PlayerMoving", playerMoving);
+        anim.SetBool("IsAttacking", isAttacking);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
+    }
+
+    private void setAttackBack()
+    {
+        isAttacking = false;
     }
 }
