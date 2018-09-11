@@ -8,12 +8,18 @@ public class EnemyControl : MonoBehaviour {
     public float detectionAngle;
     public float detectionDistance;
     private PlayerControl targetControl;
+    private AttackPatterns attackPatterns;
+    private GameObject gun;
+    private IEnumerator attackCoroutine;
+    public GameObject bullet;
     
 
     void Awake()
     {
         target = GameObject.FindWithTag("Player");
         targetControl = target.GetComponent<PlayerControl>();
+        gun = transform.GetChild(0).gameObject;
+        attackPatterns = new AttackPatterns();
     }
 
 	// Use this for initialization
@@ -25,9 +31,30 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         if (targetControl.isSpotted)
-            fire();
+        {
+            if (!attackPatterns.getIsAttacking())
+            {
+                attackStates();
+                StartCoroutine(attackCoroutine);
+            }
+        }
         else
+        {
             checkVision();
+        }
+    }
+
+    void attackStates()
+    {
+        int randomState = Random.Range(0, 2);
+        if (randomState == 0)
+        {
+            attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, 2);
+        }
+        else
+        {
+            attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, 2);
+        }
     }
 
     void checkVision()
@@ -44,10 +71,5 @@ public class EnemyControl : MonoBehaviour {
                 Debug.Log("Player Spotted");
             }
         }
-    }
-
-    void fire()
-    {
-        Debug.Log("Firing for effect");
     }
 }
