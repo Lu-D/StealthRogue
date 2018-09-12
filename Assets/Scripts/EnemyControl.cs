@@ -12,7 +12,11 @@ public class EnemyControl : MonoBehaviour {
     private GameObject gun;
     private IEnumerator attackCoroutine;
     public GameObject bullet;
-    
+    private int nextWayPoint;
+    public GameObject waypointControl;
+    public Transform[] wayPoints;
+    private bool patrolDirection; //false when going backwards
+    public float moveSpeed;
 
     void Awake()
     {
@@ -20,11 +24,14 @@ public class EnemyControl : MonoBehaviour {
         targetControl = target.GetComponent<PlayerControl>();
         gun = transform.GetChild(0).gameObject;
         attackPatterns = new AttackPatterns();
+        wayPoints = waypointControl.GetComponentsInChildren<Transform>();
+        patrolDirection = true;
+        nextWayPoint = 2;
     }
 
 	// Use this for initialization
 	void Start () {
-		
+        moveTowardsNext();
 	}
 
     // Update is called once per frame
@@ -69,6 +76,57 @@ public class EnemyControl : MonoBehaviour {
             {
                 targetControl.isSpotted = true;
                 Debug.Log("Player Spotted");
+            }
+        }
+    }
+
+    public void moveTowardsNext()
+    {
+        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        //updateAnim(transform.position, wayPoints[nextWayPoint].position);
+        transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
+        Debug.Log(nextWayPoint);
+        Debug.Log((wayPoints[nextWayPoint].position - transform.position).normalized);
+    }
+
+    public void moveTowardsPrev()
+    {
+        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        //updateAnim(transform.position, wayPoints[nextWayPoint].position);
+        transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
+        Debug.Log(nextWayPoint);
+        Debug.Log((wayPoints[nextWayPoint].position - transform.position).normalized);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.transform.tag == "Waypoint")
+        {
+            Debug.Log("Waypoint");
+            if (patrolDirection)
+            {
+                ++nextWayPoint;
+                moveTowardsNext();
+            }
+            else
+            {
+                --nextWayPoint;
+                moveTowardsPrev();
+            }
+        }
+        else if(other.transform.tag == "Endpoint")
+        {
+            Debug.Log("Endpoint");
+            patrolDirection = !patrolDirection;
+            if (patrolDirection)
+            {
+                ++nextWayPoint;
+                moveTowardsNext();
+            }
+            else
+            {
+                --nextWayPoint;
+                moveTowardsPrev();
             }
         }
     }

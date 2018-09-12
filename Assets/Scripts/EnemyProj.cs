@@ -13,14 +13,14 @@ public class EnemyProj : BProjectile
 
     private new void Update()
     {
-        if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
-        {
-            projCollider.enabled = false;
-        }
-        else
-        {
-            projCollider.enabled = true;
-        }
+        //if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
+        //{
+        //    projCollider.enabled = false;
+        //}
+        //else
+        //{
+        //    projCollider.enabled = true;
+        //}
     }
 
     private new void OnCollisionEnter2D(Collision2D collision)

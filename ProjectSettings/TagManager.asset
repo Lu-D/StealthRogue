@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Waypoint Control
+  - Waypoint
+  - Endpoint
+  - Border
   layers:
   - Default
   - TransparentFX
