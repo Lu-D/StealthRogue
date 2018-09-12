@@ -31,7 +31,7 @@ public class EnemyControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        moveTowardsNext();
+        //moveTowardsNext();
 	}
 
     // Update is called once per frame
@@ -66,12 +66,12 @@ public class EnemyControl : MonoBehaviour {
 
     void checkVision()
     {
-        
         Vector3 targetDir = target.transform.position - transform.position;
         if ((Vector3.Angle(targetDir, transform.up) < detectionAngle) && (Vector3.Distance(target.transform.position, transform.position) < detectionDistance))
         {
             Debug.Log("Casting Ray");
             RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDir);
+            Debug.Log(hit.transform.tag);
             if (hit.transform.tag == "Player")
             {
                 targetControl.isSpotted = true;
@@ -85,8 +85,6 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-        Debug.Log(nextWayPoint);
-        Debug.Log((wayPoints[nextWayPoint].position - transform.position).normalized);
     }
 
     public void moveTowardsPrev()
@@ -94,15 +92,12 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-        Debug.Log(nextWayPoint);
-        Debug.Log((wayPoints[nextWayPoint].position - transform.position).normalized);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.tag == "Waypoint")
         {
-            Debug.Log("Waypoint");
             if (patrolDirection)
             {
                 ++nextWayPoint;
@@ -116,7 +111,6 @@ public class EnemyControl : MonoBehaviour {
         }
         else if(other.transform.tag == "Endpoint")
         {
-            Debug.Log("Endpoint");
             patrolDirection = !patrolDirection;
             if (patrolDirection)
             {
