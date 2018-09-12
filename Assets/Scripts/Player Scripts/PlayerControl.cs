@@ -18,7 +18,7 @@ public class PlayerControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        lastMove.y = -1;
         isSpotted = false;
         myRigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -30,7 +30,7 @@ public class PlayerControl : MonoBehaviour {
         playerMoving = false;
 
         //moves player left and right
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1)
+        if ((Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1) && !isAttacking)
         {
             //moves player according to moveSpeed horizontally
             //transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime, 0f, 0f));
@@ -47,7 +47,7 @@ public class PlayerControl : MonoBehaviour {
         }
 
         //moves player up and down
-        if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        if ((Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1) && !isAttacking)
         {
             //moves player according to moveSpeed vertically
             //Transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime, 0f));
