@@ -31,7 +31,7 @@ public class EnemyControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //moveTowardsNext();
+        moveTowardsNext();
 	}
 
     // Update is called once per frame
@@ -85,6 +85,8 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, wayPoints[nextWayPoint].rotation, 1);
+
     }
 
     public void moveTowardsPrev()
@@ -92,6 +94,7 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternioo, 1);
     }
 
     void OnTriggerEnter2D(Collider2D other)
