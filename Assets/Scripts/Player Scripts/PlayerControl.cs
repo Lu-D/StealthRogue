@@ -9,21 +9,26 @@ public class PlayerControl : MonoBehaviour {
     public bool isSpotted;
     public bool invincible;
 
-    private Rigidbody2D myRigidbody;
-    private Animator anim;
-
     public bool playerMoving;
     public bool isAttacking;
     public Vector2 lastMove;
+
+    public AudioClip[] audioClips;
+
+    private Rigidbody2D myRigidbody;
+    private Animator anim;
+    private AudioSource myAudioSource;
 
 	// Use this for initialization
 	void Start () {
         lastMove.y = -1;
         isSpotted = false;
+
         myRigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        myAudioSource = GetComponent<AudioSource>();
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -64,7 +69,7 @@ public class PlayerControl : MonoBehaviour {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
         }
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && !isAttacking)
         {
             isAttacking = true;
             Invoke("setAttackBack", .5f);
@@ -84,5 +89,10 @@ public class PlayerControl : MonoBehaviour {
     private void setAttackBack()
     {
         isAttacking = false;
+    }
+
+    private void playAttackSound()
+    {
+        myAudioSource.PlayOneShot(audioClips[0], 1f);
     }
 }
