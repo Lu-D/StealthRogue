@@ -210,7 +210,9 @@ MonoBehaviour:
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 0}
   wayPoints: []
-  moveSpeed: 0.5
+  moveSpeed: 1
+  rotateSpeed: 120
+  nextWayPoint: 0
 --- !u!212 &212266032691370640
 SpriteRenderer:
   m_ObjectHideFlags: 1

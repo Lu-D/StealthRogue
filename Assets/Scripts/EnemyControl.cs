@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class EnemyControl : MonoBehaviour {
     private AttackPatterns attackPatterns;
     private GameObject gun;
     private IEnumerator attackCoroutine;
-    private int nextWayPoint;
+    public int nextWayPoint;
     private bool patrolDirection; //false when going backwards
 
     void Awake()
@@ -55,16 +56,17 @@ public class EnemyControl : MonoBehaviour {
 
     IEnumerator RotateToFace(Transform targ)
     {
-        while(transform.rotation != Quaternion.FromToRotation(transform.position, targ.position))
+        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
+        while (transform.rotation != lookDirection)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targ.rotation, rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;
         }
     }
 
     void attackStates()
     {
-        int randomState = Random.Range(0, 2);
+        int randomState = UnityEngine.Random.Range(0, 2);
         if (randomState == 0)
         {
             attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, 2);
@@ -80,13 +82,10 @@ public class EnemyControl : MonoBehaviour {
         Vector3 targetDir = target.transform.position - transform.position;
         if ((Vector3.Angle(targetDir, transform.up) < detectionAngle) && (Vector3.Distance(target.transform.position, transform.position) < detectionDistance))
         {
-            Debug.Log("Casting Ray");
             RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDir);
-            Debug.Log(hit.transform.tag);
             if (hit.transform.tag == "Player")
             {
                 targetControl.isSpotted = true;
-                Debug.Log("Player Spotted");
             }
         }
     }
@@ -95,23 +94,36 @@ public class EnemyControl : MonoBehaviour {
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
+        StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-        transform.rotation = Quaternion.Slerp(transform.rotation, wayPoints[nextWayPoint].rotation, 1);
-
     }
 
     public void moveTowardsPrev()
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
+        StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternioo, 1);
+    }
+
+    void disableWaypoint(GameObject waypoint)
+    {
+        waypoint.SetActive(false);
+    }
+
+    void reenableWaypoints()
+    {
+        foreach(Transform waypoint in wayPoints)
+        {
+            waypoint.gameObject.SetActive(true);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.tag == "Waypoint")
         {
+            disableWaypoint(other.transform.gameObject);
             if (patrolDirection)
             {
                 ++nextWayPoint;
@@ -125,6 +137,7 @@ public class EnemyControl : MonoBehaviour {
         }
         else if(other.transform.tag == "Endpoint")
         {
+            reenableWaypoints();
             patrolDirection = !patrolDirection;
             if (patrolDirection)
             {
