@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour {
 
-    private GameObject target;
     public float detectionAngle;
     public float detectionDistance;
+    public GameObject bullet;
+    public GameObject waypointControl;
+    public Transform[] wayPoints;
+    public float moveSpeed;
+    public float rotateSpeed;
+
+    private GameObject target;
     private PlayerControl targetControl;
     private AttackPatterns attackPatterns;
     private GameObject gun;
     private IEnumerator attackCoroutine;
-    public GameObject bullet;
     private int nextWayPoint;
-    public GameObject waypointControl;
-    public Transform[] wayPoints;
     private bool patrolDirection; //false when going backwards
-    public float moveSpeed;
 
     void Awake()
     {
@@ -48,6 +50,15 @@ public class EnemyControl : MonoBehaviour {
         else
         {
             checkVision();
+        }
+    }
+
+    IEnumerator RotateToFace(Transform targ)
+    {
+        while(transform.rotation != Quaternion.FromToRotation(transform.position, targ.position))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targ.rotation, rotateSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
@@ -94,7 +105,7 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternioo, 1);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternioo, 1);
     }
 
     void OnTriggerEnter2D(Collider2D other)
