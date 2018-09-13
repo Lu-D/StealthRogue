@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4685b7d922322d40977b7377a1a5116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 4
   isSpotted: 0
   invincible: 0
   playerMoving: 0
