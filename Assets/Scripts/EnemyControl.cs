@@ -48,7 +48,7 @@ public class EnemyControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //updateVision();
+        updateVision();
         if (targetControl.isSpotted)
         {
             if (!attackPatterns.getIsAttacking())
