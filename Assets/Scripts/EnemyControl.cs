@@ -18,8 +18,15 @@ public class EnemyControl : MonoBehaviour {
     private AttackPatterns attackPatterns;
     private GameObject gun;
     private IEnumerator attackCoroutine;
-    public int nextWayPoint;
+    private int nextWayPoint;
     private bool patrolDirection; //false when going backwards
+    private Animator anim;
+
+    private struct animDirection
+    {
+        public static float x;
+        public static float y;
+    }
 
     void Awake()
     {
@@ -30,6 +37,7 @@ public class EnemyControl : MonoBehaviour {
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
         patrolDirection = true;
         nextWayPoint = 2;
+        anim = GetComponent<Animator>();
     }
 
 	// Use this for initialization
@@ -40,6 +48,7 @@ public class EnemyControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        updateVision();
         if (targetControl.isSpotted)
         {
             if (!attackPatterns.getIsAttacking())
@@ -52,6 +61,32 @@ public class EnemyControl : MonoBehaviour {
         {
             checkVision();
         }
+    }
+
+    void updateVision()
+    {
+        Vector3 directionVector = gun.transform.position - transform.position;
+        if (directionVector.x > 0)
+            animDirection.x = 1;
+        else if (directionVector.x < 0)
+            animDirection.x = -1;
+        else
+            animDirection.x = 0;
+
+        if (directionVector.y > 0)
+            animDirection.y = 1;
+        else if (directionVector.y < 0)
+            animDirection.y = -1;
+        else
+            animDirection.y = 0;
+
+        anim.SetFloat("MoveX", animDirection.x);
+        anim.SetFloat("MoveY", animDirection.y);
+
+        if(transform.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
+            anim.SetBool("isMoving", false);
+        else
+            anim.SetBool("isMoving", true);
     }
 
     IEnumerator RotateToFace(Transform targ)
@@ -93,7 +128,6 @@ public class EnemyControl : MonoBehaviour {
     public void moveTowardsNext()
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
@@ -101,7 +135,6 @@ public class EnemyControl : MonoBehaviour {
     public void moveTowardsPrev()
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        //updateAnim(transform.position, wayPoints[nextWayPoint].position);
         StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
