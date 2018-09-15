@@ -48,7 +48,7 @@ public class EnemyControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        updateVision();
+        //updateVision();
         if (targetControl.isSpotted)
         {
             if (!attackPatterns.getIsAttacking())
@@ -156,31 +156,38 @@ public class EnemyControl : MonoBehaviour {
     {
         if (other.transform.tag == "Waypoint")
         {
-            disableWaypoint(other.transform.gameObject);
-            if (patrolDirection)
+            if(GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
-                ++nextWayPoint;
-                moveTowardsNext();
-            }
-            else
-            {
-                --nextWayPoint;
-                moveTowardsPrev();
+                disableWaypoint(other.transform.gameObject);
+                if (patrolDirection)
+                {
+                    ++nextWayPoint;
+                    moveTowardsNext();
+                }
+                else
+                {
+                    --nextWayPoint;
+                    moveTowardsPrev();
+                }
             }
         }
         else if(other.transform.tag == "Endpoint")
         {
-            reenableWaypoints();
-            patrolDirection = !patrolDirection;
-            if (patrolDirection)
+
+            if (GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
-                ++nextWayPoint;
-                moveTowardsNext();
-            }
-            else
-            {
-                --nextWayPoint;
-                moveTowardsPrev();
+                reenableWaypoints();
+                patrolDirection = !patrolDirection;
+                if (patrolDirection)
+                {
+                    ++nextWayPoint;
+                    moveTowardsNext();
+                }
+                else
+                {
+                    --nextWayPoint;
+                    moveTowardsPrev();
+                }
             }
         }
     }
