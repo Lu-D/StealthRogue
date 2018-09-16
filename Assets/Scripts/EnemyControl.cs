@@ -9,7 +9,7 @@ public class EnemyControl : MonoBehaviour {
     public float detectionDistance;
     public GameObject bullet;
     public GameObject waypointControl;
-    public Transform[] wayPoints;
+    public Transform[] wayPoints; //waypoints[1] is waypointControl
     public float moveSpeed;
     public float rotateSpeed;
 
@@ -21,13 +21,16 @@ public class EnemyControl : MonoBehaviour {
     private int nextWayPoint;
     private bool patrolDirection; //false when going backwards
     private Animator anim;
+    private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
 
+    //Struct for keeping track of directions for animator
     private struct animDirection
     {
         public static float x;
         public static float y;
     }
 
+    //on start script
     void Awake()
     {
         target = GameObject.FindWithTag("Player");
@@ -36,8 +39,9 @@ public class EnemyControl : MonoBehaviour {
         attackPatterns = new AttackPatterns();
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
         patrolDirection = true;
-        nextWayPoint = 2;
+        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = GetComponent<Animator>();
+        lookingAtPlayer = false;
     }
 
 	// Use this for initialization
@@ -51,6 +55,12 @@ public class EnemyControl : MonoBehaviour {
         updateVision();
         if (targetControl.isSpotted)
         {
+            transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            if (!lookingAtPlayer)
+            {
+                lookingAtPlayer = true;
+                StartCoroutine(RotateToFacePlayer(target.transform));
+            }
             if (!attackPatterns.getIsAttacking())
             {
                 attackStates();
@@ -63,6 +73,7 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //update animator with direction state
     void updateVision()
     {
         Vector3 directionVector = gun.transform.position - transform.position;
@@ -83,13 +94,30 @@ public class EnemyControl : MonoBehaviour {
         anim.SetFloat("MoveX", animDirection.x);
         anim.SetFloat("MoveY", animDirection.y);
 
+        //determines whether or not to play idle animation
         if(transform.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
             anim.SetBool("isMoving", false);
         else
             anim.SetBool("isMoving", true);
     }
 
-    IEnumerator RotateToFace(Transform targ)
+    //rotates enemy to face target
+    //coroutine stops when enemy is facing target
+    //watch for multiple rotate to faces triggering at same time
+    IEnumerator RotateToFaceWaypoint(Transform targ)
+    {
+        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
+        while (transform.rotation != lookDirection && !lookingAtPlayer)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    //rotates enemy to face target
+    //coroutine stops when enemy is facing target
+    //watch for multiple rotate to faces triggering at same time
+    IEnumerator RotateToFacePlayer(Transform targ)
     {
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
         while (transform.rotation != lookDirection)
@@ -97,8 +125,10 @@ public class EnemyControl : MonoBehaviour {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;
         }
+        lookingAtPlayer = false;
     }
 
+    //randomly choose attackPattern
     void attackStates()
     {
         int randomState = UnityEngine.Random.Range(0, 2);
@@ -112,6 +142,7 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //check if enemy can see player
     void checkVision()
     {
         Vector3 targetDir = target.transform.position - transform.position;
@@ -125,25 +156,29 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //move towards next waypoint
     public void moveTowardsNext()
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
+        StartCoroutine(RotateToFaceWaypoint(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
-
+    
+    //move towards previous waypoint
     public void moveTowardsPrev()
     {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        StartCoroutine(RotateToFace(wayPoints[nextWayPoint]));
+        StartCoroutine(RotateToFaceWaypoint(wayPoints[nextWayPoint]));
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
 
+    //"collects waypoints as enemy progresses to avoid colliding again while rotating
     void disableWaypoint(GameObject waypoint)
     {
         waypoint.SetActive(false);
     }
 
+    //reenables all waypoints at end of chain
     void reenableWaypoints()
     {
         foreach(Transform waypoint in wayPoints)
@@ -152,6 +187,8 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //determines whether waypoint is waypoint or endpoint
+    //reverses direction on collision with endpoint
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.tag == "Waypoint")
