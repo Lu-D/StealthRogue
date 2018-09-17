@@ -16,11 +16,11 @@ public class EnemyControl : MonoBehaviour {
     private GameObject target;
     private PlayerControl targetControl;
     private AttackPatterns attackPatterns;
+    private Animator anim;
     private GameObject gun;
     private IEnumerator attackCoroutine;
     private int nextWayPoint;
     private bool patrolDirection; //false when going backwards
-    private Animator anim;
     private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
 
     //Struct for keeping track of directions for animator
@@ -46,7 +46,7 @@ public class EnemyControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        moveTowardsNext();
+        StartCoroutine(moveTowardsNext());
 	}
 
     // Update is called once per frame
@@ -157,18 +157,16 @@ public class EnemyControl : MonoBehaviour {
     }
 
     //move towards next waypoint
-    public void moveTowardsNext()
+    IEnumerator moveTowardsNext()
     {
+        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
+        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        if (waitTime > 0)
+            yield return new WaitForSeconds(waitTime);
         StartCoroutine(RotateToFaceWaypoint(wayPoints[nextWayPoint]));
-        transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-    }
-    
-    //move towards previous waypoint
-    public void moveTowardsPrev()
-    {
-        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        StartCoroutine(RotateToFaceWaypoint(wayPoints[nextWayPoint]));
+        if (waitToRotate > 0)
+            yield return new WaitForSeconds(waitToRotate);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
 
@@ -197,15 +195,10 @@ public class EnemyControl : MonoBehaviour {
             {
                 disableWaypoint(other.transform.gameObject);
                 if (patrolDirection)
-                {
                     ++nextWayPoint;
-                    moveTowardsNext();
-                }
                 else
-                {
                     --nextWayPoint;
-                    moveTowardsPrev();
-                }
+                StartCoroutine(moveTowardsNext());
             }
         }
         else if(other.transform.tag == "Endpoint")
@@ -216,15 +209,10 @@ public class EnemyControl : MonoBehaviour {
                 reenableWaypoints();
                 patrolDirection = !patrolDirection;
                 if (patrolDirection)
-                {
                     ++nextWayPoint;
-                    moveTowardsNext();
-                }
                 else
-                {
                     --nextWayPoint;
-                    moveTowardsPrev();
-                }
+                StartCoroutine(moveTowardsNext());
             }
         }
     }
