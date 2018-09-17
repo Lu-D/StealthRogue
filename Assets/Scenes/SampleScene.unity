@@ -740,12 +740,22 @@ Prefab:
     - target: {fileID: 114485930087815188, guid: 08d56ca263eea3f40a918b1f9323d7ab,
         type: 2}
       propertyPath: waitTime
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114485930087815188, guid: 08d56ca263eea3f40a918b1f9323d7ab,
         type: 2}
       propertyPath: waitToRotate
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946192114896328, guid: 08d56ca263eea3f40a918b1f9323d7ab,
+        type: 2}
+      propertyPath: waitTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946192114896328, guid: 08d56ca263eea3f40a918b1f9323d7ab,
+        type: 2}
+      propertyPath: waitToRotate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08d56ca263eea3f40a918b1f9323d7ab, type: 2}
