@@ -12,6 +12,7 @@ public class EnemyControl : MonoBehaviour {
     public Transform[] wayPoints; //waypoints[1] is waypointControl
     public float moveSpeed;
     public float rotateSpeed;
+    public float fovResolution;
 
     private GameObject target;
     private PlayerControl targetControl;
@@ -22,6 +23,7 @@ public class EnemyControl : MonoBehaviour {
     private int nextWayPoint;
     private bool patrolDirection; //false when going backwards
     private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
+    private EnemyVision enemyVision;
 
     //Struct for keeping track of directions for animator
     private struct animDirection
@@ -42,6 +44,7 @@ public class EnemyControl : MonoBehaviour {
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = GetComponent<Animator>();
         lookingAtPlayer = false;
+        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution);
     }
 
 	// Use this for initialization
@@ -58,7 +61,6 @@ public class EnemyControl : MonoBehaviour {
             transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             if (!lookingAtPlayer)
             {
-                lookingAtPlayer = true;
                 StartCoroutine(RotateToFacePlayer(target.transform));
             }
             if (!attackPatterns.getIsAttacking())
@@ -69,7 +71,9 @@ public class EnemyControl : MonoBehaviour {
         }
         else
         {
-            checkVision();
+            targetControl.isSpotted = enemyVision.checkVision();
+            if (targetControl.isSpotted)
+                StopAllCoroutines();
         }
     }
 
@@ -119,6 +123,7 @@ public class EnemyControl : MonoBehaviour {
     //watch for multiple rotate to faces triggering at same time
     IEnumerator RotateToFacePlayer(Transform targ)
     {
+        lookingAtPlayer = true;
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
         while (transform.rotation != lookDirection)
         {
@@ -139,20 +144,6 @@ public class EnemyControl : MonoBehaviour {
         else
         {
             attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, 2);
-        }
-    }
-
-    //check if enemy can see player
-    void checkVision()
-    {
-        Vector3 targetDir = target.transform.position - transform.position;
-        if ((Vector3.Angle(targetDir, transform.up) < detectionAngle) && (Vector3.Distance(target.transform.position, transform.position) < detectionDistance))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDir);
-            if (hit.transform.tag == "Player")
-            {
-                targetControl.isSpotted = true;
-            }
         }
     }
 
