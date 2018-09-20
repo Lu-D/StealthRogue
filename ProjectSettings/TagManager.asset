@@ -10,6 +10,7 @@ TagManager:
   - Waypoint
   - Endpoint
   - Border
+  - Obstacle
   layers:
   - Default
   - TransparentFX

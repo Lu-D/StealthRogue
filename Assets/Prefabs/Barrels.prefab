@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4088405030000596}
   - component: {fileID: 212072324963881992}
-  - component: {fileID: 65114336345832884}
+  - component: {fileID: 60158376846192504}
   m_Layer: 0
   m_Name: Barrels
   m_TagString: Untagged
@@ -35,24 +35,40 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1409380862187762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: 0.54, z: 0}
-  m_LocalScale: {x: 1.2089, y: 1.2089, z: 25.235786}
+  m_LocalPosition: {x: -0.84, y: -0.02, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 36}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65114336345832884
-BoxCollider:
+--- !u!60 &60158376846192504
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1409380862187762}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2533205, y: 0.26243752, z: 0.19999999}
-  m_Center: {x: -0.15955195, y: 0.6290933, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.2709652, y: 0.78143644}
+      - {x: -0.26518354, y: 0.5240395}
+      - {x: -0.039477587, y: 0.5111246}
+      - {x: -0.041806936, y: 0.781313}
 --- !u!212 &212072324963881992
 SpriteRenderer:
   m_ObjectHideFlags: 1

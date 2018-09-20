@@ -24,6 +24,7 @@ public class EnemyControl : MonoBehaviour {
     private bool patrolDirection; //false when going backwards
     private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
     private EnemyVision enemyVision;
+    public MeshFilter viewMeshFilter;
 
     //Struct for keeping track of directions for animator
     private struct animDirection
@@ -44,7 +45,7 @@ public class EnemyControl : MonoBehaviour {
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = GetComponent<Animator>();
         lookingAtPlayer = false;
-        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution);
+        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter);
     }
 
 	// Use this for initialization
@@ -55,6 +56,7 @@ public class EnemyControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
         updateVision();
         if (targetControl.isSpotted)
         {
@@ -75,6 +77,11 @@ public class EnemyControl : MonoBehaviour {
             if (targetControl.isSpotted)
                 StopAllCoroutines();
         }
+    }
+
+    private void LateUpdate()
+    {
+        enemyVision.drawFOV();
     }
 
     //update animator with direction state
