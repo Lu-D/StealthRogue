@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//EnemyControl
+//class to control enemy behavior
 public class EnemyControl : MonoBehaviour {
 
     public float detectionAngle;
@@ -26,6 +28,7 @@ public class EnemyControl : MonoBehaviour {
     private EnemyVision enemyVision;
     public MeshFilter viewMeshFilter;
 
+    //animDirection
     //Struct for keeping track of directions for animator
     private struct animDirection
     {
@@ -33,6 +36,7 @@ public class EnemyControl : MonoBehaviour {
         public static float y;
     }
 
+    //Awake
     //on start script
     void Awake()
     {
@@ -48,12 +52,14 @@ public class EnemyControl : MonoBehaviour {
         enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter);
     }
 
-	// Use this for initialization
+    //Start
+	//on initialization
 	void Start () {
         StartCoroutine(moveTowardsNext());
 	}
 
-    // Update is called once per frame
+    //Update
+    //called once per frame
     void Update()
     {
 
@@ -79,11 +85,14 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //LateUpdate
+    //draws enemies fieldOfView for player
     private void LateUpdate()
     {
         enemyVision.drawFOV();
     }
 
+    //updateVision
     //update animator with direction state
     void updateVision()
     {
@@ -112,9 +121,9 @@ public class EnemyControl : MonoBehaviour {
             anim.SetBool("isMoving", true);
     }
 
+    //RotateToFaceWaypoint
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
-    //watch for multiple rotate to faces triggering at same time
     IEnumerator RotateToFaceWaypoint(Transform targ)
     {
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
@@ -125,9 +134,9 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //RotateToFacePlayer
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
-    //watch for multiple rotate to faces triggering at same time
     IEnumerator RotateToFacePlayer(Transform targ)
     {
         lookingAtPlayer = true;
@@ -140,6 +149,7 @@ public class EnemyControl : MonoBehaviour {
         lookingAtPlayer = false;
     }
 
+    //attackStates
     //randomly choose attackPattern
     void attackStates()
     {
@@ -153,8 +163,9 @@ public class EnemyControl : MonoBehaviour {
             attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, 2);
         }
     }
-
-    //move towards next waypoint
+    
+    //moveTowardsNext
+    //move towards next waypoint in wayPoints
     IEnumerator moveTowardsNext()
     {
         float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
@@ -168,12 +179,14 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
 
-    //"collects waypoints as enemy progresses to avoid colliding again while rotating
+    //disableWaypoint
+    //collects waypoints as enemy progresses to avoid colliding again while rotating
     void disableWaypoint(GameObject waypoint)
     {
         waypoint.SetActive(false);
     }
 
+    //reenableWaypoints
     //reenables all waypoints at end of chain
     void reenableWaypoints()
     {
@@ -183,6 +196,7 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
+    //OnTriggerEnter2D
     //determines whether waypoint is waypoint or endpoint
     //reverses direction on collision with endpoint
     void OnTriggerEnter2D(Collider2D other)
