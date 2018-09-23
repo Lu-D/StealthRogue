@@ -31,6 +31,8 @@ ExportedObj/
 
 *.unityproj
 
+*.sln
+
 *.suo
 
 *.tmp
