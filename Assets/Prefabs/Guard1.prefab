@@ -131,13 +131,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1121946117354924}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4260216050603588}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4184375572897964
 Transform:
   m_ObjectHideFlags: 1
@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662486246921054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.88, y: 0.34, z: 0}
+  m_LocalPosition: {x: 1.88, y: 0.322, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4026170866123746}
@@ -177,11 +177,11 @@ MeshRenderer:
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c36ac99cb8a10b54785c855e236d84f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -297,14 +297,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 846a72152555a094b9ed7dbfe8209313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionAngle: 45
+  detectionAngle: 90
   detectionDistance: 1.7
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 0}
   wayPoints: []
   moveSpeed: 0.5
   rotateSpeed: 120
-  fovResolution: 1
+  fovResolution: 0.5
   viewMeshFilter: {fileID: 33514825042086144}
 --- !u!212 &212266032691370640
 SpriteRenderer:

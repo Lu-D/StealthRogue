@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//enemy vision class held by enemy control script
 public class EnemyVision {
 
     GameObject player;
@@ -12,6 +13,7 @@ public class EnemyVision {
     MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    //Initialize fields
     public EnemyVision(GameObject target, Transform transform, float detectionAngle, float detectionDistance, float resolution, MeshFilter meshFilter)
     {
         player = target;
@@ -26,6 +28,10 @@ public class EnemyVision {
         viewMeshFilter.mesh = viewMesh;
     }
 
+    //checkVision
+    //shoot raycast at player when in detection angle and distance
+    //sets player as spotted if raycast hits
+    //return if player is spotted or not
     public bool checkVision()
     {
         Vector3 targetDir = player.transform.position - enemyTransform.position;
@@ -48,6 +54,9 @@ public class EnemyVision {
 
     }
 
+    //drawFOV
+    //draws enemy vision
+    //creates 3d mesh with vertices made by raycast collisions
     public void drawFOV()
     {
         int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
@@ -83,6 +92,8 @@ public class EnemyVision {
         viewMesh.RecalculateNormals();
     }
 
+    //ViewCast()
+    //Casts ray in direction angle and returns information about the raycase
     ViewCastInfo ViewCast(float angle)
     {
         Vector3 dir = dirFromAngle(angle);
@@ -97,11 +108,15 @@ public class EnemyVision {
         }
     }
 
+    //dirFromAngle()
+    //Returns Vector3 when given angles in degrees
     public Vector3 dirFromAngle(float angleInDegrees)
     {
         return new Vector3(Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0);
     }
 
+    //ViewCastInfo
+    //contatins information returned by a raycast
     public struct ViewCastInfo
     {
         public bool hit;

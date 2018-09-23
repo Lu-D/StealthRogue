@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114267141498049866}
   - component: {fileID: 95830394595039808}
   - component: {fileID: 60786834639101302}
+  - component: {fileID: 82107348674107630}
   m_Layer: 0
   m_Name: Player Goblin
   m_TagString: Player
@@ -55,8 +56,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767790816318420}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0460985, y: -2.7066405, z: 0}
-  m_LocalScale: {x: 3.092419, y: 3.092419, z: 3.092419}
+  m_LocalPosition: {x: 0.67, y: -2.48, z: 0}
+  m_LocalScale: {x: 0.95066756, y: 0.9506676, z: 0.95066756}
   m_Children:
   - {fileID: 4610154442205474}
   m_Father: {fileID: 0}
@@ -94,7 +95,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &60170413164004720
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -153,6 +154,101 @@ PolygonCollider2D:
       - {x: 0.16, y: -0.265}
       - {x: 0.15391344, y: 0.15196148}
       - {x: 0.09913453, y: 0.19456732}
+--- !u!82 &82107348674107630
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1767790816318420}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2dcb094cbf17bca4ea2fa5a3f9e0bbef, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &95830394595039808
 Animator:
   serializedVersion: 3
@@ -182,13 +278,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4685b7d922322d40977b7377a1a5116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 1
   isSpotted: 0
   invincible: 0
   playerMoving: 0
   isAttacking: 0
   lastMove: {x: 0, y: 0}
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 6e27e6f0b24b3eb408f3ee484fc8c353, type: 3}
 --- !u!114 &114330987956753764
 MonoBehaviour:
   m_ObjectHideFlags: 1
