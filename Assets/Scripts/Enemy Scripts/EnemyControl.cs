@@ -82,11 +82,17 @@ public class EnemyControl : MonoBehaviour {
         }
         else
         {
-            enemyVision.drawFOV();
             targetControl.isSpotted = enemyVision.checkVision();
             if (targetControl.isSpotted)
                 StopAllCoroutines();
         }
+    }
+
+    //LateUpdate
+    //draws enemies fieldOfView for player
+    private void LateUpdate()
+    {
+        enemyVision.drawFOV();
     }
 
     //updateVision

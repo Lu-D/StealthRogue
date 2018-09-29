@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionAngle: 90
-  detectionDistance: 1.7
+  detectionDistance: 1
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 1084180923}
   wayPoints: []
@@ -1301,6 +1301,18 @@ Prefab:
     - target: {fileID: 1767790816318420, guid: daa8204185e479e49b62426e223bde71, type: 2}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610154442205474, guid: daa8204185e479e49b62426e223bde71, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610154442205474, guid: daa8204185e479e49b62426e223bde71, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610154442205474, guid: daa8204185e479e49b62426e223bde71, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daa8204185e479e49b62426e223bde71, type: 2}
