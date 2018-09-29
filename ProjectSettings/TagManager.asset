@@ -11,6 +11,8 @@ TagManager:
   - Endpoint
   - Border
   - Obstacle
+  - PlayerHurt
+  - Player Projectile
   layers:
   - Default
   - TransparentFX

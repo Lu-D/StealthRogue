@@ -33,7 +33,7 @@ public class EnemyProj : BProjectile
         base.OnCollisionEnter2D(collision);
 
         //Destroy game object when in contact with player collider
-        if (collision.gameObject.tag == "Player" )
+        if (collision.gameObject.tag == "PlayerHurt" )
         {
             Destroy(gameObject);
         }

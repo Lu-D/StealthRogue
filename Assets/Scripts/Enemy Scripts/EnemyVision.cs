@@ -37,9 +37,10 @@ public class EnemyVision {
         Vector3 targetDir = player.transform.position - enemyTransform.position;
         if ((Vector3.Angle(targetDir, enemyTransform.up) < (detectionAngle/2)) && (Vector3.Distance(player.transform.position, enemyTransform.position) < detectionDistance))
         {
-            RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir);
+            RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir, detectionDistance);
             if (hit.transform.tag == "Player")
             {
+                Debug.Log(hit.transform.tag);
                 return true;
             }
             else
