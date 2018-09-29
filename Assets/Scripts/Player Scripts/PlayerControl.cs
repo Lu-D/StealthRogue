@@ -13,6 +13,11 @@ public class PlayerControl : MonoBehaviour {
     public bool isAttacking;
     public Vector2 lastMove;
 
+    public int equip;
+    public bool capturedBullet;
+    public GameObject gun;
+    public GameObject bullet;
+
     public AudioClip[] audioClips;
 
     private Rigidbody2D myRigidbody;
@@ -28,6 +33,9 @@ public class PlayerControl : MonoBehaviour {
         anim = GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
 
+        equip = 0;
+        capturedBullet = false;
+        gun = transform.Find("Gun").gameObject;
     }
 	
 	// Update is called once per frame
@@ -73,6 +81,11 @@ public class PlayerControl : MonoBehaviour {
         {
             isAttacking = true;
             Invoke("setAttackBack", .5f);
+        }
+        if (Input.GetKeyDown("e") && capturedBullet)
+        {
+            gun.GetComponent<GunControl>().Fire(bullet, 0);
+            capturedBullet = false;
         }
 
 
