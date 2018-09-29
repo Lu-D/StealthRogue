@@ -374,9 +374,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.013731241, y: 0.30318707}
-      - {x: -0.17212105, y: -0.2042296}
-      - {x: 0.2499311, y: -0.2225377}
+    - - {x: 0.24402356, y: 0.2888353}
+      - {x: -0.20212507, y: 0.29890543}
+      - {x: -0.23206472, y: -0.28129983}
+      - {x: 0.23708606, y: -0.2824813}
 --- !u!50 &140327847
 Rigidbody2D:
   serializedVersion: 4
@@ -670,7 +671,7 @@ Transform:
   m_GameObject: {fileID: 1185807440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_Children: []
   m_Father: {fileID: 140327850}
   m_RootOrder: 2
