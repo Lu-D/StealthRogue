@@ -82,17 +82,11 @@ public class EnemyControl : MonoBehaviour {
         }
         else
         {
+            enemyVision.drawFOV();
             targetControl.isSpotted = enemyVision.checkVision();
             if (targetControl.isSpotted)
                 StopAllCoroutines();
         }
-    }
-
-    //LateUpdate
-    //draws enemies fieldOfView for player
-    private void LateUpdate()
-    {
-        enemyVision.drawFOV();
     }
 
     //updateVision
@@ -125,8 +119,6 @@ public class EnemyControl : MonoBehaviour {
         {
             animDirection.y = 0;
         }
-
-        Debug.Log(directionVector.y);
 
         anim.SetFloat("MoveX", animDirection.x);
         anim.SetFloat("MoveY", animDirection.y);

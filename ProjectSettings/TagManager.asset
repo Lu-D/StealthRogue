@@ -21,8 +21,8 @@ TagManager:
   - 
   - 
   - obstacle
-  - 
-  - 
+  - visionEntranceBlock
+  - Player
   - 
   - 
   - 
@@ -50,4 +50,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Gates
+    uniqueID: 2042049539
     locked: 0
