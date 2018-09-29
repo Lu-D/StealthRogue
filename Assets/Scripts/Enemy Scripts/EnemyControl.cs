@@ -15,6 +15,8 @@ public class EnemyControl : MonoBehaviour {
     public float moveSpeed;
     public float rotateSpeed;
     public float fovResolution;
+    public GameObject texture;
+    public MeshFilter viewMeshFilter;
 
     private GameObject target;
     private PlayerControl targetControl;
@@ -26,11 +28,12 @@ public class EnemyControl : MonoBehaviour {
     private bool patrolDirection; //false when going backwards
     private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
     private EnemyVision enemyVision;
-    public MeshFilter viewMeshFilter;
+    private Quaternion up; //to keep texture upright
+
 
     //animDirection
     //Struct for keeping track of directions for animator
-    private struct animDirection
+    public struct animDirection
     {
         public static float x;
         public static float y;
@@ -42,14 +45,15 @@ public class EnemyControl : MonoBehaviour {
     {
         target = GameObject.FindWithTag("Player");
         targetControl = target.GetComponent<PlayerControl>();
-        gun = transform.GetChild(0).gameObject;
+        gun = transform.Find("Gun").gameObject;
         attackPatterns = new AttackPatterns();
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
         patrolDirection = true;
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
-        anim = GetComponent<Animator>();
+        anim = texture.GetComponent<Animator>();
         lookingAtPlayer = false;
         enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter);
+        up = transform.rotation;
     }
 
     //Start
@@ -62,7 +66,6 @@ public class EnemyControl : MonoBehaviour {
     //called once per frame
     void Update()
     {
-
         updateVision();
         if (targetControl.isSpotted)
         {
@@ -97,25 +100,44 @@ public class EnemyControl : MonoBehaviour {
     void updateVision()
     {
         Vector3 directionVector = gun.transform.position - transform.position;
-        if (directionVector.x > 0)
+
+        if (directionVector.x > 0.01f)
+        {
             animDirection.x = 1;
-        else if (directionVector.x < 0)
+        }
+        else if (directionVector.x < -.01f)
+        {
             animDirection.x = -1;
+        }
         else
             animDirection.x = 0;
 
-        if (directionVector.y > 0)
+
+        if (directionVector.y > .01f)
+        {
             animDirection.y = 1;
-        else if (directionVector.y < 0)
+        }
+        else if (directionVector.y < -.01f)
+        {
             animDirection.y = -1;
+        }
         else
+        {
             animDirection.y = 0;
+        }
+
+        Debug.Log(directionVector.y);
 
         anim.SetFloat("MoveX", animDirection.x);
         anim.SetFloat("MoveY", animDirection.y);
 
+        //keeps animation texture upright
+        if(texture.transform.rotation != up)
+            texture.transform.rotation = up;
+        
+
         //determines whether or not to play idle animation
-        if(transform.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
+        if (transform.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
             anim.SetBool("isMoving", false);
         else
             anim.SetBool("isMoving", true);
