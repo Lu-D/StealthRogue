@@ -13,6 +13,7 @@ TagManager:
   - Obstacle
   - PlayerHurt
   - Player Projectile
+  - KnifeCollider
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - obstacle
   - visionEntranceBlock
   - PlayerHurt
-  - 
+  - Enemy
   - 
   - 
   - 
