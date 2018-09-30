@@ -24,7 +24,7 @@ TagManager:
   - 
   - obstacle
   - visionEntranceBlock
-  - Player
+  - PlayerHurt
   - 
   - 
   - 

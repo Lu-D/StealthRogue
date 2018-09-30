@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 76955193}
   - component: {fileID: 76955198}
   - component: {fileID: 76955197}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: protoMap0_1
   m_TagString: Border
   m_Icon: {fileID: 0}
@@ -1462,7 +1462,7 @@ Prefab:
         type: 2}
     - target: {fileID: 1959280887816146, guid: daa8204185e479e49b62426e223bde71, type: 2}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4964215188981296, guid: daa8204185e479e49b62426e223bde71, type: 2}
       propertyPath: m_RootOrder
@@ -1481,6 +1481,10 @@ Prefab:
       propertyPath: gun
       value: 
       objectReference: {fileID: 754095855}
+    - target: {fileID: 1959280887816146, guid: daa8204185e479e49b62426e223bde71, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 60786834639101302, guid: daa8204185e479e49b62426e223bde71, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: daa8204185e479e49b62426e223bde71, type: 2}
@@ -1494,7 +1498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1600586507}
   - component: {fileID: 1600586508}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SceneCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
