@@ -1401,6 +1401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972743514}
   - component: {fileID: 972743515}
+  - component: {fileID: 972743516}
   m_Layer: 10
   m_Name: Hurtbox
   m_TagString: Player
@@ -1450,6 +1451,17 @@ PolygonCollider2D:
       - {x: -0.20427413, y: 0.18601774}
       - {x: -0.1924299, y: -0.32141206}
       - {x: 0.15865335, y: -0.3213473}
+--- !u!114 &972743516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 972743513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cce51775dc8ba745811379ec9a8456f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &992957371
 Prefab:
   m_ObjectHideFlags: 0

@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class LocatePlayer : MonoBehaviour {
 
-    Physics2D
 }
