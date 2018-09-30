@@ -18,12 +18,14 @@ public class PlayerControl : MonoBehaviour {
     public GameObject gun;
     public GameObject bullet;
     public string mapLocation;
+    public bool changingLocation;
 
     public AudioClip[] audioClips;
 
     private Rigidbody2D myRigidbody;
     private Animator anim;
     private AudioSource myAudioSource;
+    private Light light;
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +39,8 @@ public class PlayerControl : MonoBehaviour {
         equip = 0;
         capturedBullet = false;
         gun = transform.Find("Gun").gameObject;
+
+        light = transform.Find("Player Light").gameObject.GetComponent<Light>();
     }
 	
 	// Update is called once per frame
@@ -89,8 +93,6 @@ public class PlayerControl : MonoBehaviour {
             capturedBullet = false;
         }
 
-
-
         //assigns values to animator
         anim.SetFloat("MoveX", Input.GetAxisRaw("Horizontal"));
         anim.SetFloat("MoveY", Input.GetAxisRaw("Vertical"));
@@ -98,6 +100,11 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("IsAttacking", isAttacking);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
+
+        if (changingLocation)
+        {
+            StartCoroutine(adjustLight());
+        }
     }
 
     private void setAttackBack()
@@ -108,6 +115,28 @@ public class PlayerControl : MonoBehaviour {
     private void playAttackSound()
     {
         myAudioSource.PlayOneShot(audioClips[0], 1f);
+    }
+
+    public IEnumerator adjustLight()
+    {
+        if(mapLocation == "")
+        {
+            for(int i = 54; i >= 30; i-=2)
+            {
+                light.spotAngle = i;
+                yield return null;
+            }
+            changingLocation = false;
+        }
+        else
+        {
+            for (int i = 30; i <= 54; i+=2)
+            {
+                light.spotAngle = i;
+                yield return null;
+            }
+            changingLocation = false;
+        }
     }
 
     public void OnCollisionEnter2DHurt(Collision2D collision)
