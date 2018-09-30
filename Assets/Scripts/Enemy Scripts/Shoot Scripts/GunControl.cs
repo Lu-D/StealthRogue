@@ -31,6 +31,7 @@ public class GunControl : MonoBehaviour
         //fire Projectile
         GameObject projectile = (GameObject)Instantiate(bullet, gunFront.position, boss.rotation);
         projectile.GetComponent<Rigidbody2D>().velocity = (gunFront.position - gunBack.position) * projectile.GetComponent<BProjectile>().projSpeed;
+        projectile.GetComponent<BProjectile>().source = transform.gameObject;
         coolDown = maxCoolDown;
         transform.Rotate(0, 0, -angle, Space.Self);
 

@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviour {
     public bool capturedBullet;
     public GameObject gun;
     public GameObject bullet;
+    public string mapLocation;
 
     public AudioClip[] audioClips;
 
@@ -131,10 +132,10 @@ public class PlayerControl : MonoBehaviour {
                 //laserSword
                 if (collision.gameObject.tag == "Projectile")
                 {
-                    Debug.Log("knifecontact");
-                    Debug.Log(collision.gameObject.GetComponent<Rigidbody2D>().velocity);
-                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = -collision.gameObject.GetComponent<Rigidbody2D>().velocity;
-                    Debug.Log(collision.gameObject.GetComponent<Rigidbody2D>().velocity);
+                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+                    BProjectile bulletControl = collision.gameObject.GetComponent<BProjectile>();
+                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = (bulletControl.source.transform.position - transform.position).normalized * bulletControl.projSpeed;
+                    bulletControl.source = transform.gameObject;
                 }
                 return;
             case 4:
