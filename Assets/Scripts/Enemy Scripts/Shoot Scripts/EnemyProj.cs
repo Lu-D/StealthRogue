@@ -16,26 +16,35 @@ public class EnemyProj : BProjectile
     //executes every frame
     private new void Update()
     {
-        //Deactivate collider when player is invincible
-        if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
-        {
-            projCollider.enabled = false;
-        }
-        else
-        {
-            projCollider.enabled = true;
-        }
+        ////Deactivate collider when player is invincible
+        //if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
+        //{
+        //    projCollider.enabled = false;
+        //}
+        //else
+        //{
+        //    projCollider.enabled = true;
+        //}
     }
 
     //collision method
     private new void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter2D(collision);
+        //base.OnCollisionEnter2D(collision);
 
-        //Destroy game object when in contact with player collider
-        if (collision.gameObject.tag == "Player" )
+        ////Destroy game object when in contact with player collider
+        //if (collision.gameObject.tag == "Player" )
+        //{
+        //    Debug.Log("hit player");
+        //    Destroy(gameObject);
+        //} else if (collision.gameObject.tag == "Border")
+        //{
+        //    Destroy(this.gameObject);
+        //}
+
+        if (collision.gameObject.tag == "Border")
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

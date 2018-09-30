@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnifeHitBox : MonoBehaviour {
+public class hurtBoxControl : MonoBehaviour {
+
     private PlayerControl pControl;
 
     void Awake()
@@ -12,6 +13,6 @@ public class KnifeHitBox : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        pControl.OnCollisionEnter2DKnife(collision);
+        pControl.OnCollisionEnter2DHurt(collision);
     }
 }

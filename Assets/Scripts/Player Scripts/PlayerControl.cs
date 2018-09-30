@@ -108,4 +108,50 @@ public class PlayerControl : MonoBehaviour {
     {
         myAudioSource.PlayOneShot(audioClips[0], 1f);
     }
+
+    public void OnCollisionEnter2DHurt(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+        {
+            Debug.Log("playerhit");
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public void OnCollisionEnter2DKnife(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("enemycontact");
+            Destroy(collision.gameObject);
+        }
+        switch (equip)
+        {
+            case 2:
+                //laserSword
+                if (collision.gameObject.tag == "Projectile")
+                {
+                    Debug.Log("knifecontact");
+                    Debug.Log(collision.gameObject.GetComponent<Rigidbody2D>().velocity);
+                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = -collision.gameObject.GetComponent<Rigidbody2D>().velocity;
+                    Debug.Log(collision.gameObject.GetComponent<Rigidbody2D>().velocity);
+                }
+                return;
+            case 4:
+                //shovel
+                if (collision.gameObject.tag == "Obstacle")
+                {
+                    Destroy(collision.gameObject);
+                }
+                return;
+            case 5:
+                //darkSword
+                if (collision.gameObject.tag == "Projectile")
+                {
+                    Destroy(collision.gameObject);
+                    capturedBullet = true;
+                }
+                return;
+        }
+    }
 }

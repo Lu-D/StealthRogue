@@ -27,7 +27,7 @@ public class shovelControl : EquipmentController {
     {
         if(collision.gameObject.tag == "Player")
         {
-            pControl.equip = (int)Equipment.darkSword;
+            pControl.equip = (int)Equipment.laserSword;
             transform.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             transform.gameObject.GetComponent<Collider2D>().enabled = false;
         }
