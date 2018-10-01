@@ -10,8 +10,8 @@ public class EnemyVision {
     float detectionAngle;
     float detectionDistance;
     float fovResolution;
-    MeshFilter viewMeshFilter;
-    Mesh viewMesh;
+    public MeshFilter viewMeshFilter;
+    public Mesh viewMesh;
 
     //Initialize fields
     public EnemyVision(GameObject target, Transform transform, float detectionAngle, float detectionDistance, float resolution, MeshFilter meshFilter)
@@ -40,7 +40,6 @@ public class EnemyVision {
             RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir, detectionDistance);
             if (hit.transform.tag == "Player")
             {
-                Debug.Log(hit.transform.tag);
                 return true;
             }
             else

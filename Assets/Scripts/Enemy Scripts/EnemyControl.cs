@@ -16,7 +16,7 @@ public class EnemyControl : MonoBehaviour {
     public float rotateSpeed;
     public float fovResolution;
     public GameObject texture;
-    public MeshFilter viewMeshFilter;
+    public GameObject viewMeshFilter;
 
     private GameObject target;
     private PlayerControl targetControl;
@@ -52,7 +52,7 @@ public class EnemyControl : MonoBehaviour {
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = texture.GetComponent<Animator>();
         lookingAtPlayer = false;
-        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter);
+        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter.GetComponent<MeshFilter>());
         up = transform.rotation;
     }
 
@@ -69,6 +69,7 @@ public class EnemyControl : MonoBehaviour {
         updateVision();
         if (targetControl.isSpotted)
         {
+            viewMeshFilter.SetActive(false);
             transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             if (!lookingAtPlayer)
             {
@@ -82,6 +83,7 @@ public class EnemyControl : MonoBehaviour {
         }
         else
         {
+            viewMeshFilter.SetActive(true);
             targetControl.isSpotted = enemyVision.checkVision();
             if (targetControl.isSpotted)
                 StopAllCoroutines();
