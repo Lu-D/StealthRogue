@@ -14,6 +14,7 @@ public class PlayerControl : MonoBehaviour {
     public Vector2 lastMove;
 
     public int equip;
+    public GameObject equipment;
     public bool capturedBullet;
     public GameObject gun;
     public GameObject bullet;
@@ -155,33 +156,35 @@ public class PlayerControl : MonoBehaviour {
             Debug.Log("enemycontact");
             Destroy(collision.gameObject);
         }
-        switch (equip)
+        //switch (equip)
+        //{
+        //    case 2:
+        //        //laserSword
+        //        if (collision.gameObject.tag == "Projectile")
+        //        {
+        //            //equipment.GetComponent<
+        //            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        //            BProjectile bulletControl = collision.gameObject.GetComponent<BProjectile>();
+        //            collision.gameObject.GetComponent<Rigidbody2D>().velocity = (bulletControl.source.transform.position - transform.position).normalized * bulletControl.projSpeed;
+        //            bulletControl.source = transform.gameObject;
+        //        }
+        //        return;
+        //    case 4:
+        //        //shovel
+        //        equipment.GetComponent<EquipmentController>().onCollide();
+        //        return;
+        //    case 5:
+        //        //darkSword
+        //        if (collision.gameObject.tag == "Projectile")
+        //        {
+        //            Destroy(collision.gameObject);
+        //            capturedBullet = true;
+        //        }
+        //        return;
+        //}
+        if(equipment != null)
         {
-            case 2:
-                //laserSword
-                if (collision.gameObject.tag == "Projectile")
-                {
-                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-                    BProjectile bulletControl = collision.gameObject.GetComponent<BProjectile>();
-                    collision.gameObject.GetComponent<Rigidbody2D>().velocity = (bulletControl.source.transform.position - transform.position).normalized * bulletControl.projSpeed;
-                    bulletControl.source = transform.gameObject;
-                }
-                return;
-            case 4:
-                //shovel
-                if (collision.gameObject.tag == "Obstacle")
-                {
-                    Destroy(collision.gameObject);
-                }
-                return;
-            case 5:
-                //darkSword
-                if (collision.gameObject.tag == "Projectile")
-                {
-                    Destroy(collision.gameObject);
-                    capturedBullet = true;
-                }
-                return;
+            equipment.GetComponent<EquipmentController>().onCollide(collision);
         }
     }
 }

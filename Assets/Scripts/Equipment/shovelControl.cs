@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class shovelControl : EquipmentController {
 
-	void Awake () {
+    void Awake () {
+        equipType = (int)Equipment.shovel;
         player = GameObject.FindWithTag("Player");
         pControl = player.GetComponent<PlayerControl>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            onKeyDown();
-        }
-    }
+
 
     //equip
     public override void onKeyDown()
@@ -23,13 +17,11 @@ public class shovelControl : EquipmentController {
 
     }
 
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void onCollide(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Obstacle")
         {
-            pControl.equip = (int)Equipment.laserSword;
-            transform.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            transform.gameObject.GetComponent<Collider2D>().enabled = false;
+            Destroy(collision.gameObject);
         }
     }
 }
