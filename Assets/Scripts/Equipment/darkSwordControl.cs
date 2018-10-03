@@ -14,8 +14,11 @@ public class darkSwordControl : EquipmentController {
     //equip
     public override void onKeyDown()
     {
-        pControl.gun.GetComponent<GunControl>().Fire(pControl.bullet, 0);
-        pControl.capturedBullet = false;
+        if(pControl.capturedBullet)
+        {
+            pControl.gun.GetComponent<GunControl>().Fire(pControl.bullet, 0);
+            pControl.capturedBullet = false;
+        }
     }
 
     public override void onCollide(Collision2D collision)

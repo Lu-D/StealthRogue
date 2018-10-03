@@ -12,11 +12,15 @@ public class chronoShiftControl : EquipmentController {
         player = GameObject.FindWithTag("Player");
         pControl = player.GetComponent<PlayerControl>();
         queueSize = 0;
+        posQueue = new Queue<Vector3>();
         StartCoroutine(positionTracker());
     }
 
     public override void onKeyDown()
     {
+        Debug.Log("onkeydown");
+        Debug.Log(posQueue.Peek());
+        Debug.Log(player.transform.position);
         player.transform.position = posQueue.Peek();
     }
 

@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour {
             isAttacking = true;
             Invoke("setAttackBack", .5f);
         }
-        if (Input.GetKeyDown("e") && capturedBullet)
+        if (Input.GetKeyDown("e"))
         {
             equipment.GetComponent<EquipmentController>().onKeyDown();
         }
