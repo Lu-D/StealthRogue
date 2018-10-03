@@ -23,13 +23,13 @@ TagManager:
   - UI
   - 
   - 
-  - obstacle
-  - visionEntranceBlock
+  - Obstacle
+  - Gate
   - PlayerHurt
   - Enemy
   - Projectile
-  - 
-  - 
+  - PlayerSceneColl
+  - Border
   - 
   - 
   - 

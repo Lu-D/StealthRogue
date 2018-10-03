@@ -139,7 +139,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -324,6 +324,10 @@ Prefab:
     - target: {fileID: 1312394335884228, guid: d6c9a598d8da9ce4fb8bce76695074f4, type: 2}
       propertyPath: m_Name
       value: protoMap0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022685762939730, guid: d6c9a598d8da9ce4fb8bce76695074f4, type: 2}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6c9a598d8da9ce4fb8bce76695074f4, type: 2}
@@ -841,6 +845,48 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2369ab8763c14504bb039ffe53202bad, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1001 &935985227
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.102
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.72542053
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864233324758646, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8bb5961ebb0e1734e8952a77ddd4c41e, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &972743513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1600586507}
   - component: {fileID: 1600586508}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SceneCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
