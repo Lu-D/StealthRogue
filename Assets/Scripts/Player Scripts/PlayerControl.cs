@@ -90,8 +90,7 @@ public class PlayerControl : MonoBehaviour {
         }
         if (Input.GetKeyDown("e") && capturedBullet)
         {
-            gun.GetComponent<GunControl>().Fire(bullet, 0);
-            capturedBullet = false;
+            equipment.GetComponent<EquipmentController>().onKeyDown();
         }
 
         //assigns values to animator
@@ -144,7 +143,6 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Projectile")
         {
-            Debug.Log("playerhit");
             Destroy(collision.gameObject);
         }
     }
@@ -153,35 +151,8 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("enemycontact");
             Destroy(collision.gameObject);
         }
-        //switch (equip)
-        //{
-        //    case 2:
-        //        //laserSword
-        //        if (collision.gameObject.tag == "Projectile")
-        //        {
-        //            //equipment.GetComponent<
-        //            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        //            BProjectile bulletControl = collision.gameObject.GetComponent<BProjectile>();
-        //            collision.gameObject.GetComponent<Rigidbody2D>().velocity = (bulletControl.source.transform.position - transform.position).normalized * bulletControl.projSpeed;
-        //            bulletControl.source = transform.gameObject;
-        //        }
-        //        return;
-        //    case 4:
-        //        //shovel
-        //        equipment.GetComponent<EquipmentController>().onCollide();
-        //        return;
-        //    case 5:
-        //        //darkSword
-        //        if (collision.gameObject.tag == "Projectile")
-        //        {
-        //            Destroy(collision.gameObject);
-        //            capturedBullet = true;
-        //        }
-        //        return;
-        //}
         if(equipment != null)
         {
             equipment.GetComponent<EquipmentController>().onCollide(collision);

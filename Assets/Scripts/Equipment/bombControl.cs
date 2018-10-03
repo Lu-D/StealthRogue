@@ -2,15 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bombControl : MonoBehaviour {
+public class bombControl : EquipmentController {
+    private int bombCount;
+    public GameObject bomb;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        equipType = (int)Equipment.bomb;
+        player = GameObject.FindWithTag("Player");
+        pControl = player.GetComponent<PlayerControl>();
+    }
+
+    //equip
+    public override void onKeyDown()
+    {
+        if(bombCount > 0)
+        {
+            GameObject projectile = (GameObject)Instantiate(bomb, player.transform.position, player.transform.rotation);
+            --bombCount;
+        }
+    }
+
+    public override void onCollide(Collision2D collision)
+    {
+
+    }
 }

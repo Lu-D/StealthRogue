@@ -17,10 +17,7 @@ public abstract class EquipmentController : MonoBehaviour {
         bomb,
         shovel,
         darkSword,
-        map,
-        box,
-        trap
-        //disguise
+        map
     };
 
     public abstract void onKeyDown();
@@ -31,7 +28,7 @@ public abstract class EquipmentController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (pControl.equip != null && pControl.equip > 0)
+            if (pControl.equip > 0)
             {
                 spawnPrevEquip(pControl.equip);
             }

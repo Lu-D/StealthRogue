@@ -10,8 +10,6 @@ public class shovelControl : EquipmentController {
         pControl = player.GetComponent<PlayerControl>();
     }
 
-
-    //equip
     public override void onKeyDown()
     {
 

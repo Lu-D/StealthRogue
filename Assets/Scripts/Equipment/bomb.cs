@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class boxControl : MonoBehaviour {
+public class bomb : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
