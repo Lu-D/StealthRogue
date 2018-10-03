@@ -42,7 +42,7 @@ public class EnemyProj : BProjectile
         //    Destroy(this.gameObject);
         //}
 
-        if (collision.gameObject.tag == "Border")
+        if (collision.gameObject.tag == "Border" || collision.gameObject.tag == "Obstacle")
         {
             Destroy(this.gameObject);
         }
