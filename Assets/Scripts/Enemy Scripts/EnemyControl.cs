@@ -86,7 +86,10 @@ public class EnemyControl : MonoBehaviour {
             viewMeshFilter.SetActive(true);
             targetControl.isSpotted = enemyVision.checkVision();
             if (targetControl.isSpotted)
+            {
+                targetControl.gettingCaught = true;
                 StopAllCoroutines();
+            }
         }
     }
 

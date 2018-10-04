@@ -19,14 +19,16 @@ public class PlayerControl : MonoBehaviour {
     public GameObject gun;
     public GameObject bullet;
     public string mapLocation;
-    public bool changingLocation;
+    public bool changingLocation; //coroutine play once flag
+    public bool gettingCaught; //coroutine play once flag
 
     public AudioClip[] audioClips;
 
     private Rigidbody2D myRigidbody;
     private Animator anim;
     private AudioSource myAudioSource;
-    private Light light;
+    private Light playerLight;
+    private Light sceneLight;
 
 	// Use this for initialization
 	void Start () {
@@ -41,11 +43,29 @@ public class PlayerControl : MonoBehaviour {
         capturedBullet = false;
         gun = transform.Find("Gun").gameObject;
 
-        light = transform.Find("Player Light").gameObject.GetComponent<Light>();
+        playerLight = transform.Find("Player Light").gameObject.GetComponent<Light>();
+        sceneLight = GameObject.Find("Scene Light").gameObject.GetComponent<Light>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        playerMove();
+
+        if (gettingCaught)
+        {
+            StartCoroutine(getCaught());
+            gettingCaught = false;
+        }
+
+        if (changingLocation)
+        {
+            StartCoroutine(adjustLight());
+        }
+    }
+
+    private void playerMove()
+    {
         playerMoving = false;
 
         //moves player left and right
@@ -100,11 +120,18 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("IsAttacking", isAttacking);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
+    }
 
-        if (changingLocation)
-        {
-            StartCoroutine(adjustLight());
-        }
+    public IEnumerator getCaught()
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(0.5f);
+        myAudioSource.PlayOneShot(audioClips[1], 1f);
+        sceneLight.intensity = 2f;
+        yield return new WaitForSecondsRealtime(0.5f);
+        myAudioSource.PlayOneShot(audioClips[2], 1f);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
     }
 
     private void setAttackBack()
@@ -123,7 +150,7 @@ public class PlayerControl : MonoBehaviour {
         {
             for(int i = 54; i >= 30; i-=2)
             {
-                light.spotAngle = i;
+                playerLight.spotAngle = i;
                 yield return null;
             }
             changingLocation = false;
@@ -132,7 +159,7 @@ public class PlayerControl : MonoBehaviour {
         {
             for (int i = 30; i <= 54; i+=2)
             {
-                light.spotAngle = i;
+                playerLight.spotAngle = i;
                 yield return null;
             }
             changingLocation = false;
