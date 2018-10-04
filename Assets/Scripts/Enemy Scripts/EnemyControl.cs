@@ -89,6 +89,7 @@ public class EnemyControl : MonoBehaviour {
             {
                 targetControl.gettingCaught = true;
                 StopAllCoroutines();
+                lookingAtPlayer = false;
             }
         }
     }
@@ -172,6 +173,26 @@ public class EnemyControl : MonoBehaviour {
             yield return null;
         }
         lookingAtPlayer = false;
+    }
+
+    public void bombAlert(Vector3 bomb)
+    {
+        StartCoroutine(lookAtBomb(bomb));
+    }
+
+    //lookAtBomb
+    IEnumerator lookAtBomb(Vector3 bomb)
+    {
+        Debug.Log("looking");
+        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized);
+        while (transform.rotation != lookDirection && !lookingAtPlayer)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized), rotateSpeed * Time.deltaTime);
+            yield return null;
+        }
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(moveTowardsNext());
     }
 
     //attackStates

@@ -11,6 +11,7 @@ public class bombControl : EquipmentController {
         equipType = (int)Equipment.bomb;
         player = GameObject.FindWithTag("Player");
         pControl = player.GetComponent<PlayerControl>();
+        bombCount = 3;
     }
 
     //equip
