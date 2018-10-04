@@ -35,7 +35,7 @@ public class EnemyVision {
     public bool checkVision()
     {
         Vector3 targetDir = player.transform.position - enemyTransform.position;
-        if ((Vector3.Angle(targetDir, enemyTransform.up) < (detectionAngle/2)) && (Vector3.Distance(player.transform.position, enemyTransform.position) < detectionDistance))
+        if ((Vector3.Angle(targetDir, enemyTransform.up) < (detectionAngle/2) + 5) && (Vector3.Distance(player.transform.position, enemyTransform.position) < detectionDistance))
         {
             RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir, detectionDistance);
             if (hit.transform.tag == "Player")
