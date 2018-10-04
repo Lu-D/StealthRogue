@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour {
     public string mapLocation;
     public bool changingLocation; //coroutine play once flag
     public bool gettingCaught; //coroutine play once flag
+    public int health;
 
     public AudioClip[] audioClips;
 
@@ -169,6 +170,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Projectile")
         {
+            --health;
             Destroy(collision.gameObject);
         }
     }
