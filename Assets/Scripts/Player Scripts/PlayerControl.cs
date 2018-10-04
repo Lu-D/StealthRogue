@@ -61,6 +61,7 @@ public class PlayerControl : MonoBehaviour {
         if (changingLocation)
         {
             StartCoroutine(adjustLight());
+            changingLocation = false;
         }
     }
 
@@ -153,7 +154,6 @@ public class PlayerControl : MonoBehaviour {
                 playerLight.spotAngle = i;
                 yield return null;
             }
-            changingLocation = false;
         }
         else
         {
@@ -162,7 +162,6 @@ public class PlayerControl : MonoBehaviour {
                 playerLight.spotAngle = i;
                 yield return null;
             }
-            changingLocation = false;
         }
     }
 
