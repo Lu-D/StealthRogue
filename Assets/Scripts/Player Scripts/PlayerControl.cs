@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour {
     public bool changingLocation; //coroutine play once flag
     public bool gettingCaught; //coroutine play once flag
     public int health;
+    public int stamina;
 
     public AudioClip[] audioClips;
 
@@ -46,6 +47,8 @@ public class PlayerControl : MonoBehaviour {
 
         playerLight = transform.Find("Player Light").gameObject.GetComponent<Light>();
         sceneLight = GameObject.Find("Scene Light").gameObject.GetComponent<Light>();
+
+        stamina = 100;
     }
 	
 	// Update is called once per frame
@@ -63,6 +66,16 @@ public class PlayerControl : MonoBehaviour {
         {
             StartCoroutine(adjustLight());
             changingLocation = false;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            sprint();
+        }
+        else if(stamina != 100)
+        {
+            moveSpeed = 1;
+            ++stamina;
         }
     }
 
@@ -124,6 +137,17 @@ public class PlayerControl : MonoBehaviour {
         anim.SetFloat("LastMoveY", lastMove.y);
     }
 
+    public void sprint()
+    {
+        moveSpeed = 2;
+        --stamina;
+        if(stamina < 0)
+        {
+            moveSpeed = 1;
+            ++stamina;
+        }
+    }
+
     public IEnumerator getCaught()
     {
         Time.timeScale = 0f;
@@ -170,7 +194,8 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Projectile")
         {
-            --health;
+            if(health != 0)
+                --health;
             Destroy(collision.gameObject);
         }
     }
