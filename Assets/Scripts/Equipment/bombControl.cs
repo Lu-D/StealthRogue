@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class bombControl : EquipmentController {
-    private int bombCount;
+    public int bombCount;
     public GameObject bomb;
 
     void Awake()
