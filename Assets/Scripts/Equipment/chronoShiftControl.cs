@@ -6,6 +6,7 @@ public class chronoShiftControl : EquipmentController {
     private Queue<Vector3> posQueue;
     private int queueSize;
     public int secondsAgo;
+    public GameObject shadow;
 
     void Awake () {
         equipType = (int)Equipment.chronoshift;
@@ -33,7 +34,7 @@ public class chronoShiftControl : EquipmentController {
     {
         while(true)
         {
-            if(queueSize < secondsAgo*(1/0.2))
+            if(queueSize < secondsAgo*(1/0.1))
             {
                 ++queueSize;
             }
@@ -42,7 +43,8 @@ public class chronoShiftControl : EquipmentController {
                 posQueue.Dequeue();
             }
             posQueue.Enqueue(player.transform.position);
-            yield return new WaitForSeconds(0.2f);
+            shadow.transform.position = posQueue.Peek();
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
