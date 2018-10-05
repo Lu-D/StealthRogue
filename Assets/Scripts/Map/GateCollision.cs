@@ -21,13 +21,6 @@ public class GateCollision : MonoBehaviour {
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.tag == "Player")
-        {
-        }
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
