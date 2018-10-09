@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour {
 
-    public Sprite leverOff;
-
     private PlayerControl player;
     private Light sceneLight;
     private AudioSource mainAudio;
@@ -13,23 +11,21 @@ public class Lever : MonoBehaviour {
    void Start () {
 
        player = GameObject.Find("Player").GetComponent<PlayerControl>();
-
        sceneLight = GameObject.Find("Scene Light").GetComponent<Light>();
-
        mainAudio = GameObject.Find("Player").GetComponent<AudioSource>();
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("we good");
             if (Input.GetKeyDown("f") && player.isSpotted)
             {
                 player.isSpotted = false;
-                gameObject.GetComponent<SpriteRenderer>().sprite = leverOff;
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
                 mainAudio.Stop();
+                mainAudio.PlayOneShot(player.audioClips[1]);
                 sceneLight.intensity = 0f;
             }
         }
