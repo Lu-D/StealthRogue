@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class PlayerControl : MonoBehaviour {
 
-    public float moveSpeed;
+    public float defaultSpeed;
+    public float sprintSpeed;
     public bool isSpotted;
     public bool invincible;
 
@@ -31,6 +32,7 @@ public class PlayerControl : MonoBehaviour {
     private AudioSource myAudioSource;
     private Light playerLight;
     private Light sceneLight;
+    private float moveSpeed;
 
 	// Use this for initialization
 	void Start () {
@@ -49,6 +51,7 @@ public class PlayerControl : MonoBehaviour {
         sceneLight = GameObject.Find("Scene Light").gameObject.GetComponent<Light>();
 
         stamina = 100;
+        moveSpeed = defaultSpeed;
     }
 	
 	// Update is called once per frame
@@ -139,11 +142,11 @@ public class PlayerControl : MonoBehaviour {
 
     public void sprint()
     {
-        moveSpeed = 2;
+        moveSpeed = sprintSpeed;
         --stamina;
         if(stamina < 0)
         {
-            moveSpeed = 1;
+            moveSpeed = defaultSpeed;
             ++stamina;
         }
     }
