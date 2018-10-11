@@ -139,7 +139,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -415,37 +415,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 60219384236308048, guid: dfa3912ecc7786b469360170c33d284e,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212815944649118696, guid: dfa3912ecc7786b469360170c33d284e,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212815944649118696, guid: dfa3912ecc7786b469360170c33d284e,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212815944649118696, guid: dfa3912ecc7786b469360170c33d284e,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212815944649118696, guid: dfa3912ecc7786b469360170c33d284e,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4cc4dbc5048704f46b675e7c92fc9d93, type: 2}
-    - target: {fileID: 1922293833533168, guid: dfa3912ecc7786b469360170c33d284e, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114240792951438498, guid: dfa3912ecc7786b469360170c33d284e, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfa3912ecc7786b469360170c33d284e, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &451944042
@@ -1121,11 +1091,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4598529231934092, guid: de75779aebe98ce49bd75b46e38a1122, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.1060386
+      value: 3.019
       objectReference: {fileID: 0}
     - target: {fileID: 4598529231934092, guid: de75779aebe98ce49bd75b46e38a1122, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.8010035
+      value: -1.311
       objectReference: {fileID: 0}
     - target: {fileID: 4598529231934092, guid: de75779aebe98ce49bd75b46e38a1122, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1677,6 +1647,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1582655042 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1703393106453648, guid: de75779aebe98ce49bd75b46e38a1122,
+    type: 2}
+  m_PrefabInternal: {fileID: 953142961}
+--- !u!114 &1582655043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1582655042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f87599104df674cb0fc1a332014752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - {fileID: 1922293833533168, guid: dfa3912ecc7786b469360170c33d284e, type: 2}
+  - {fileID: 1163696546615196, guid: d825e54e89a795e438b57d7361b3d379, type: 2}
 --- !u!1 &1600586506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,26 +1723,6 @@ PolygonCollider2D:
       - {x: -0.088620275, y: -0.1204121}
       - {x: -0.09394198, y: -0.27223068}
       - {x: 0.09752064, y: -0.2686524}
---- !u!1 &1622997672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1922293833533168, guid: dfa3912ecc7786b469360170c33d284e,
-    type: 2}
-  m_PrefabInternal: {fileID: 429124725}
---- !u!114 &1622997675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1622997672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91cf71258db9c994ca9607b061094847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeedBonus: 0
-  equipType: 0
-  secondsAgo: 3
-  shadow: {fileID: 1622997672}
 --- !u!1001 &1809816111
 Prefab:
   m_ObjectHideFlags: 0

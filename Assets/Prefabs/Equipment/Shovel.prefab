@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4278060352658884}
   - component: {fileID: 212815944649118696}
   - component: {fileID: 60219384236308048}
-  - component: {fileID: 114240792951438498}
+  - component: {fileID: 114240052418769340}
   m_Layer: 0
   m_Name: Shovel
   m_TagString: Untagged
@@ -51,7 +51,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -85,7 +85,7 @@ PolygonCollider2D:
       - {x: -0.13, y: -0.385}
       - {x: 0.01, y: -0.285}
       - {x: 0.19, y: -0.114999995}
---- !u!114 &114240792951438498
+--- !u!114 &114240052418769340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,11 +93,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1922293833533168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9ed4925a74b124c8a54120e370cd7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 91cf71258db9c994ca9607b061094847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeedBonus: 0
   equipType: 0
+  secondsAgo: 3
+  shadow: {fileID: 1817958319340010, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 2}
 --- !u!212 &212815944649118696
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,7 +115,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4cc4dbc5048704f46b675e7c92fc9d93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
