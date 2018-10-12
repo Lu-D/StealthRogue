@@ -17,18 +17,19 @@ public class EnemyControl : MonoBehaviour {
     public float fovResolution;
     public GameObject texture;
     public GameObject viewMeshFilter;
+    public StateMachine FSM;
+    public PlayerControl targetControl;
 
-    private GameObject target;
-    private PlayerControl targetControl;
-    private AttackPatterns attackPatterns;
-    private Animator anim;
-    private GameObject gun;
-    private IEnumerator attackCoroutine;
-    private int nextWayPoint;
-    private bool patrolDirection; //false when going backwards
-    private bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
-    private EnemyVision enemyVision;
-    private Quaternion up; //to keep texture upright
+    public GameObject target;
+    public AttackPatterns attackPatterns;
+    public Animator anim;
+    public GameObject gun;
+    public IEnumerator attackCoroutine;
+    public int nextWayPoint;
+    public bool patrolDirection; //false when going backwards
+    public bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
+    public EnemyVision enemyVision;
+    public Quaternion up; //to keep texture upright
 
 
     //animDirection
@@ -54,6 +55,10 @@ public class EnemyControl : MonoBehaviour {
         lookingAtPlayer = false;
         enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter.GetComponent<MeshFilter>());
         up = transform.rotation;
+
+        FSM = new StateMachine(this);
+        FSM.currentState = WaypointState.Instance;
+        FSM.currentState.Enter(this);
     }
 
     //Start
@@ -67,31 +72,12 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateVision();
-        if (targetControl.isSpotted)
-        {
-            viewMeshFilter.SetActive(false);
-            transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-            if (!lookingAtPlayer)
-            {
-                StartCoroutine(RotateToFacePlayer(target.transform));
-            }
-            if (!attackPatterns.getIsAttacking())
-            {
-                attackStates();
-                StartCoroutine(attackCoroutine);
-            }
-        }
-        else
-        {
-            viewMeshFilter.SetActive(true);
+        viewMeshFilter.SetActive(true);
+
+        if(!targetControl.isSpotted)
             targetControl.isSpotted = enemyVision.checkVision();
-            if (targetControl.isSpotted)
-            {
-                targetControl.gettingCaught = true;
-                StopAllCoroutines();
-                lookingAtPlayer = false;
-            }
-        }
+
+        FSM.stateUpdate();
     }
 
     //LateUpdate
@@ -163,7 +149,7 @@ public class EnemyControl : MonoBehaviour {
     //RotateToFacePlayer
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
-    IEnumerator RotateToFacePlayer(Transform targ)
+    public IEnumerator RotateToFacePlayer(Transform targ)
     {
         lookingAtPlayer = true;
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
@@ -197,7 +183,7 @@ public class EnemyControl : MonoBehaviour {
 
     //attackStates
     //randomly choose attackPattern
-    void attackStates()
+    public void attackStates()
     {
         int randomState = UnityEngine.Random.Range(0, 2);
         if (randomState == 0)
@@ -212,7 +198,7 @@ public class EnemyControl : MonoBehaviour {
     
     //moveTowardsNext
     //move towards next waypoint in wayPoints
-    IEnumerator moveTowardsNext()
+    public IEnumerator moveTowardsNext()
     {
         float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
         float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class AttackPatterns
 {
     //ensures only one instance of coroutine is running
-    private bool isAttacking;
+    public bool isAttacking;
 
     //AttackPatterns Constructor
     //sets isAttacking = false
