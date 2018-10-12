@@ -54,6 +54,7 @@ public class EnemyControl : MonoBehaviour {
         enemyVision = new EnemyVision(this);
         up = transform.rotation;
 
+        //initialize state machine
         FSM = new StateMachine(this);
         FSM.currentState = WaypointState.Instance;
         FSM.currentState.Enter(this);

@@ -18,8 +18,8 @@ public class EnemyVision {
     {
         player = owner.targetControl;
         enemyTransform = owner.transform;
-        this.detectionAngle = owner.detectionAngle;
-        this.detectionDistance = owner.detectionDistance;
+        detectionAngle = owner.detectionAngle;
+        detectionDistance = owner.detectionDistance;
         fovResolution = owner.fovResolution;
         viewMeshFilter = owner.viewMeshFilter.GetComponent<MeshFilter>();
 
