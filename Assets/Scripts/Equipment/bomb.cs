@@ -6,6 +6,7 @@ public class bomb : MonoBehaviour {
     public float blastRadius;
     public float enemyAlertRadius;
     public float fuseLength;
+    public Message lookAtMe;
 	
 	void Update () {
         fuseLength -= Time.deltaTime;
@@ -33,8 +34,8 @@ public class bomb : MonoBehaviour {
         {
             if (alert.gameObject.tag == "Enemy")
             {
-                alert.gameObject.GetComponent<EnemyControl>().StopAllCoroutines();
-                alert.gameObject.GetComponent<EnemyControl>().bombAlert(transform.position);
+                lookAtMe = new Message(gameObject, BasicEnemyState.LookAtBomb.Instance);
+                alert.gameObject.GetComponent<EnemyControl>().messageReceiver = lookAtMe;
             }
         }
         Destroy(this.gameObject);

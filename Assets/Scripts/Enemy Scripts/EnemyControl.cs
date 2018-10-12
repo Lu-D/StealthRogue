@@ -21,6 +21,13 @@ public class EnemyControl : MonoBehaviour {
     public StateMachine FSM;
     public PlayerControl targetControl;
 
+    //bomb detection bools
+    public Vector3 bomb;
+    public bool lookingAtBomb = false;
+
+    //Receives messages
+    public Message messageReceiver;
+
     public GameObject target;
     public AttackPatterns attackPatterns;
     public Animator anim;
@@ -54,16 +61,11 @@ public class EnemyControl : MonoBehaviour {
         enemyVision = new EnemyVision(this);
         up = transform.rotation;
 
-        //initialize state machine
+        //initialize state machine and enter first state
         FSM = new StateMachine(this);
-        FSM.currentState = WaypointState.Instance;
+        FSM.currentState = PatrolWaypoint.Instance;
         FSM.currentState.Enter(this);
     }
-
-    //Start
-	//on initialization
-	void Start () {
-	}
 
     //Update
     //called once per frame
@@ -130,47 +132,15 @@ public class EnemyControl : MonoBehaviour {
     //RotateToFaceWaypoint
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
-    public IEnumerator RotateToFaceWaypoint(Transform targ)
+    public IEnumerator RotateTo(Vector3 targ, float delayAfter)
     {
-        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
+        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized);
         while (transform.rotation != lookDirection)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;
         }
-    }
-
-    //RotateToFacePlayer
-    //rotates enemy to face target
-    //coroutine stops when enemy is facing target
-    public IEnumerator RotateToFacePlayer(Transform targ)
-    {
-        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
-        while (transform.rotation != lookDirection)
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    public void bombAlert(Vector3 bomb)
-    {
-        StartCoroutine(lookAtBomb(bomb));
-    }
-
-    //lookAtBomb
-    IEnumerator lookAtBomb(Vector3 bomb)
-    {
-        Debug.Log("looking");
-        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized);
-        while (transform.rotation != lookDirection)
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized), rotateSpeed * Time.deltaTime);
-            yield return null;
-        }
-        yield return new WaitForSeconds(5f);
-        StartCoroutine(moveTowardsNext());
+        yield return new WaitForSeconds(delayAfter);
     }
 
     //attackStates
@@ -197,22 +167,25 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
-        yield return RotateToFaceWaypoint(wayPoints[nextWayPoint]);
+        yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
         if (waitToRotate > 0)
             yield return new WaitForSeconds(waitToRotate);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
 
-    //disableWaypoint
-    //collects waypoints as enemy progresses to avoid colliding again while rotating
-    void disableWaypoint(GameObject waypoint)
+    //disableWaypoints
+    //disables all waypoints
+    public void disableWaypoints()
     {
-        waypoint.SetActive(false);
+        foreach (Transform waypoint in wayPoints)
+        {
+            waypoint.gameObject.SetActive(false);
+        }
     }
 
     //reenableWaypoints
     //reenables all waypoints at end of chain
-    void reenableWaypoints()
+    public void reenableWaypoints()
     {
         foreach(Transform waypoint in wayPoints)
         {
@@ -229,7 +202,7 @@ public class EnemyControl : MonoBehaviour {
         {
             if(GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
-                disableWaypoint(other.transform.gameObject);
+                other.transform.gameObject.SetActive(false);
                 if (patrolDirection)
                     ++nextWayPoint;
                 else

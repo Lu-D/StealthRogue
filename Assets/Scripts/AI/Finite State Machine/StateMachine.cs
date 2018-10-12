@@ -27,10 +27,10 @@ public class StateMachine{
         currentState.Enter(owner);
     }
 
-    //public void revertToPrevState()
-    //{
-    //    changeState(prevState);
-    //}
+    public void revertToPrevState()
+    {
+        changeState(prevState);
+    }
 
     public void stateUpdate()
     {
