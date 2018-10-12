@@ -34,7 +34,7 @@ public class bomb : MonoBehaviour {
         {
             if (alert.gameObject.tag == "Enemy")
             {
-                lookAtMe = new Message(gameObject, BasicEnemyState.LookAtBomb.Instance);
+                lookAtMe = new Message(gameObject, BasicEnemyState.LookAtMe.Instance);
                 alert.gameObject.GetComponent<EnemyControl>().messageReceiver = lookAtMe;
             }
         }
