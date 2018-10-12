@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BasicEnemyState;
 
 //EnemyControl
 //class to control enemy behavior
@@ -27,10 +28,8 @@ public class EnemyControl : MonoBehaviour {
     public IEnumerator attackCoroutine;
     public int nextWayPoint;
     public bool patrolDirection; //false when going backwards
-    public bool lookingAtPlayer; //to prevent multiple lookToward coroutines from starting
     public EnemyVision enemyVision;
     public Quaternion up; //to keep texture upright
-
 
     //animDirection
     //Struct for keeping track of directions for animator
@@ -52,8 +51,7 @@ public class EnemyControl : MonoBehaviour {
         patrolDirection = true;
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = texture.GetComponent<Animator>();
-        lookingAtPlayer = false;
-        enemyVision = new EnemyVision(target, gameObject.transform, detectionAngle, detectionDistance, fovResolution, viewMeshFilter.GetComponent<MeshFilter>());
+        enemyVision = new EnemyVision(this);
         up = transform.rotation;
 
         FSM = new StateMachine(this);
@@ -133,7 +131,6 @@ public class EnemyControl : MonoBehaviour {
     //coroutine stops when enemy is facing target
     public IEnumerator RotateToFaceWaypoint(Transform targ)
     {
-        Debug.Log("yeet");
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
         while (transform.rotation != lookDirection)
         {
@@ -147,14 +144,12 @@ public class EnemyControl : MonoBehaviour {
     //coroutine stops when enemy is facing target
     public IEnumerator RotateToFacePlayer(Transform targ)
     {
-        lookingAtPlayer = true;
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
         while (transform.rotation != lookDirection)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;
         }
-        lookingAtPlayer = false;
     }
 
     public void bombAlert(Vector3 bomb)
@@ -168,7 +163,7 @@ public class EnemyControl : MonoBehaviour {
         Debug.Log("looking");
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized);
-        while (transform.rotation != lookDirection && !lookingAtPlayer)
+        while (transform.rotation != lookDirection)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (bomb - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;

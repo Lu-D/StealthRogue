@@ -5,7 +5,7 @@ using UnityEngine;
 //enemy vision class held by enemy control script
 public class EnemyVision {
 
-    GameObject player;
+    PlayerControl player;
     Transform enemyTransform;
     float detectionAngle;
     float detectionDistance;
@@ -14,14 +14,14 @@ public class EnemyVision {
     public Mesh viewMesh;
 
     //Initialize fields
-    public EnemyVision(GameObject target, Transform transform, float detectionAngle, float detectionDistance, float resolution, MeshFilter meshFilter)
+    public EnemyVision(EnemyControl owner)
     {
-        player = target;
-        enemyTransform = transform;
-        this.detectionAngle = detectionAngle;
-        this.detectionDistance = detectionDistance;
-        fovResolution = resolution;
-        viewMeshFilter = meshFilter;
+        player = owner.targetControl;
+        enemyTransform = owner.transform;
+        this.detectionAngle = owner.detectionAngle;
+        this.detectionDistance = owner.detectionDistance;
+        fovResolution = owner.fovResolution;
+        viewMeshFilter = owner.viewMeshFilter.GetComponent<MeshFilter>();
 
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";

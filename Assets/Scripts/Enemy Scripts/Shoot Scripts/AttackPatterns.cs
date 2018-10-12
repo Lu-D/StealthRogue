@@ -6,15 +6,6 @@ using UnityEngine;
 //List of projectile attacks that gameobject can execute
 public class AttackPatterns
 {
-    //ensures only one instance of coroutine is running
-    public bool isAttacking;
-
-    //AttackPatterns Constructor
-    //sets isAttacking = false
-    public AttackPatterns()
-    {
-        isAttacking = false;
-    }
 
     //shootgun()
     //Takes gun thats shooting, type of projectile being shot, number of bullets being shot, and cd for attack
@@ -22,7 +13,6 @@ public class AttackPatterns
     //returns IEnumerator for coroutines
     public IEnumerator shootThree(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
-        isAttacking = true;
         yield return new WaitForSeconds(.1f);
         for (int i = 1; i <= bulletNum; ++i)
         {
@@ -32,7 +22,6 @@ public class AttackPatterns
             yield return new WaitForSeconds(.2f);
         }
         yield return new WaitForSeconds(CD);
-        isAttacking = false;
     }
 
     //shootStraight()
@@ -41,7 +30,6 @@ public class AttackPatterns
     //returns IEnumerator for coroutines
     public IEnumerator shootStraight(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
-        isAttacking = true;
         yield return new WaitForSeconds(.1f);
         for (int i = 1; i <= bulletNum; ++i)
         {
@@ -49,7 +37,6 @@ public class AttackPatterns
             yield return new WaitForSeconds(.2f);
         }
         yield return new WaitForSeconds(CD);
-        isAttacking = false;
     }
 
     //shootWave()
@@ -59,7 +46,6 @@ public class AttackPatterns
     public IEnumerator shootWave(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
         yield return new WaitForSeconds(.1f);
-        isAttacking = true;
         yield return new WaitForSeconds(.2f);
         for (int i = 1; i <= bulletNum; ++i)
         {
@@ -80,13 +66,5 @@ public class AttackPatterns
             yield return new WaitForSeconds(.2f);
         }
         yield return new WaitForSeconds(CD);
-        isAttacking = false;
-    }
-
-    //getIsAttacking
-    //return bool isAttacking
-    public bool getIsAttacking()
-    {
-        return isAttacking;
     }
 }

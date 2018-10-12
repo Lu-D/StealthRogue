@@ -4,88 +4,93 @@ using UnityEngine;
 
 
 
-public class WaypointState : State
+namespace BasicEnemyState
 {
-    private static WaypointState instance = null;
-
-    public override void Enter(EnemyControl owner)
+    public class WaypointState : State
     {
-        owner.viewMeshFilter.SetActive(true);
-        owner.StartCoroutine(owner.moveTowardsNext());
-    }
+        private static WaypointState instance = null;
 
-    public override void Execute(EnemyControl owner)
-    {
-        owner.targetControl.isSpotted = owner.enemyVision.checkVision();
-
-        if (owner.targetControl.isSpotted)
+        public override void Enter(EnemyControl owner)
         {
-            owner.FSM.changeState(AttackState.Instance);
+            owner.viewMeshFilter.SetActive(true);
+            owner.StartCoroutine(owner.moveTowardsNext());
+        }
+
+        public override void Execute(EnemyControl owner)
+        {
+            owner.targetControl.isSpotted = owner.enemyVision.checkVision();
+
+            if (owner.targetControl.isSpotted)
+            {
+                owner.FSM.changeState(AttackState.Instance);
+            }
+        }
+
+        public override void Exit(EnemyControl owner)
+        {
+            owner.StopAllCoroutines();
+        }
+
+        public static WaypointState Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new WaypointState();
+
+                return instance;
+            }
         }
     }
 
-    public override void Exit(EnemyControl owner)
+    public class AttackState : State
     {
-        owner.StopAllCoroutines();
-    }
+        private static AttackState instance = null;
+        private Task attackOneShot;
+        private Task lookingAtPlayerOneShot;
 
-    public static WaypointState Instance
-    {
-        get
+        public override void Enter(EnemyControl owner)
         {
-            if(instance == null)
-                instance = new WaypointState();
-
-            return instance;
-        }
-    }
-}
-
-public class AttackState : State
-{
-    private static AttackState instance = null;
-
-    public override void Enter(EnemyControl owner)
-    {
-        owner.viewMeshFilter.SetActive(false);
-        owner.targetControl.gettingCaught = true;
-        owner.lookingAtPlayer = false;
-        owner.attackPatterns.isAttacking = false;
-        owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-    }
-
-    public override void Execute(EnemyControl owner)
-    {
-        owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-        if (!owner.attackPatterns.isAttacking)
-        {
-            owner.attackStates();
-            owner.StartCoroutine(owner.attackCoroutine);
+            owner.viewMeshFilter.SetActive(false);
+            owner.targetControl.gettingCaught = true;
+            owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         }
 
-        if (!owner.lookingAtPlayer)
-            owner.StartCoroutine(owner.RotateToFacePlayer(owner.targetControl.transform));
-
-        if (!owner.targetControl.isSpotted)
+        public override void Execute(EnemyControl owner)
         {
-            owner.FSM.changeState(WaypointState.Instance);
+            owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+
+            if (attackOneShot == null || !attackOneShot.Running) {
+                owner.attackStates();
+                attackOneShot = new Task(owner.attackCoroutine);
+            }
+
+            if(lookingAtPlayerOneShot == null || !lookingAtPlayerOneShot.Running)
+            {
+                lookingAtPlayerOneShot = new Task(owner.RotateToFacePlayer(owner.targetControl.transform));
+            }
+
+            if (!owner.targetControl.isSpotted)
+            {
+                owner.FSM.changeState(WaypointState.Instance);
+            }
         }
-    }
 
-    public override void Exit(EnemyControl owner)
-    {
-        owner.lookingAtPlayer = true;
-        owner.StopAllCoroutines();
-    }
-
-    public static AttackState Instance
-    {
-        get
+        public override void Exit(EnemyControl owner)
         {
-            if (instance == null)
-                instance = new AttackState();
+            attackOneShot.Stop();
+            lookingAtPlayerOneShot.Stop();
+        }
 
-            return instance;
+        public static AttackState Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new AttackState();
+
+                return instance;
+            }
         }
     }
 }
