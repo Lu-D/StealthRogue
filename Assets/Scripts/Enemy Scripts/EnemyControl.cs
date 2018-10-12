@@ -64,18 +64,13 @@ public class EnemyControl : MonoBehaviour {
     //Start
 	//on initialization
 	void Start () {
-        StartCoroutine(moveTowardsNext());
 	}
 
     //Update
     //called once per frame
     void Update()
     {
-        updateVision();
-        viewMeshFilter.SetActive(true);
-
-        if(!targetControl.isSpotted)
-            targetControl.isSpotted = enemyVision.checkVision();
+        updateAnim();       
 
         FSM.stateUpdate();
     }
@@ -89,7 +84,7 @@ public class EnemyControl : MonoBehaviour {
 
     //updateVision
     //update animator with direction state
-    void updateVision()
+    void updateAnim()
     {
         Vector3 directionVector = gun.transform.position - transform.position;
 
@@ -136,10 +131,11 @@ public class EnemyControl : MonoBehaviour {
     //RotateToFaceWaypoint
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
-    IEnumerator RotateToFaceWaypoint(Transform targ)
+    public IEnumerator RotateToFaceWaypoint(Transform targ)
     {
+        Debug.Log("yeet");
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized);
-        while (transform.rotation != lookDirection && !lookingAtPlayer)
+        while (transform.rotation != lookDirection)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ.position - transform.position).normalized), rotateSpeed * Time.deltaTime);
             yield return null;
@@ -205,7 +201,7 @@ public class EnemyControl : MonoBehaviour {
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
-        StartCoroutine(RotateToFaceWaypoint(wayPoints[nextWayPoint]));
+        yield return RotateToFaceWaypoint(wayPoints[nextWayPoint]);
         if (waitToRotate > 0)
             yield return new WaitForSeconds(waitToRotate);
         transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);

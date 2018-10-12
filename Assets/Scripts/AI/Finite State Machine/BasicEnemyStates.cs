@@ -11,13 +11,12 @@ public class WaypointState : State
     public override void Enter(EnemyControl owner)
     {
         owner.viewMeshFilter.SetActive(true);
-        owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         owner.StartCoroutine(owner.moveTowardsNext());
     }
 
     public override void Execute(EnemyControl owner)
     {
-        Debug.Log("Executing waypoint state");
+        owner.targetControl.isSpotted = owner.enemyVision.checkVision();
 
         if (owner.targetControl.isSpotted)
         {
@@ -27,7 +26,7 @@ public class WaypointState : State
 
     public override void Exit(EnemyControl owner)
     {
-        Debug.Log("Exiting Waypoint State");
+        owner.StopAllCoroutines();
     }
 
     public static WaypointState Instance
@@ -48,8 +47,11 @@ public class AttackState : State
 
     public override void Enter(EnemyControl owner)
     {
+        owner.viewMeshFilter.SetActive(false);
         owner.targetControl.gettingCaught = true;
         owner.lookingAtPlayer = false;
+        owner.attackPatterns.isAttacking = false;
+        owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
     }
 
     public override void Execute(EnemyControl owner)
@@ -60,9 +62,10 @@ public class AttackState : State
             owner.attackStates();
             owner.StartCoroutine(owner.attackCoroutine);
         }
-        
+
         if (!owner.lookingAtPlayer)
             owner.StartCoroutine(owner.RotateToFacePlayer(owner.targetControl.transform));
+
         if (!owner.targetControl.isSpotted)
         {
             owner.FSM.changeState(WaypointState.Instance);
@@ -71,7 +74,8 @@ public class AttackState : State
 
     public override void Exit(EnemyControl owner)
     {
-        Debug.Log("Exiting Attack State");
+        owner.lookingAtPlayer = true;
+        owner.StopAllCoroutines();
     }
 
     public static AttackState Instance
