@@ -34,7 +34,6 @@ public class StateMachine{
 
     public void stateUpdate()
     {
-        if(currentState != null)
-            currentState.Execute(owner);
+        currentState.Execute(owner);
     }
 }

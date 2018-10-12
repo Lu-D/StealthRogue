@@ -121,22 +121,18 @@ namespace BasicEnemyState
         }
     }
 
-    public class LookAtMe : State
+    public class LookAtBomb : State
     {
         //singleton of state
-        private static LookAtMe instance = null;
+        private static LookAtBomb instance = null;
 
         //coroutines in execute()
         private Task lookAtBombOneShot;
 
         public override void Enter(EnemyControl owner)
         {
-            //take contents of message and look at sender
-            Vector3 lookAtPosition = owner.messageReceiver.sender.transform.position;
-            lookAtBombOneShot = new Task(owner.RotateTo(lookAtPosition, 5f));
-
-            //clear message 
-            owner.messageReceiver = new Message(null, null);
+            Vector3 bombPosition = owner.messageReceiver.sender.transform.position;
+            lookAtBombOneShot = new Task(owner.RotateTo(bombPosition, 5f));
         }
 
         public override void Execute(EnemyControl owner)
@@ -151,24 +147,22 @@ namespace BasicEnemyState
                 owner.FSM.changeState(AttackPlayer.Instance);
             //Reverts back to previous state after coroutine is done running
             if (!lookAtBombOneShot.Running)
-                owner.FSM.changeState(PatrolWaypoint.Instance);
-            //new msg overrides lookAtMe state
-            if (owner.messageReceiver.newState != null)
-                owner.FSM.changeState(owner.messageReceiver.newState);
+                owner.FSM.revertToPrevState();
 
         }
 
         public override void Exit(EnemyControl owner)
         {
+            owner.messageReceiver = new Message(null, null);
         }
 
         //singleton
-        public static LookAtMe Instance
+        public static LookAtBomb Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new LookAtMe();
+                    instance = new LookAtBomb();
 
                 return instance;
             }
