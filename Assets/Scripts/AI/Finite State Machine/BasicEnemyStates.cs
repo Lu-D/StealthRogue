@@ -16,17 +16,19 @@ namespace BasicEnemyState
             //turn on FOV visualization
             owner.viewMeshFilter.SetActive(true);
 
-            //fire coroutine first time
-            new Task(owner.moveTowardsNext());
-
             //turn on all waypoints
             owner.reenableWaypoints();
+
+            //fire coroutine first time
+            new Task(owner.moveTowardsNext());
         }
 
         public override void Execute(EnemyControl owner)
         {
             //check if player is spotted every udpate
-            owner.targetControl.isSpotted = owner.enemyVision.checkVision();
+            owner.playerSpotted = owner.enemyVision.checkVision();
+            if (owner.playerSpotted)
+                owner.targetControl.isSpotted = true;
 
             //changes to attack state if enemy spots player
             if (owner.targetControl.isSpotted)
@@ -59,10 +61,6 @@ namespace BasicEnemyState
     {
         //singleton of state
         private static AttackPlayer instance = null;
-        
-        //coroutines in execute()
-        private Task attackOneShot;
-        private Task lookingAtPlayerOneShot;
 
         public override void Enter(EnemyControl owner)
         {
@@ -76,8 +74,8 @@ namespace BasicEnemyState
             owner.disableWaypoints();
 
             //fire coroutines first time
-            attackOneShot = new Task(owner.attackCoroutine);
-            lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
+            owner.attackOneShot = new Task(owner.attackCoroutine);
+            owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
         }
 
         public override void Execute(EnemyControl owner)
@@ -85,13 +83,13 @@ namespace BasicEnemyState
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             //only fires coroutines if current one is not running
-            if (!attackOneShot.Running) {
+            if (!owner.attackOneShot.Running) {
                 owner.attackStates();
-                attackOneShot = new Task(owner.attackCoroutine);
+                owner.attackOneShot = new Task(owner.attackCoroutine);
             }
-            if(!lookingAtPlayerOneShot.Running)
+            if(!owner.lookingAtPlayerOneShot.Running)
             {
-                lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
+                owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
             }
 
             //change to waypoint state if player is no longer spotted
@@ -104,8 +102,10 @@ namespace BasicEnemyState
         public override void Exit(EnemyControl owner)
         {
             //stop both coroutines
-            attackOneShot.Stop();
-            lookingAtPlayerOneShot.Stop();
+            owner.attackOneShot.Stop();
+            owner.lookingAtPlayerOneShot.Stop();
+            owner.attackOneShot = null;
+            owner.lookingAtPlayerOneShot = null;
         }
 
         //singleton
@@ -121,18 +121,18 @@ namespace BasicEnemyState
         }
     }
 
-    public class LookAtBomb : State
+    public class LookAtMe: State
     {
         //singleton of state
-        private static LookAtBomb instance = null;
+        private static LookAtMe instance = null;
 
         //coroutines in execute()
-        private Task lookAtBombOneShot;
+        
 
         public override void Enter(EnemyControl owner)
         {
             Vector3 bombPosition = owner.messageReceiver.senderPosition;
-            lookAtBombOneShot = new Task(owner.RotateTo(bombPosition, 5f));
+            owner.lookAtMeOneShot = new Task(owner.RotateTo(bombPosition, 5f));
 
             owner.messageReceiver = new Message(Vector3.zero, null);
         }
@@ -148,7 +148,7 @@ namespace BasicEnemyState
             if (owner.targetControl.isSpotted)
                 owner.FSM.changeState(AttackPlayer.Instance);
             //Reverts back to previous state after coroutine is done running
-            if (!lookAtBombOneShot.Running)
+            if (!owner.lookAtMeOneShot.Running)
                 owner.FSM.changeState(PatrolWaypoint.Instance);
             if (owner.messageReceiver.newState != null)
                 owner.FSM.changeState(owner.messageReceiver.newState);
@@ -160,12 +160,12 @@ namespace BasicEnemyState
         }
 
         //singleton
-        public static LookAtBomb Instance
+        public static LookAtMe Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new LookAtBomb();
+                    instance = new LookAtMe();
 
                 return instance;
             }

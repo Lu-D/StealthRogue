@@ -20,10 +20,12 @@ public class EnemyControl : MonoBehaviour {
     public GameObject viewMeshFilter;
     public StateMachine FSM;
     public PlayerControl targetControl;
+    public bool playerSpotted;
 
-    //bomb detection bools
-    public Vector3 bomb;
-    public bool lookingAtBomb = false;
+    //coroutines in attackPlayer state
+    public Task attackOneShot;
+    public Task lookingAtPlayerOneShot;
+    public Task lookAtMeOneShot;
 
     //Receives messages
     public Message messageReceiver = new Message(Vector3.zero, null);
