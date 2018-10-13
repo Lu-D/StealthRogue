@@ -67,7 +67,7 @@ public class EnemyControl : MonoBehaviour {
         FSM = new StateMachine(this);
         FSM.currentState = PatrolWaypoint.Instance;
         FSM.globalState = GlobalState.Instance;
-        FSM.currentState.Enter(this);
+        //FSM.currentState.Enter(this);
     }
 
     //Update
@@ -75,7 +75,7 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateAnim();
-        FSM.stateUpdate();
+        //FSM.stateUpdate();
     }
 
     //LateUpdate
