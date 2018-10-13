@@ -26,7 +26,7 @@ public class EnemyControl : MonoBehaviour {
     public bool lookingAtBomb = false;
 
     //Receives messages
-    public Message messageReceiver;
+    public Message messageReceiver = new Message(Vector3.zero, null);
 
     public GameObject target;
     public AttackPatterns attackPatterns;
@@ -64,6 +64,7 @@ public class EnemyControl : MonoBehaviour {
         //initialize state machine and enter first state
         FSM = new StateMachine(this);
         FSM.currentState = PatrolWaypoint.Instance;
+        FSM.globalState = GlobalState.Instance;
         FSM.currentState.Enter(this);
     }
 

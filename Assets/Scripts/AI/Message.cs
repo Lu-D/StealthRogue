@@ -4,12 +4,18 @@ using UnityEngine;
 
 public struct Message
 {
-    public GameObject sender;
+    public Vector3 senderPosition;
     public State newState;
 
-    public Message(GameObject _sender, State _newState)
+    public Message(State _newState)
     {
-        sender = _sender;
+        newState = _newState;
+        senderPosition = Vector3.zero;
+    }
+
+    public Message(Vector3 _sender, State _newState)
+    {
+        senderPosition = _sender;
         newState = _newState;
     }
 }

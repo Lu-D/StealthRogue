@@ -7,6 +7,7 @@ public class StateMachine{
     EnemyControl owner;
     public State currentState;
     public State prevState;
+    public State globalState;
 
     //constructor for state machine
     public StateMachine(EnemyControl currOwner)
@@ -14,6 +15,7 @@ public class StateMachine{
         owner = currOwner;
         currentState = null;
         prevState = null;
+        globalState = null;
     }
 
     public void changeState(State newState)
@@ -34,6 +36,9 @@ public class StateMachine{
 
     public void stateUpdate()
     {
-        currentState.Execute(owner);
+        if(currentState != null)
+            currentState.Execute(owner);
+        if (globalState != null)
+            globalState.Execute(owner);
     }
 }

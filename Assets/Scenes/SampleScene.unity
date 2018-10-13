@@ -1647,6 +1647,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1432559349
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349374510905082, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114001261090465020, guid: 23d85c991efca9b4b9160469858e3bec,
+        type: 2}
+      propertyPath: enemyAlertRadius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024933416046808, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+      propertyPath: m_Name
+      value: bomb (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114001261090465020, guid: 23d85c991efca9b4b9160469858e3bec,
+        type: 2}
+      propertyPath: fuseLength
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114001261090465020, guid: 23d85c991efca9b4b9160469858e3bec,
+        type: 2}
+      propertyPath: blastRadius
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 23d85c991efca9b4b9160469858e3bec, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1582655042 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1703393106453648, guid: de75779aebe98ce49bd75b46e38a1122,

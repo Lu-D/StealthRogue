@@ -131,8 +131,10 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
-            Vector3 bombPosition = owner.messageReceiver.sender.transform.position;
+            Vector3 bombPosition = owner.messageReceiver.senderPosition;
             lookAtBombOneShot = new Task(owner.RotateTo(bombPosition, 5f));
+
+            owner.messageReceiver = new Message(Vector3.zero, null);
         }
 
         public override void Execute(EnemyControl owner)
@@ -147,13 +149,14 @@ namespace BasicEnemyState
                 owner.FSM.changeState(AttackPlayer.Instance);
             //Reverts back to previous state after coroutine is done running
             if (!lookAtBombOneShot.Running)
-                owner.FSM.revertToPrevState();
+                owner.FSM.changeState(PatrolWaypoint.Instance);
+            if (owner.messageReceiver.newState != null)
+                owner.FSM.changeState(owner.messageReceiver.newState);
 
         }
 
         public override void Exit(EnemyControl owner)
         {
-            owner.messageReceiver = new Message(null, null);
         }
 
         //singleton
@@ -163,6 +166,69 @@ namespace BasicEnemyState
             {
                 if (instance == null)
                     instance = new LookAtBomb();
+
+                return instance;
+            }
+        }
+    }
+
+    public class Die : State
+    {
+        //singleton of state
+        private static Die instance = null;
+
+        public override void Enter(EnemyControl owner)
+        {
+        }
+
+        public override void Execute(EnemyControl owner)
+        {
+            GameObject.Destroy(owner.gameObject);
+        }
+
+        public override void Exit(EnemyControl owner)
+        {
+        }
+
+        //singleton
+        public static Die Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Die();
+
+                return instance;
+            }
+        }
+    }
+
+    public class GlobalState : State
+    {
+        //singleton of state
+        private static GlobalState instance = null;
+
+        public override void Enter(EnemyControl owner)
+        {
+        }
+
+        public override void Execute(EnemyControl owner)
+        {
+            if (owner.messageReceiver.newState is Die)
+                owner.FSM.changeState(Die.Instance);
+        }
+
+        public override void Exit(EnemyControl owner)
+        {
+        }
+
+        //singleton
+        public static GlobalState Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new GlobalState();
 
                 return instance;
             }
