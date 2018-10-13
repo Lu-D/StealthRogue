@@ -74,11 +74,7 @@ public class EnemyControl : MonoBehaviour {
     //called once per frame
     void Update()
     {
-        updateAnim();       
-    }
-
-    private void FixedUpdate()
-    {
+        updateAnim();
         FSM.stateUpdate();
     }
 
