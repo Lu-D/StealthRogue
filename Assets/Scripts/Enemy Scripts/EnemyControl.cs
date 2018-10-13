@@ -137,6 +137,7 @@ public class EnemyControl : MonoBehaviour {
     //coroutine stops when enemy is facing target
     public IEnumerator RotateTo(Vector3 targ, float delayAfter)
     {
+        Debug.Log(targ);
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized);
         while (transform.rotation != lookDirection)
         {
@@ -215,7 +216,7 @@ public class EnemyControl : MonoBehaviour {
         }
         else if(other.transform.tag == "Endpoint")
         {
-
+            Debug.Log("hits endpoint");
             if (GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
                 reenableWaypoints();

@@ -42,6 +42,7 @@ namespace BasicEnemyState
 
         public override void Exit(EnemyControl owner)
         {
+            owner.StopAllCoroutines();
         }
 
         //singleton
@@ -80,6 +81,7 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
+            Debug.Log("Attacking is executing");
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             //only fires coroutines if current one is not running
@@ -87,7 +89,8 @@ namespace BasicEnemyState
                 owner.attackStates();
                 owner.attackOneShot = new Task(owner.attackCoroutine);
             }
-            if(!owner.lookingAtPlayerOneShot.Running)
+            Debug.Log(owner.lookingAtPlayerOneShot.Running);
+            if (!owner.lookingAtPlayerOneShot.Running)
             {
                 owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
             }
@@ -142,7 +145,9 @@ namespace BasicEnemyState
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             //check if player is spotted every udpate
-            owner.targetControl.isSpotted = owner.enemyVision.checkVision();
+            owner.playerSpotted = owner.enemyVision.checkVision();
+            if (owner.playerSpotted)
+                owner.targetControl.isSpotted = true;
 
             //Change to attack state if player is spotted
             if (owner.targetControl.isSpotted)
