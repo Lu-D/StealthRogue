@@ -15,7 +15,6 @@ public class GateCollision : MonoBehaviour {
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("yay");
             player.enabled = false;
             player.enabled = true;
             Physics2D.IgnoreLayerCollision(13, 14, true);

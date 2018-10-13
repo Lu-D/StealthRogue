@@ -21,6 +21,8 @@ namespace BasicEnemyState
 
             //fire coroutine first time
             new Task(owner.moveTowardsNext());
+
+            owner.playerSpotted = false;
         }
 
         public override void Execute(EnemyControl owner)
@@ -28,15 +30,19 @@ namespace BasicEnemyState
             //check if player is spotted every udpate
             owner.playerSpotted = owner.enemyVision.checkVision();
             if (owner.playerSpotted)
+            {
                 owner.targetControl.isSpotted = true;
+                //play gettingCaught() scene sequence
+                owner.targetControl.gettingCaught = true;
+            }
 
-            //changes to attack state if enemy spots player
-            if (owner.targetControl.isSpotted)
+                //changes to attack state if enemy spots player
+                if (owner.targetControl.isSpotted)
                 owner.FSM.changeState(AttackPlayer.Instance);
 
-            //changes to new state when enemy receives message
-            if (owner.messageReceiver.newState != null)
-                owner.FSM.changeState(owner.messageReceiver.newState);
+            //changes to lookAtMe state when lookatme message is received
+            if(owner.messageReceiver.newState is LookAtMe)
+                owner.FSM.changeState(LookAtMe.Instance);
 
         }
 
@@ -65,14 +71,12 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
-            //play gettingCaught() scene sequence
-            owner.targetControl.gettingCaught = true;
             //have enemy stand in place
             owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             //turn off FOV visualization
             owner.viewMeshFilter.SetActive(false);
             //turn off all waypoints
-            owner.disableWaypoints();
+            //owner.disableWaypoints();
 
             //fire coroutines first time
             owner.attackOneShot = new Task(owner.attackCoroutine);
@@ -81,7 +85,6 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
-            Debug.Log("Attacking is executing");
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             //only fires coroutines if current one is not running
@@ -89,7 +92,7 @@ namespace BasicEnemyState
                 owner.attackStates();
                 owner.attackOneShot = new Task(owner.attackCoroutine);
             }
-            Debug.Log(owner.lookingAtPlayerOneShot.Running);
+
             if (!owner.lookingAtPlayerOneShot.Running)
             {
                 owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
@@ -107,8 +110,6 @@ namespace BasicEnemyState
             //stop both coroutines
             owner.attackOneShot.Stop();
             owner.lookingAtPlayerOneShot.Stop();
-            owner.attackOneShot = null;
-            owner.lookingAtPlayerOneShot = null;
         }
 
         //singleton
@@ -124,20 +125,16 @@ namespace BasicEnemyState
         }
     }
 
-    public class LookAtMe: State
+    public class LookAtMe : State
     {
         //singleton of state
         private static LookAtMe instance = null;
-
-        //coroutines in execute()
         
 
         public override void Enter(EnemyControl owner)
         {
             Vector3 bombPosition = owner.messageReceiver.senderPosition;
             owner.lookAtMeOneShot = new Task(owner.RotateTo(bombPosition, 5f));
-
-            owner.messageReceiver = new Message(Vector3.zero, null);
         }
 
         public override void Execute(EnemyControl owner)
@@ -147,21 +144,28 @@ namespace BasicEnemyState
             //check if player is spotted every udpate
             owner.playerSpotted = owner.enemyVision.checkVision();
             if (owner.playerSpotted)
+            {
                 owner.targetControl.isSpotted = true;
+                //play gettingCaught() scene sequence
+                owner.targetControl.gettingCaught = true;
+            }
 
-            //Change to attack state if player is spotted
-            if (owner.targetControl.isSpotted)
+                //Change to attack state if player is spotted
+                if (owner.targetControl.isSpotted)
                 owner.FSM.changeState(AttackPlayer.Instance);
-            //Reverts back to previous state after coroutine is done running
+            //overrides current state for a new lookatme
+            if (owner.messageReceiver.newState is LookAtMe)
+                owner.FSM.reenterState();
+            //Reverts back to patrol waypoint state after coroutine is done running
             if (!owner.lookAtMeOneShot.Running)
                 owner.FSM.changeState(PatrolWaypoint.Instance);
-            if (owner.messageReceiver.newState != null)
-                owner.FSM.changeState(owner.messageReceiver.newState);
 
         }
 
         public override void Exit(EnemyControl owner)
         {
+            owner.lookAtMeOneShot.Stop();
+            owner.lookAtMeOneShot = null;
         }
 
         //singleton

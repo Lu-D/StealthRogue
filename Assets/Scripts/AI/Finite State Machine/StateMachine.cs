@@ -27,11 +27,23 @@ public class StateMachine{
         currentState.Exit(owner);
         currentState = newState;
         currentState.Enter(owner);
+        //clear messages before new current state execution begins
+        clearMessages();
     }
 
     public void revertToPrevState()
     {
         changeState(prevState);
+    }
+
+    public void reenterState()
+    {
+        changeState(currentState);
+    }
+
+    public void clearMessages()
+    {
+        owner.messageReceiver = new Message(Vector3.zero, null);
     }
 
     public void stateUpdate()

@@ -75,7 +75,10 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateAnim();       
+    }
 
+    private void FixedUpdate()
+    {
         FSM.stateUpdate();
     }
 
@@ -132,16 +135,18 @@ public class EnemyControl : MonoBehaviour {
             anim.SetBool("isMoving", true);
     }
 
-    //RotateToFaceWaypoint
+    //RotateTo
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
     public IEnumerator RotateTo(Vector3 targ, float delayAfter)
     {
-        Debug.Log(targ);
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized);
-        while (transform.rotation != lookDirection)
+        while (Quaternion.Angle(transform.rotation, lookDirection) > .1f)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized), rotateSpeed * Time.deltaTime);
+            Debug.DrawRay(transform.position, (targ - transform.position), Color.red);
+            Debug.Log("Enemy rotation: " + transform.rotation);
+            Debug.Log("Target rotation: " + lookDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, rotateSpeed * Time.deltaTime);
             yield return null;
         }
         yield return new WaitForSeconds(delayAfter);
