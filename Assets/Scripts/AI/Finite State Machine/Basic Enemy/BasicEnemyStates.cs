@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using BasicEnemyAttackState;
 
 namespace BasicEnemyState
 {
@@ -38,11 +37,11 @@ namespace BasicEnemyState
 
                 //changes to attack state if enemy spots player
                 if (owner.targetControl.isSpotted)
-                owner.FSM.changeState(AttackPlayer.Instance);
+                owner.mainFSM.changeState(AttackPlayer.Instance);
 
             //changes to lookAtMe state when lookatme message is received
             if(owner.messageReceiver.newState is LookAtMe)
-                owner.FSM.changeState(LookAtMe.Instance);
+                owner.mainFSM.changeState(LookAtMe.Instance);
 
         }
 
@@ -71,37 +70,25 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
-            //have enemy stand in place
-            owner.transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
             //turn off FOV visualization
             owner.viewMeshFilter.SetActive(false);
             //turn off all waypoints
-            //owner.disableWaypoints();
+            owner.disableWaypoints();
 
-            //fire coroutines first time
-            owner.attackOneShot = new Task(owner.attackCoroutine);
-            owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
+            owner.attackFSM.changeState(Search.Instance);
+            owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
         }
 
         public override void Execute(EnemyControl owner)
         {
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
-            //only fires coroutines if current one is not running
-            if (!owner.attackOneShot.Running) {
-                owner.attackStates();
-                owner.attackOneShot = new Task(owner.attackCoroutine);
-            }
-
-            if (!owner.lookingAtPlayerOneShot.Running)
-            {
-                owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
-            }
+            owner.attackFSM.stateUpdate();
 
             //change to waypoint state if player is no longer spotted
             if (!owner.targetControl.isSpotted)
             {
-                owner.FSM.changeState(PatrolWaypoint.Instance);
+                owner.mainFSM.changeState(PatrolWaypoint.Instance);
             }
         }
 
@@ -152,13 +139,13 @@ namespace BasicEnemyState
 
                 //Change to attack state if player is spotted
                 if (owner.targetControl.isSpotted)
-                owner.FSM.changeState(AttackPlayer.Instance);
+                owner.mainFSM.changeState(AttackPlayer.Instance);
             //overrides current state for a new lookatme
             if (owner.messageReceiver.newState is LookAtMe)
-                owner.FSM.reenterState();
+                owner.mainFSM.reenterState();
             //Reverts back to patrol waypoint state after coroutine is done running
             if (!owner.lookAtMeOneShot.Running)
-                owner.FSM.changeState(PatrolWaypoint.Instance);
+                owner.mainFSM.changeState(PatrolWaypoint.Instance);
 
         }
 
@@ -212,10 +199,10 @@ namespace BasicEnemyState
         }
     }
 
-    public class GlobalState : State
+    public class BasicEnemyGlobal : State
     {
         //singleton of state
-        private static GlobalState instance = null;
+        private static BasicEnemyGlobal instance = null;
 
         public override void Enter(EnemyControl owner)
         {
@@ -223,8 +210,10 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
+            owner.updateAnim();
+
             if (owner.messageReceiver.newState is Die)
-                owner.FSM.changeState(Die.Instance);
+                owner.mainFSM.changeState(Die.Instance);
         }
 
         public override void Exit(EnemyControl owner)
@@ -232,12 +221,12 @@ namespace BasicEnemyState
         }
 
         //singleton
-        public static GlobalState Instance
+        public static BasicEnemyGlobal Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new GlobalState();
+                    instance = new BasicEnemyGlobal();
 
                 return instance;
             }

@@ -46,25 +46,13 @@ public class AttackPatterns
     public IEnumerator shootWave(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
         yield return new WaitForSeconds(.1f);
-        yield return new WaitForSeconds(.2f);
-        for (int i = 1; i <= bulletNum; ++i)
+        for (int j = -(5 * bulletNum); j <= 5 * bulletNum; j += 5)
         {
-            for (int j = -40; j <= 40; j += 5)
-            {
-                gun.GetComponent<GunControl>().Fire(bullet, j);
-                yield return new WaitForSeconds(.03f);
-            }
-
-            gun.GetComponent<GunControl>().Fire(bullet, 45);
-            yield return new WaitForSeconds(.1f);
-
-            for (int j = 40; j >= -40; j -= 5)
-            {
-                gun.GetComponent<GunControl>().Fire(bullet, j);
-                yield return new WaitForSeconds(.03f);
-            }
-            yield return new WaitForSeconds(.2f);
+            gun.GetComponent<GunControl>().Fire(bullet, j);
+            yield return new WaitForSeconds(.03f);
         }
+        
+
         yield return new WaitForSeconds(CD);
     }
 }

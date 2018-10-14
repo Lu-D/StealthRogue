@@ -24,9 +24,21 @@ public class StateMachine{
         prevState = currentState;
 
         //changes to new state
-        currentState.Exit(owner);
+        if(currentState != null)
+            currentState.Exit(owner);
         currentState = newState;
         currentState.Enter(owner);
+        //clear messages before new current state execution begins
+        clearMessages();
+    }
+
+    public void changeGlobalState(State newState)
+    {
+        //changes to new state
+        if (globalState != null)
+            globalState.Exit(owner);
+        globalState = newState;
+        globalState.Enter(owner);
         //clear messages before new current state execution begins
         clearMessages();
     }

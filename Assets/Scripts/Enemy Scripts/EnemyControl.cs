@@ -3,41 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BasicEnemyState;
+using BasicEnemyAttackState;
+
 
 //EnemyControl
 //class to control enemy behavior
 public class EnemyControl : MonoBehaviour {
 
+    //enemy properties
     public float detectionAngle;
     public float detectionDistance;
-    public GameObject bullet;
-    public GameObject waypointControl;
-    public Transform[] wayPoints; //waypoints[1] is waypointControl
     public float moveSpeed;
     public float rotateSpeed;
     public float fovResolution;
+    public float distToFire;
+    public bool playerSpotted;
+    public int currAmmo;
+    public int maxAmmo;
+    public float reloadTime;
+
+    //objects associated with enemy
+    public GameObject bullet;
+    public GameObject waypointControl;
+    public Transform[] wayPoints; //waypoints[1] is waypointControl
     public GameObject texture;
     public GameObject viewMeshFilter;
-    public StateMachine FSM;
     public PlayerControl targetControl;
-    public bool playerSpotted;
+    public GameObject gun;
+
+    public EnemyVision enemyVision;
+    public AttackPatterns attackPatterns;
+
+    //Finite State Machines
+    public StateMachine mainFSM;
+    public StateMachine attackFSM;
 
     //coroutines in attackPlayer state
     public Task attackOneShot;
     public Task lookingAtPlayerOneShot;
+    public Task reloadOneShot;
     public Task lookAtMeOneShot;
 
     //Receives messages
     public Message messageReceiver = new Message(Vector3.zero, null);
 
+    //helper variables
     public GameObject target;
-    public AttackPatterns attackPatterns;
     public Animator anim;
-    public GameObject gun;
-    public IEnumerator attackCoroutine;
     public int nextWayPoint;
+    public IEnumerator attackCoroutine;
     public bool patrolDirection; //false when going backwards
-    public EnemyVision enemyVision;
     public Quaternion up; //to keep texture upright
 
     //animDirection
@@ -64,10 +79,12 @@ public class EnemyControl : MonoBehaviour {
         up = transform.rotation;
 
         //initialize state machine and enter first state
-        FSM = new StateMachine(this);
-        FSM.currentState = PatrolWaypoint.Instance;
-        FSM.globalState = GlobalState.Instance;
-        //FSM.currentState.Enter(this);
+        mainFSM = new StateMachine(this);
+        mainFSM.changeState(PatrolWaypoint.Instance);
+        mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
+        mainFSM.currentState.Enter(this);
+
+        attackFSM = new StateMachine(this);
     }
 
     //Update
@@ -75,7 +92,7 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateAnim();
-        //FSM.stateUpdate();
+        mainFSM.stateUpdate();
     }
 
     //LateUpdate
@@ -87,7 +104,7 @@ public class EnemyControl : MonoBehaviour {
 
     //updateVision
     //update animator with direction state
-    void updateAnim()
+    public void updateAnim()
     {
         Vector3 directionVector = gun.transform.position - transform.position;
 
@@ -131,6 +148,11 @@ public class EnemyControl : MonoBehaviour {
             anim.SetBool("isMoving", true);
     }
 
+    public IEnumerator Reload(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    }
+
     //RotateTo
     //rotates enemy to face target
     //coroutine stops when enemy is facing target
@@ -152,14 +174,22 @@ public class EnemyControl : MonoBehaviour {
     //randomly choose attackPattern
     public void attackStates()
     {
-        int randomState = UnityEngine.Random.Range(0, 2);
-        if (randomState == 0)
+        int randomState = UnityEngine.Random.Range(0, 3);
+        switch (randomState)
         {
-            attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, 2);
-        }
-        else
-        {
-            attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, 2);
+            case 0:
+                attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
+                break;
+            case 1:
+                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, .5f);
+                break;
+            case 2:
+                attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
+                break;
+            default:
+                Debug.Log("attack coroutine random range is out of bounds");
+                break;
+
         }
     }
     
