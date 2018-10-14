@@ -80,9 +80,8 @@ public class EnemyControl : MonoBehaviour {
 
         //initialize state machine and enter first state
         mainFSM = new StateMachine(this);
-        mainFSM.changeState(PatrolWaypoint.Instance);
-        mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
-        mainFSM.currentState.Enter(this);
+        //mainFSM.changeState(PatrolWaypoint.Instance);
+        //mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
 
         attackFSM = new StateMachine(this);
     }
@@ -92,7 +91,7 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateAnim();
-        mainFSM.stateUpdate();
+        //mainFSM.stateUpdate();
     }
 
     //LateUpdate
