@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BasicEnemyState;
 using BasicEnemyAttackState;
+using Pathfinding;
 
 
 //EnemyControl
@@ -33,6 +34,7 @@ public class EnemyControl : MonoBehaviour {
 
     public EnemyVision enemyVision;
     public AttackPatterns attackPatterns;
+    public AIPath pathFinder;
 
     //Finite State Machines
     public StateMachine mainFSM;
@@ -78,10 +80,13 @@ public class EnemyControl : MonoBehaviour {
         enemyVision = new EnemyVision(this);
         up = transform.rotation;
 
+        //initialize pathFinder
+        pathFinder = GetComponent<AIPath>();
+
         //initialize state machine and enter first state
         mainFSM = new StateMachine(this);
-        //mainFSM.changeState(PatrolWaypoint.Instance);
-        //mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
+        mainFSM.changeState(PatrolWaypoint.Instance);
+        mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
 
         attackFSM = new StateMachine(this);
     }
@@ -91,7 +96,7 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         updateAnim();
-        //mainFSM.stateUpdate();
+        mainFSM.stateUpdate();
     }
 
     //LateUpdate

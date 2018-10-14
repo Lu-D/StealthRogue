@@ -203,9 +203,18 @@ namespace Pathfinding {
 		/** \copydoc Pathfinding::IAstarAI::canMove */
 		bool IAstarAI.canMove { get { return canMove; } set { canMove = value; } }
 
-		#endregion
+        #endregion
 
-		protected override void OnDisable () {
+        //void Awake()
+        //{
+        //    // Expands the bounds along the z axis
+        //    Collider2D collider = GetComponent<Collider2D>();
+        //    collider.bounds.Expand(Vector3.forward * 1000);
+        //    var guo = new GraphUpdateObject(collider.bounds);
+        //    AstarPath.active.UpdateGraphs(guo);
+        //}
+
+        protected override void OnDisable () {
 			base.OnDisable();
 
 			// Release current path so that it can be pooled

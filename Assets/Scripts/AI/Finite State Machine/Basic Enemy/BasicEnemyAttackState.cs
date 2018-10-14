@@ -10,11 +10,14 @@ namespace BasicEnemyAttackState
 
         public override void Enter(EnemyControl owner)
         {
-
+            owner.pathFinder.canSearch = true;
+            owner.pathFinder.canMove = true;
         }
 
         public override void Execute(EnemyControl owner)
         {
+            owner.pathFinder.destination = owner.targetControl.transform.position;
+
             //check if enemy can hit player, if so change to fire state
             Vector3 targetDir = owner.targetControl.transform.position - owner.transform.position;
             RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, targetDir, owner.distToFire);
@@ -25,7 +28,8 @@ namespace BasicEnemyAttackState
 
         public override void Exit(EnemyControl owner)
         {
-
+            owner.pathFinder.canSearch = false;
+            owner.pathFinder.canMove = false;
         }
 
         //singleton

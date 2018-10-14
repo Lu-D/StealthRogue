@@ -107,8 +107,11 @@ namespace Pathfinding {
 		 */
 		protected float verticalVelocity;
 
-		/** Cached Seeker component */
-		protected Seeker seeker;
+        /** \copydoc Pathfinding::IAstarAI::destination */
+        public Vector3 destination { get; set; }
+
+        /** Cached Seeker component */
+        protected Seeker seeker;
 
 		/** Cached Transform component */
 		protected Transform tr;
@@ -208,9 +211,6 @@ namespace Pathfinding {
 			}
 		}
 
-		/** \copydoc Pathfinding::IAstarAI::destination */
-		public Vector3 destination { get; set; }
-
 		/** \copydoc Pathfinding::IAstarAI::velocity */
 		public Vector3 velocity {
 			get {
@@ -237,7 +237,7 @@ namespace Pathfinding {
 		}
 
 		protected AIBase () {
-			// Note that this needs to be set here in the constructor and not in e.g Awake
+			// Note that this needs to be set here in the constructor and not in e.g  
 			// because it is possible that other code runs and sets the destination property
 			// before the Awake method on this script runs.
 			destination = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
