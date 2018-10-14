@@ -56,6 +56,9 @@ GameObject:
   - component: {fileID: 114346982193550546}
   - component: {fileID: 50509238476600432}
   - component: {fileID: 60825981468978982}
+  - component: {fileID: 114669280663129444}
+  - component: {fileID: 114858433717916054}
+  - component: {fileID: 114145881527296106}
   m_Layer: 11
   m_Name: Guard
   m_TagString: Enemy
@@ -185,8 +188,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662486246921054}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.88, y: 0.322, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.08, y: 0.22, z: -0.17871094}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4026170866123746}
@@ -303,6 +306,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114145881527296106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1662486246921054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 0.1
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!114 &114288640574902138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,14 +353,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionAngle: 90
   detectionDistance: 1
+  moveSpeed: 0.5
+  rotateSpeed: 160
+  fovResolution: 0.5
+  distToFire: 1.5
+  playerSpotted: 0
+  currAmmo: 3
+  maxAmmo: 3
+  reloadTime: 4
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 0}
   wayPoints: []
-  moveSpeed: 0.5
-  rotateSpeed: 120
-  fovResolution: 0.5
   texture: {fileID: 1208962735208170}
   viewMeshFilter: {fileID: 1121946117354924}
+  targetControl: {fileID: 0}
+  gun: {fileID: 0}
+  pathFinder: {fileID: 0}
+  target: {fileID: 0}
+  anim: {fileID: 0}
+  nextWayPoint: 0
+  patrolDirection: 0
+  up: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114669280663129444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1662486246921054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  repathRate: 0.5
+  canSearch: 0
+  canMove: 0
+  maxSpeed: 1
+  gravity: {x: 0, y: 0, z: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffset: 1
+  rotationIn2D: 1
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 360
+  slowdownDistance: 0.1
+  pickNextWaypointDist: 0.05
+  endReachedDistance: 0.5
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 1
+--- !u!114 &114858433717916054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1662486246921054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask: -1
 --- !u!212 &212266032691370640
 SpriteRenderer:
   m_ObjectHideFlags: 1
