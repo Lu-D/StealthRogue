@@ -12,6 +12,7 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
+
             //turn on FOV visualization
             owner.viewMeshFilter.SetActive(true);
 
@@ -48,6 +49,7 @@ namespace BasicEnemyState
         public override void Exit(EnemyControl owner)
         {
             owner.StopAllCoroutines();
+            owner.locationBeforeAttack = owner.transform.position;
         }
 
         //singleton
@@ -57,6 +59,38 @@ namespace BasicEnemyState
             {
                 if (instance == null)
                     instance = new PatrolWaypoint();
+
+                return instance;
+            }
+        }
+    }
+
+    public class Alert : State
+    {
+        //singleton of state
+        private static Alert instance = null;
+
+        public override void Enter(EnemyControl owner)
+        {
+        }
+
+        public override void Execute(EnemyControl owner)
+        {
+            if (owner.mapLocation == owner.targetControl.mapLocation)
+                owner.mainFSM.changeState(AttackPlayer.Instance);
+        }
+
+        public override void Exit(EnemyControl owner)
+        {
+        }
+
+        //singleton
+        public static Alert Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Alert();
 
                 return instance;
             }
@@ -81,22 +115,30 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
+
             owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             owner.attackFSM.stateUpdate();
 
+            //change to alert state if player leaves map location
+            if (owner.mapLocation != owner.targetControl.mapLocation)
+            {
+                owner.attackFSM.changeState(Inactive.Instance);
+                owner.revertPositionBeforeAttack(Alert.Instance);
+            }
+
             //change to waypoint state if player is no longer spotted
             if (!owner.targetControl.isSpotted)
             {
-                owner.mainFSM.changeState(PatrolWaypoint.Instance);
+                owner.attackFSM.changeState(Inactive.Instance);
+                owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);
+                
             }
         }
 
         public override void Exit(EnemyControl owner)
         {
-            //stop both coroutines
-            owner.attackOneShot.Stop();
-            owner.lookingAtPlayerOneShot.Stop();
+            owner.attackFSM.globalState.Exit(owner);
         }
 
         //singleton

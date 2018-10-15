@@ -16,8 +16,18 @@ public class LocatePlayer : MonoBehaviour {
         if (collision.tag == "Player")
         {
             player.mapLocation = transform.parent.name;
-            player.changingLocation = true;
+            player.changingLocation = false;
         }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            collision.GetComponent<EnemyControl>().mapLocation = transform.parent.name;
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)

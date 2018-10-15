@@ -1406,6 +1406,11 @@ Prefab:
       propertyPath: m_Name
       value: 'GuardBottomRight '
       objectReference: {fileID: 0}
+    - target: {fileID: 114669280663129444, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 2}
+      propertyPath: slowWhenNotFacingTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 771e6cb1afb62024da4dda65b77932ee, type: 2}
   m_IsPrefabAsset: 0
@@ -3159,11 +3164,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4253586412378144, guid: 43f9b8f378861734c8c579da31e8a31e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.73
+      value: 1.58
       objectReference: {fileID: 0}
     - target: {fileID: 4253586412378144, guid: 43f9b8f378861734c8c579da31e8a31e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.45
+      value: 3.99
       objectReference: {fileID: 0}
     - target: {fileID: 4253586412378144, guid: 43f9b8f378861734c8c579da31e8a31e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3194,6 +3199,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4cc4dbc5048704f46b675e7c92fc9d93, type: 2}
+    - target: {fileID: 1437192303991950, guid: 43f9b8f378861734c8c579da31e8a31e, type: 2}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43f9b8f378861734c8c579da31e8a31e, type: 2}
   m_IsPrefabAsset: 0

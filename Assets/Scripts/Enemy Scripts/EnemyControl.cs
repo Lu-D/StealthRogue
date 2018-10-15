@@ -22,6 +22,8 @@ public class EnemyControl : MonoBehaviour {
     public int currAmmo;
     public int maxAmmo;
     public float reloadTime;
+    public string mapLocation;
+    public State currState;
 
     //objects associated with enemy
     public GameObject bullet;
@@ -56,6 +58,7 @@ public class EnemyControl : MonoBehaviour {
     public IEnumerator attackCoroutine;
     public bool patrolDirection; //false when going backwards
     public Quaternion up; //to keep texture upright
+    public Vector3 locationBeforeAttack;
 
     //animDirection
     //Struct for keeping track of directions for animator
@@ -89,6 +92,7 @@ public class EnemyControl : MonoBehaviour {
         mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
 
         attackFSM = new StateMachine(this);
+        currState = mainFSM.currentState;
     }
 
     //Update
@@ -97,6 +101,7 @@ public class EnemyControl : MonoBehaviour {
     {
         updateAnim();
         mainFSM.stateUpdate();
+        Debug.Log(mainFSM.currentState);
     }
 
     //LateUpdate
@@ -104,6 +109,22 @@ public class EnemyControl : MonoBehaviour {
     private void LateUpdate()
     {
         enemyVision.drawFOV();
+    }
+
+    //Moves enemy back to position before attack
+    public void revertPositionBeforeAttack(State newState)
+    {
+
+        pathFinder.canSearch = true;
+        pathFinder.canMove = true;
+        pathFinder.destination = locationBeforeAttack;
+
+        if (pathFinder.reachedEndOfPath)
+        {
+            pathFinder.canSearch = false;
+            pathFinder.canMove = false;
+            mainFSM.changeState(newState);
+        }
     }
 
     //updateVision
@@ -166,8 +187,6 @@ public class EnemyControl : MonoBehaviour {
         while (Quaternion.Angle(transform.rotation, lookDirection) > .1f)
         {
             Debug.DrawRay(transform.position, (targ - transform.position), Color.red);
-            Debug.Log("Enemy rotation: " + transform.rotation);
-            Debug.Log("Target rotation: " + lookDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, rotateSpeed * Time.deltaTime);
             yield return null;
         }
