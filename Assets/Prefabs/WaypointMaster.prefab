@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 114946192114896328}
   m_Layer: 2
   m_Name: Endpoint
-  m_TagString: Endpoint
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114485930087815188}
   m_Layer: 2
   m_Name: Endpoint
-  m_TagString: Endpoint
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

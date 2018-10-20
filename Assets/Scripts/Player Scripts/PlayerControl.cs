@@ -207,7 +207,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<EnemyControl>().messageReceiver = new Message(BasicEnemyState.Die.Instance);
+            collision.gameObject.GetComponent<EnemyControl>().messageReceiver = new Message("die");
         }
         if(equipment != null)
         {

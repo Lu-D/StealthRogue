@@ -5,17 +5,17 @@ using UnityEngine;
 public struct Message
 {
     public Vector3 senderPosition;
-    public State newState;
+    public string message;
 
-    public Message(State _newState)
+    public Message(string _message)
     {
-        newState = _newState;
+        message = _message;
         senderPosition = Vector3.zero;
     }
 
-    public Message(Vector3 _sender, State _newState)
+    public Message(Vector3 _sender, string _message)
     {
         senderPosition = _sender;
-        newState = _newState;
+        message = _message;
     }
 }

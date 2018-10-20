@@ -12,21 +12,23 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
-
             //turn on FOV visualization
             owner.viewMeshFilter.SetActive(true);
 
             //turn on all waypoints
             owner.reenableWaypoints();
 
-            //fire coroutine first time
-            new Task(owner.moveTowardsNext());
+            if (owner.movingPatrol)
+                new Task(owner.moveTowardsNext());
+            else
+                new Task(owner.rotateTowardsNext());
 
             owner.playerSpotted = false;
         }
 
         public override void Execute(EnemyControl owner)
         {
+
             //check if player is spotted every udpate
             owner.playerSpotted = owner.enemyVision.checkVision();
             if (owner.playerSpotted)
@@ -36,12 +38,16 @@ namespace BasicEnemyState
                 owner.targetControl.gettingCaught = true;
             }
 
-                //changes to attack state if enemy spots player
-                if (owner.targetControl.isSpotted)
+            //changes to attack state if enemy spots player
+            if (owner.targetControl.isSpotted)
                 owner.mainFSM.changeState(AttackPlayer.Instance);
 
+            //reenters state if it hits a waypoint
+            if (owner.messageReceiver.message == "next waypoint")
+                owner.mainFSM.reenterState();
+
             //changes to lookAtMe state when lookatme message is received
-            if(owner.messageReceiver.newState is LookAtMe)
+            if(owner.messageReceiver.message == "look at me")
                 owner.mainFSM.changeState(LookAtMe.Instance);
 
         }
@@ -183,7 +189,7 @@ namespace BasicEnemyState
                 if (owner.targetControl.isSpotted)
                 owner.mainFSM.changeState(AttackPlayer.Instance);
             //overrides current state for a new lookatme
-            if (owner.messageReceiver.newState is LookAtMe)
+            if (owner.messageReceiver.message == "look at me")
                 owner.mainFSM.reenterState();
             //Reverts back to patrol waypoint state after coroutine is done running
             if (!owner.lookAtMeOneShot.Running)
@@ -254,7 +260,7 @@ namespace BasicEnemyState
         {
             owner.updateAnim();
 
-            if (owner.messageReceiver.newState is Die)
+            if (owner.messageReceiver.message == "die")
                 owner.mainFSM.changeState(Die.Instance);
         }
 

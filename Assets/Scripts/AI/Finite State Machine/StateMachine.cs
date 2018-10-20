@@ -56,7 +56,7 @@ public class StateMachine{
     public void clearMessages()
     {
         owner.messageReceiver.senderPosition = Vector3.zero;
-        owner.messageReceiver.newState = null;
+        owner.messageReceiver.message = "";
     }
 
     public void stateUpdate()
@@ -65,5 +65,7 @@ public class StateMachine{
             currentState.Execute(owner);
         if (globalState != null)
             globalState.Execute(owner);
+
+        clearMessages();
     }
 }
