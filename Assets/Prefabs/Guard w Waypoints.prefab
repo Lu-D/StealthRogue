@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 114719669548717742}
   - component: {fileID: 114393531271510652}
   m_Layer: 11
-  m_Name: GuardTopLeft
+  m_Name: Guard
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionAngle: 45
-  detectionDistance: 2
+  detectionDistance: 1.7
   moveSpeed: 0.5
   rotateSpeed: 120
   fovResolution: 0.5

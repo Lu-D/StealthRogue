@@ -351,8 +351,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 846a72152555a094b9ed7dbfe8209313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionAngle: 90
-  detectionDistance: 1
+  detectionAngle: 45
+  detectionDistance: 1.7
   moveSpeed: 0.5
   rotateSpeed: 120
   fovResolution: 0.5

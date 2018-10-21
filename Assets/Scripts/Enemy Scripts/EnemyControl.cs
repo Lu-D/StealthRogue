@@ -24,6 +24,7 @@ public class EnemyControl : MonoBehaviour {
     public float reloadTime;
     public string mapLocation;
     public bool movingPatrol;
+    public bool patrolLoop;
     public State currState;
 
     //objects associated with enemy
@@ -283,10 +284,16 @@ public class EnemyControl : MonoBehaviour {
         {
             if(GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
-                if (nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1)
+                if ((nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1) && !patrolLoop)
                 {
                     reenableWaypoints();
                     patrolDirection = !patrolDirection;
+                }
+                else if(nextWayPoint == waypointControl.transform.childCount && patrolLoop)
+                {
+                    Debug.Log("succesful loop");
+                    reenableWaypoints();
+                    nextWayPoint = 0;
                 }
                 else
                     other.transform.gameObject.SetActive(false);

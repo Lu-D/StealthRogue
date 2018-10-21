@@ -65,7 +65,5 @@ public class StateMachine{
             currentState.Execute(owner);
         if (globalState != null)
             globalState.Execute(owner);
-
-        clearMessages();
     }
 }
