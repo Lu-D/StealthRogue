@@ -70,7 +70,7 @@ namespace BasicEnemyAttackState
 
         public override void Exit(EnemyControl owner)
         {
-            owner.attackOneShot.Stop();
+            owner.StopAllCoroutines();
         }
 
         //singleton
@@ -167,7 +167,7 @@ namespace BasicEnemyAttackState
 
         public override void Exit(EnemyControl owner)
         {
-            owner.lookingAtPlayerOneShot.Stop();
+            owner.StopAllCoroutines();
         }
 
         //singleton

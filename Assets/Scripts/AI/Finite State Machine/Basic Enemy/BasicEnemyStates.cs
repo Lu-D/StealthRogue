@@ -199,8 +199,7 @@ namespace BasicEnemyState
 
         public override void Exit(EnemyControl owner)
         {
-            owner.lookAtMeOneShot.Stop();
-            owner.lookAtMeOneShot = null;
+            owner.StopAllCoroutines();
         }
 
         //singleton
