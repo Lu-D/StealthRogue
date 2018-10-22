@@ -93,12 +93,15 @@ public class EnemyVision {
     }
 
     //ViewCast()
-    //Casts ray in direction angle and returns information about the raycase
+    //Casts ray in direction angle and returns information about the raycast
     ViewCastInfo ViewCast(float angle)
     {
         Vector3 dir = dirFromAngle(angle);
 
-        RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance);
+        //visualization ignores other guards
+        LayerMask viewCastLayer = ~((1 << 11));
+
+        RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance, viewCastLayer);
         if (hit.collider != null){
             return new ViewCastInfo(true, hit.point, hit.distance, angle);
         }

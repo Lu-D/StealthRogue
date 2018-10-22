@@ -2045,6 +2045,8 @@ MonoBehaviour:
   sprintSpeed: 2
   isSpotted: 0
   invincible: 0
+  dashDist: 0.6
+  dashSpeed: 1.75
   playerMoving: 0
   isAttacking: 0
   lastMove: {x: 0, y: 0}

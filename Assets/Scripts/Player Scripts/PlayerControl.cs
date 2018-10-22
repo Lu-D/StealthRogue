@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
     public float sprintSpeed;
     public bool isSpotted;
     public bool invincible;
+    public float dashDist;
+    public float dashSpeed;
 
     public bool playerMoving;
     public bool isAttacking;
@@ -26,6 +28,8 @@ public class PlayerControl : MonoBehaviour {
     public int stamina;
 
     public AudioClip[] audioClips;
+
+    Task rollOneShot;
 
     private Rigidbody2D myRigidbody;
     private Animator anim;
@@ -57,8 +61,6 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        playerMove();
-
         if (gettingCaught)
         {
             StartCoroutine(getCaught());
@@ -70,6 +72,11 @@ public class PlayerControl : MonoBehaviour {
             StartCoroutine(adjustLight());
             changingLocation = false;
         }
+
+        if (Input.GetMouseButtonDown(0) && (rollOneShot == null || !rollOneShot.Running))
+            rollOneShot = new Task(roll());
+
+        playerMove();
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
@@ -171,6 +178,21 @@ public class PlayerControl : MonoBehaviour {
     private void playAttackSound()
     {
         myAudioSource.PlayOneShot(audioClips[0], 1f);
+    }
+
+    public IEnumerator roll()
+    {
+        Vector3 target = transform.position + new Vector3(lastMove.x, lastMove.y, 0) * dashDist;
+
+        float rollSpeedX = lastMove.x * dashSpeed;
+        float rollSpeedY = lastMove.y * dashSpeed;
+
+        while (Vector3.Distance(transform.position, target) > .1f)
+        {
+            Debug.Log("yay");
+            myRigidbody.velocity = new Vector3(rollSpeedX, rollSpeedY, 0);
+            yield return null;
+        }
     }
 
     public IEnumerator adjustLight()

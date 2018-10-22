@@ -363,6 +363,7 @@ MonoBehaviour:
   reloadTime: 4
   mapLocation: 
   movingPatrol: 1
+  patrolLoop: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 0}
   wayPoints: []
