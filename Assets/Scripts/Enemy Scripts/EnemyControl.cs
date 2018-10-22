@@ -61,6 +61,7 @@ public class EnemyControl : MonoBehaviour {
     public bool patrolDirection; //false when going backwards
     public Quaternion up; //to keep texture upright
     public Vector3 locationBeforeAttack;
+    public Dictionary<int, int> randomState = new Dictionary<int, int>(); //weighted dectionary of attackStates
 
     //animDirection
     //Struct for keeping track of directions for animator
@@ -84,6 +85,11 @@ public class EnemyControl : MonoBehaviour {
         anim = texture.GetComponent<Animator>();
         enemyVision = new EnemyVision(this);
         up = transform.rotation;
+
+        //initializing weighted random states
+        randomState.Add(0, 10);
+        randomState.Add(1, 80);
+        randomState.Add(2, 10);
 
         //initialize pathFinder
         pathFinder = GetComponent<AIPath>();
@@ -199,8 +205,8 @@ public class EnemyControl : MonoBehaviour {
     //randomly choose attackPattern
     public void attackStates()
     {
-        int randomState = UnityEngine.Random.Range(0, 3);
-        switch (randomState)
+
+        switch (WeightedRandomizer.From(randomState).TakeOne())
         {
             case 0:
                 attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
