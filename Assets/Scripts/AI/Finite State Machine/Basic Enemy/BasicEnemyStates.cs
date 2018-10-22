@@ -39,7 +39,7 @@ namespace BasicEnemyState
             }
 
             //changes to attack state if enemy spots player
-            if (owner.targetControl.isSpotted)
+            if (owner.targetControl.isSpotted && owner.mapLocation == owner.targetControl.mapLocation)
                 owner.mainFSM.changeState(AttackPlayer.Instance);
 
             //reenters state if it hits a waypoint
@@ -71,38 +71,6 @@ namespace BasicEnemyState
         }
     }
 
-    public class Alert : State
-    {
-        //singleton of state
-        private static Alert instance = null;
-
-        public override void Enter(EnemyControl owner)
-        {
-        }
-
-        public override void Execute(EnemyControl owner)
-        {
-            if (owner.mapLocation == owner.targetControl.mapLocation)
-                owner.mainFSM.changeState(AttackPlayer.Instance);
-        }
-
-        public override void Exit(EnemyControl owner)
-        {
-        }
-
-        //singleton
-        public static Alert Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new Alert();
-
-                return instance;
-            }
-        }
-    }
-
     public class AttackPlayer : State
     {
         //singleton of state
@@ -126,19 +94,10 @@ namespace BasicEnemyState
 
             owner.attackFSM.stateUpdate();
 
-            //change to alert state if player leaves map location
-            if (owner.mapLocation != owner.targetControl.mapLocation)
-            {
-                owner.attackFSM.changeState(Inactive.Instance);
-                owner.revertPositionBeforeAttack(Alert.Instance);
-            }
-
             //change to waypoint state if player is no longer spotted
             if (!owner.targetControl.isSpotted)
             {
-                owner.attackFSM.changeState(Inactive.Instance);
-                owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);
-                
+                owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);      
             }
         }
 

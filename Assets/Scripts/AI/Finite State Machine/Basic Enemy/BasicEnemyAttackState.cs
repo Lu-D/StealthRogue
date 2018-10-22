@@ -119,34 +119,7 @@ namespace BasicEnemyAttackState
         }
     }
 
-    public class Inactive : State
-    {
-        private static Inactive instance = null;
-
-        public override void Enter(EnemyControl owner)
-        {
-        }
-
-        public override void Execute(EnemyControl owner)
-        {
-        }
-
-        public override void Exit(EnemyControl owner)
-        {
-        }
-
-        //singleton
-        public static Inactive Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new Inactive();
-
-                return instance;
-            }
-        }
-    }
+    
 
     public class BasicEnemyAttackGlobal : State
     {
@@ -167,7 +140,7 @@ namespace BasicEnemyAttackState
 
         public override void Exit(EnemyControl owner)
         {
-            owner.StopAllCoroutines();
+           owner.lookingAtPlayerOneShot.Stop();
         }
 
         //singleton
