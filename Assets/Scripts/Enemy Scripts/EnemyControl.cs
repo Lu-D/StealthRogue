@@ -192,7 +192,7 @@ public class EnemyControl : MonoBehaviour {
     public IEnumerator RotateTo(Vector3 targ, float delayAfter)
     {
         Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized);
-        while (Quaternion.Angle(transform.rotation, lookDirection) > .1f)
+        while (Quaternion.Angle(transform.rotation, lookDirection) > .01f)
         {
             Debug.DrawRay(transform.position, (targ - transform.position), Color.red);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, rotateSpeed * Time.deltaTime);
