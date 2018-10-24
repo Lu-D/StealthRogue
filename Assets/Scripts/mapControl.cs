@@ -12,7 +12,7 @@ public class mapControl : MonoBehaviour {
         foreach (Transform point in transform)
         {
             //int num = UnityEngine.Random.Range(0, numMaps);
-            roomName = "MinRm" + (UnityEngine.Random.Range(0, numMaps)).ToString();
+            roomName = "MiniRooms/MinRm" + (UnityEngine.Random.Range(0, numMaps)).ToString();
             GameObject instance = Instantiate(Resources.Load(roomName, typeof(GameObject))) as GameObject;
             instance.transform.position = point.position;
             instance.transform.rotation = point.rotation;
