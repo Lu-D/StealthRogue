@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class mapControl : MonoBehaviour {
     public int numEnemies;
+    public int numMaps; //highest index of maps +1
 
     void Awake()
     {
-        Transform[] spawnPoints;
-        spawnPoints = GetComponentsInChildren<Transform>();
-
-        foreach(Transform point in spawnPoints)
+        string roomName = "";
+        foreach (Transform point in transform)
         {
-            GameObject instance = Instantiate(Resources.Load("Red Dot", typeof(GameObject))) as GameObject;
+            //int num = UnityEngine.Random.Range(0, numMaps);
+            roomName = "MinRm" + (UnityEngine.Random.Range(0, numMaps)).ToString();
+            GameObject instance = Instantiate(Resources.Load(roomName, typeof(GameObject))) as GameObject;
             instance.transform.position = point.position;
             instance.transform.rotation = point.rotation;
+            point.gameObject.GetComponent < spawnPointControl>().spawnedMap = roomName;
         }
     }
 }
