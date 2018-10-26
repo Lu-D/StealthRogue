@@ -160,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1
+  triggerFunction: 
 --- !u!60 &11394004
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -965,6 +966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!60 &218450383
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2879,6 +2881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &647506888
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3170,6 +3173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.25
+  triggerFunction: 
 --- !u!60 &715011965
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3636,6 +3640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!60 &824557910
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3896,6 +3901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &929233782
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4423,6 +4429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.25
+  triggerFunction: 
 --- !u!60 &993556487
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5081,6 +5088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &1083465763
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5842,6 +5850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &1163151068
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6349,6 +6358,11 @@ Prefab:
     - target: {fileID: 4423206722412384, guid: 8908589c5b6a2a74cb109398206e1078, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114243868645694488, guid: 8908589c5b6a2a74cb109398206e1078,
+        type: 2}
+      propertyPath: triggerFunction
+      value: DoThis
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8908589c5b6a2a74cb109398206e1078, type: 2}
@@ -7474,6 +7488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &1751616735
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7602,6 +7617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1
+  triggerFunction: 
 --- !u!60 &1770794157
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -8388,6 +8404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 1.5
+  triggerFunction: 
 --- !u!60 &1989159423
 PolygonCollider2D:
   m_ObjectHideFlags: 0
