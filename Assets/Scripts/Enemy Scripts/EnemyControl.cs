@@ -312,4 +312,9 @@ public class EnemyControl : MonoBehaviour {
             }
         }
     }
+
+    public void DoThis()
+    {
+        Debug.Log("DoThis");
+    }
 }
