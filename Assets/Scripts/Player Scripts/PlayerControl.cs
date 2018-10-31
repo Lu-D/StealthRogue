@@ -23,7 +23,7 @@ public class PlayerControl : MonoBehaviour {
     public GameObject gun;
     public GameObject bullet;
     public string mapLocation;
-    public bool changingLocation; //coroutine play once flag
+    public bool changingLocation;
     public bool gettingCaught; //coroutine play once flag
     public int health;
     public int maxStamina;
@@ -73,12 +73,6 @@ public class PlayerControl : MonoBehaviour {
         {
             StartCoroutine(getCaught());
             gettingCaught = false;
-        }
-
-        if (changingLocation)
-        {
-            StartCoroutine(adjustLight());
-            changingLocation = false;
         }
 
         if (Input.GetMouseButtonDown(0) && (rollOneShot == null || !rollOneShot.Running))
@@ -224,26 +218,6 @@ public class PlayerControl : MonoBehaviour {
             Debug.Log("yay");
             myRigidbody.velocity = new Vector3(rollSpeedX, rollSpeedY, 0);
             yield return null;
-        }
-    }
-
-    public IEnumerator adjustLight()
-    {
-        if(mapLocation == "")
-        {
-            for(int i = 54; i >= 30; i-=2)
-            {
-                playerLight.spotAngle = i;
-                yield return null;
-            }
-        }
-        else
-        {
-            for (int i = 30; i <= 54; i+=2)
-            {
-                playerLight.spotAngle = i;
-                yield return null;
-            }
         }
     }
 

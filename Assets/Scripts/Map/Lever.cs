@@ -26,7 +26,7 @@ public class Lever : MonoBehaviour {
                 gameObject.GetComponent<SpriteRenderer>().flipX = true;
                 mainAudio.Stop();
                 mainAudio.PlayOneShot(player.audioClips[1]);
-                sceneLight.intensity = 0f;
+                sceneLight.intensity = .4f;
             }
         }
     }
