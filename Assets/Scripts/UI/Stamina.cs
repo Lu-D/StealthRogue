@@ -16,6 +16,6 @@ public class Stamina : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        slider.value = player.stamina;
+        slider.value = player.currStamina;
 	}
 }

@@ -572,6 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114381727712090506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -584,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionAngle: 45
-  detectionDistance: 1.7
+  detectionDistance: 1
   moveSpeed: 0.5
   rotateSpeed: 120
   fovResolution: 0.5
@@ -595,6 +596,7 @@ MonoBehaviour:
   reloadTime: 4
   mapLocation: 
   movingPatrol: 1
+  patrolLoop: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 2}
   waypointControl: {fileID: 1823226696789912}
   wayPoints: []
@@ -701,6 +703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114820446070630922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -727,6 +730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!212 &212008790574964944
 SpriteRenderer:
   m_ObjectHideFlags: 1

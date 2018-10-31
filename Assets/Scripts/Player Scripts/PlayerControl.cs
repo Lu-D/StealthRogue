@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour {
     public bool invincible;
     public float dashDist;
     public float dashSpeed;
+    public float timeSlowFactor;
 
     public bool playerMoving;
     public bool isAttacking;
@@ -25,7 +26,11 @@ public class PlayerControl : MonoBehaviour {
     public bool changingLocation; //coroutine play once flag
     public bool gettingCaught; //coroutine play once flag
     public int health;
-    public int stamina;
+    public int maxStamina;
+    public int maxTimeFeul;
+
+    public int currStamina;
+    public int currTimeFuel;
 
     public AudioClip[] audioClips;
 
@@ -33,10 +38,11 @@ public class PlayerControl : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
     private Animator anim;
-    private AudioSource myAudioSource;
+    public AudioSource myAudioSource;
     private Light playerLight;
     private Light sceneLight;
     private float moveSpeed;
+    private bool timeIsSlowed = false;
 
 	// Use this for initialization
 	void Start () {
@@ -54,7 +60,9 @@ public class PlayerControl : MonoBehaviour {
         playerLight = transform.Find("Player Light").gameObject.GetComponent<Light>();
         sceneLight = GameObject.Find("Scene Light").gameObject.GetComponent<Light>();
 
-        stamina = 100;
+        currStamina = maxStamina;
+        currTimeFuel = maxTimeFeul;
+
         moveSpeed = defaultSpeed;
     }
 	
@@ -82,11 +90,23 @@ public class PlayerControl : MonoBehaviour {
         {
             sprint();
         }
-        else if(stamina != 100)
+        else if(currStamina != maxStamina)
         {
             moveSpeed = 1;
-            ++stamina;
+            ++currStamina;
         }
+
+        if (Input.GetKeyDown("f"))
+        {
+            timeIsSlowed = !timeIsSlowed;
+            if (timeIsSlowed)
+                Time.timeScale = timeSlowFactor;
+            else
+                Time.timeScale = 1f;
+        }
+
+        timeSlow();
+        
     }
 
     private void playerMove()
@@ -130,8 +150,7 @@ public class PlayerControl : MonoBehaviour {
 
         if (Input.GetKeyDown("space") && !isAttacking)
         {
-            isAttacking = true;
-            Invoke("setAttackBack", .5f);
+            anim.SetTrigger("IsAttacking");
         }
         if (Input.GetKeyDown("e"))
         {
@@ -142,7 +161,6 @@ public class PlayerControl : MonoBehaviour {
         anim.SetFloat("MoveX", Input.GetAxisRaw("Horizontal"));
         anim.SetFloat("MoveY", Input.GetAxisRaw("Vertical"));
         anim.SetBool("PlayerMoving", playerMoving);
-        anim.SetBool("IsAttacking", isAttacking);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
     }
@@ -150,11 +168,30 @@ public class PlayerControl : MonoBehaviour {
     public void sprint()
     {
         moveSpeed = sprintSpeed;
-        --stamina;
-        if(stamina < 0)
+        --currStamina;
+        if(currStamina < 0)
         {
             moveSpeed = defaultSpeed;
-            ++stamina;
+            ++currStamina;
+        }
+    }
+
+    private void timeSlow()
+    {
+        if (currTimeFuel < 0)
+        {
+            Time.timeScale = 1f;
+            timeIsSlowed = false;
+        }
+        if (!timeIsSlowed && currTimeFuel < maxTimeFeul)
+        {
+            ++currTimeFuel;
+        }
+
+        if (timeIsSlowed)
+        {
+            moveSpeed = 2;
+            --currTimeFuel;
         }
     }
 
@@ -162,17 +199,12 @@ public class PlayerControl : MonoBehaviour {
     {
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(0.5f);
-        myAudioSource.PlayOneShot(audioClips[1], 1f);
+        myAudioSource.PlayOneShot(audioClips[1], .7f);
         sceneLight.intensity = 2f;
         yield return new WaitForSecondsRealtime(0.5f);
         myAudioSource.PlayOneShot(audioClips[2], 1f);
         yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 1f;
-    }
-
-    private void setAttackBack()
-    {
-        isAttacking = false;
     }
 
     private void playAttackSound()

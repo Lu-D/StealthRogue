@@ -558,7 +558,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1524505652780048}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0313442, y: -0.7195802, z: 0.27501103}
+  m_LocalPosition: {x: -1.61, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4089804565242156}
@@ -615,7 +615,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295149499248988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.62, y: -1.2072145, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4724530288693440}
@@ -684,7 +684,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1094457856090796}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.028655767, y: -0.7195802, z: 0.27501103}
+  m_LocalPosition: {x: -2.65, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4392749008163326}
@@ -1293,6 +1293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114099589796448684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1403,6 +1404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114189622277820002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1416,6 +1418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114243868645694488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1429,6 +1432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114444732147494528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1468,6 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114462042111613600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1560,6 +1565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114613671376270344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1573,6 +1579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!114 &114744599820030834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1631,6 +1638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 0
   waitToRotate: 0
+  triggerFunction: 
 --- !u!212 &212158690983232766
 SpriteRenderer:
   m_ObjectHideFlags: 1

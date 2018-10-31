@@ -107,7 +107,6 @@ public class EnemyControl : MonoBehaviour {
     //called once per frame
     void Update()
     {
-        updateAnim();
         mainFSM.stateUpdate();
         Debug.Log(mainFSM.currentState);
     }
@@ -175,10 +174,10 @@ public class EnemyControl : MonoBehaviour {
         
 
         //determines whether or not to play idle animation
-        if (transform.GetComponent<Rigidbody2D>().velocity == new Vector2(0,0))
-            anim.SetBool("isMoving", false);
-        else
+        if (transform.GetComponent<Rigidbody2D>().velocity != new Vector2(0,0) || pathFinder.canMove)
             anim.SetBool("isMoving", true);
+        else
+            anim.SetBool("isMoving", false);
     }
 
     public IEnumerator Reload(float delay)
@@ -208,17 +207,17 @@ public class EnemyControl : MonoBehaviour {
 
         switch (WeightedRandomizer.From(randomState).TakeOne())
         {
-            case 0:
-                attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
-                break;
-            case 1:
-                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, .5f);
-                break;
-            case 2:
-                attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
-                break;
+            //case 0:
+            //    attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
+            //    break;
+            //case 1:
+            //    attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, .5f);
+            //    break;
+            //case 2:
+            //    attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
+            //    break;
             default:
-                Debug.Log("attack coroutine random range is out of bounds");
+                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 1, .5f);
                 break;
 
         }
@@ -313,8 +312,8 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
-    public void DoThis()
+    public void playAttackSound()
     {
-        Debug.Log("DoThis");
+        targetControl.myAudioSource.PlayOneShot(targetControl.audioClips[3], .5f);
     }
 }
