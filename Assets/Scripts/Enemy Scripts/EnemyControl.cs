@@ -217,7 +217,8 @@ public class EnemyControl : MonoBehaviour {
             //    attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
             //    break;
             default:
-                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 1, .5f);
+                attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
+                //Debug.Log("invalid attack patern #");
                 break;
 
         }

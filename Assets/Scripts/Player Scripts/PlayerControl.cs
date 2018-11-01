@@ -80,15 +80,15 @@ public class PlayerControl : MonoBehaviour {
 
         playerMove();
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-        {
-            sprint();
-        }
-        else if(currStamina != maxStamina)
-        {
-            moveSpeed = 1;
-            ++currStamina;
-        }
+        //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        //{
+        //    sprint();
+        //}
+        //else if(currStamina != maxStamina)
+        //{
+        //    moveSpeed = 1;
+        //    ++currStamina;
+        //}
 
         if (Input.GetKeyDown("f"))
         {

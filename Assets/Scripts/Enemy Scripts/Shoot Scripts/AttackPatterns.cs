@@ -16,9 +16,9 @@ public class AttackPatterns
         yield return new WaitForSeconds(.1f);
         for (int i = 1; i <= bulletNum; ++i)
         {
-            gun.GetComponent<GunControl>().Fire(bullet, -45);
+            gun.GetComponent<GunControl>().Fire(bullet, -30);
             gun.GetComponent<GunControl>().Fire(bullet, 0);
-            gun.GetComponent<GunControl>().Fire(bullet, 45);
+            gun.GetComponent<GunControl>().Fire(bullet, 30);
             yield return new WaitForSeconds(.2f);
         }
         yield return new WaitForSeconds(CD);

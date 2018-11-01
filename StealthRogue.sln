@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StealthRogue", "Assembly-CSharp.csproj", "{CB49DD32-3879-A546-77FE-2DC16D192EF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{CB49DD32-3879-A546-77FE-2DC16D192EF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StealthRogue", "Assembly-CSharp-Editor.csproj", "{D4D8FCC6-EDDE-2BE0-E4D4-7813314AF599}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{D4D8FCC6-EDDE-2BE0-E4D4-7813314AF599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
