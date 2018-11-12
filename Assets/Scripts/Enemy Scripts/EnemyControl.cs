@@ -108,7 +108,6 @@ public class EnemyControl : MonoBehaviour {
     void Update()
     {
         mainFSM.stateUpdate();
-        Debug.Log(mainFSM.currentState);
     }
 
     //LateUpdate
@@ -217,7 +216,7 @@ public class EnemyControl : MonoBehaviour {
             //    attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
             //    break;
             default:
-                attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
+                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 3, .5f);
                 //Debug.Log("invalid attack patern #");
                 break;
 

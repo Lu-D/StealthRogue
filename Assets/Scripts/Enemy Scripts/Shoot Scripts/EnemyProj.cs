@@ -16,15 +16,15 @@ public class EnemyProj : BProjectile
     //executes every frame
     private new void Update()
     {
-        ////Deactivate collider when player is invincible
-        //if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
-        //{
-        //    projCollider.enabled = false;
-        //}
-        //else
-        //{
-        //    projCollider.enabled = true;
-        //}
+        //Deactivate collider when player is invincible
+        if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
+        {
+            projCollider.enabled = false;
+        }
+        else
+        {
+            projCollider.enabled = true;
+        }
     }
 
     //collision method

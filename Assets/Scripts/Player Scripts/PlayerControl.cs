@@ -43,6 +43,9 @@ public class PlayerControl : MonoBehaviour {
     private Light sceneLight;
     private float moveSpeed;
     private bool timeIsSlowed = false;
+    private Renderer myRenderer;
+
+    private bool enoughStam = true;
 
 	// Use this for initialization
 	void Start () {
@@ -52,6 +55,7 @@ public class PlayerControl : MonoBehaviour {
         myRigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
+        myRenderer = GetComponent<Renderer>();
 
         equip = 0;
         capturedBullet = false;
@@ -75,32 +79,34 @@ public class PlayerControl : MonoBehaviour {
             gettingCaught = false;
         }
 
-        if (Input.GetMouseButtonDown(0) && (rollOneShot == null || !rollOneShot.Running))
+        if (Input.GetMouseButtonDown(0) && (rollOneShot == null || !rollOneShot.Running) && currStamina > 60)
+        {
             rollOneShot = new Task(roll());
+            currStamina -= 60;
+        }
 
         playerMove();
 
-        //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-        //{
-        //    sprint();
-        //}
-        //else if(currStamina != maxStamina)
-        //{
-        //    moveSpeed = 1;
-        //    ++currStamina;
-        //}
-
-        if (Input.GetKeyDown("f"))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && currStamina > 0)
         {
-            timeIsSlowed = !timeIsSlowed;
-            if (timeIsSlowed)
-                Time.timeScale = timeSlowFactor;
-            else
-                Time.timeScale = 1f;
+            sprint();
         }
 
-        timeSlow();
-        
+        if (currStamina != maxStamina)
+        {
+            ++currStamina;
+        }
+
+        //if (Input.GetKeyDown("f"))
+        //{
+        //    timeIsSlowed = !timeIsSlowed;
+        //    if (timeIsSlowed)
+        //        Time.timeScale = timeSlowFactor;
+        //    else
+        //        Time.timeScale = 1f;
+        //}
+        //timeSlow();
+
     }
 
     private void playerMove()
@@ -108,7 +114,7 @@ public class PlayerControl : MonoBehaviour {
         playerMoving = false;
 
         //moves player left and right
-        if ((Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1) && !isAttacking)
+        if ((Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1) && Input.GetAxisRaw("Vertical") == 0 && !isAttacking)
         {
             //moves player according to moveSpeed horizontally
             //transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime, 0f, 0f));
@@ -117,7 +123,6 @@ public class PlayerControl : MonoBehaviour {
             playerMoving = true;
             lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
         }
-
         //otherwise don't move in x direction
         else
         {
@@ -125,7 +130,7 @@ public class PlayerControl : MonoBehaviour {
         }
 
         //moves player up and down
-        if ((Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1) && !isAttacking)
+        if ((Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1) && Input.GetAxisRaw("Horizontal") ==0 && !isAttacking) 
         {
             //moves player according to moveSpeed vertically
             //Transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime, 0f));
@@ -135,11 +140,21 @@ public class PlayerControl : MonoBehaviour {
             playerMoving = true;
             lastMove = new Vector2(0f, Input.GetAxisRaw("Vertical"));
         }
-
         //otherwise don't move in y direction
         else
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
+        }
+
+        //player moves diagonal
+        if(Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Horizontal") != 0)
+        {
+            //moves player according to moveSpeed horizontally
+            //transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime, 0f, 0f));
+            myRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * moveSpeed, Input.GetAxisRaw("Vertical") * moveSpeed);
+
+            playerMoving = true;
+            lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
 
         if (Input.GetKeyDown("space") && !isAttacking)
@@ -162,12 +177,9 @@ public class PlayerControl : MonoBehaviour {
     public void sprint()
     {
         moveSpeed = sprintSpeed;
-        --currStamina;
-        if(currStamina < 0)
-        {
+        currStamina -= 3;
+        if (currStamina < 0)
             moveSpeed = defaultSpeed;
-            ++currStamina;
-        }
     }
 
     private void timeSlow()
@@ -213,12 +225,32 @@ public class PlayerControl : MonoBehaviour {
         float rollSpeedX = lastMove.x * dashSpeed;
         float rollSpeedY = lastMove.y * dashSpeed;
 
-        while (Vector3.Distance(transform.position, target) > .1f)
+        float rollTime = Vector3.Distance(transform.position, target) / dashSpeed;
+        float startTime = Time.time;
+
+        //sets player to invincible
+        invincible = true;
+
+        //changes color to show player is invincible
+        //save initial material and color
+        Material m = this.myRenderer.material;
+        Color32 c = this.myRenderer.material.color;
+        //switch color to grey
+        this.myRenderer.material = null;
+        this.myRenderer.material.color = Color.white;
+
+        //rolls ends after hitting target distance or rolltime runs out
+        while (Vector3.Distance(transform.position, target) > .1f && Time.time - startTime < rollTime)
         {
-            Debug.Log("yay");
             myRigidbody.velocity = new Vector3(rollSpeedX, rollSpeedY, 0);
             yield return null;
         }
+
+        //player no longer invincible
+        invincible = false;
+        //set player back to original color
+        this.myRenderer.material = m;
+        this.myRenderer.material.color = c;
     }
 
     public void OnCollisionEnter2DHurt(Collision2D collision)
