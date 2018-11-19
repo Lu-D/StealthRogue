@@ -79,33 +79,28 @@ public class PlayerControl : MonoBehaviour {
             gettingCaught = false;
         }
 
-        if (Input.GetMouseButtonDown(0) && (rollOneShot == null || !rollOneShot.Running) && currStamina > 60)
+        if (Input.GetKeyDown("space") && (rollOneShot == null || !rollOneShot.Running) && currStamina > 60)
         {
             rollOneShot = new Task(roll());
             currStamina -= 60;
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            gun.GetComponent<GunControl>().Fire(bullet, 0);
+        }
+
         playerMove();
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && currStamina > 0)
-        {
-            sprint();
-        }
+        //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && currStamina > 0)
+        //{
+        //    sprint();
+        //}
 
         if (currStamina != maxStamina)
         {
             ++currStamina;
         }
-
-        //if (Input.GetKeyDown("f"))
-        //{
-        //    timeIsSlowed = !timeIsSlowed;
-        //    if (timeIsSlowed)
-        //        Time.timeScale = timeSlowFactor;
-        //    else
-        //        Time.timeScale = 1f;
-        //}
-        //timeSlow();
 
     }
 
@@ -157,10 +152,10 @@ public class PlayerControl : MonoBehaviour {
             lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
 
-        if (Input.GetKeyDown("space") && !isAttacking)
-        {
-            anim.SetTrigger("IsAttacking");
-        }
+        //if (Input.GetKeyDown("space") && !isAttacking)
+        //{
+        //    anim.SetTrigger("IsAttacking");
+        //}
         if (Input.GetKeyDown("e"))
         {
             equipment.GetComponent<EquipmentController>().onKeyDown();
@@ -180,25 +175,6 @@ public class PlayerControl : MonoBehaviour {
         currStamina -= 3;
         if (currStamina < 0)
             moveSpeed = defaultSpeed;
-    }
-
-    private void timeSlow()
-    {
-        if (currTimeFuel < 0)
-        {
-            Time.timeScale = 1f;
-            timeIsSlowed = false;
-        }
-        if (!timeIsSlowed && currTimeFuel < maxTimeFeul)
-        {
-            ++currTimeFuel;
-        }
-
-        if (timeIsSlowed)
-        {
-            moveSpeed = 2;
-            --currTimeFuel;
-        }
     }
 
     public IEnumerator getCaught()
@@ -253,15 +229,14 @@ public class PlayerControl : MonoBehaviour {
         this.myRenderer.material.color = c;
     }
 
-    public void OnCollisionEnter2DHurt(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Projectile")
-        {
-            if(health != 0)
-                --health;
-            Destroy(collision.gameObject);
-        }
-    }
+    //public void OnCollisionEnter2DHurt(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Projectile")
+    //    {
+    //        if(health != 0)
+    //            --health;
+    //    }
+    //}
 
     public void OnCollisionEnter2DKnife(Collision2D collision)
     {

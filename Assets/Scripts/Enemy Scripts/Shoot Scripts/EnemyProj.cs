@@ -5,12 +5,13 @@ using UnityEngine;
 //Inherits from base projectile
 public class EnemyProj : BProjectile
 {
-    private CircleCollider2D projCollider;
+    private Collider2D projCollider;
 
     //initialize fields
     private new void Start()
     {
-        projCollider = GetComponent<CircleCollider2D>();
+        base.Start();
+        projCollider = GetComponent<Collider2D>();
     }
 
     //executes every frame
@@ -30,21 +31,15 @@ public class EnemyProj : BProjectile
     //collision method
     private new void OnCollisionEnter2D(Collision2D collision)
     {
-        //base.OnCollisionEnter2D(collision);
+        base.OnCollisionEnter2D(collision);
 
-        ////Destroy game object when in contact with player collider
-        //if (collision.gameObject.tag == "Player" )
-        //{
-        //    Debug.Log("hit player");
-        //    Destroy(gameObject);
-        //} else if (collision.gameObject.tag == "Border")
-        //{
-        //    Destroy(this.gameObject);
-        //}
-
-        if (collision.gameObject.tag == "Border" || collision.gameObject.tag == "Obstacle")
+        if(collision.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
+            PlayerControl player = collision.gameObject.GetComponent<PlayerControl>();
+            if(player.health != 0)
+            {
+                --player.health;
+            }
         }
     }
 }

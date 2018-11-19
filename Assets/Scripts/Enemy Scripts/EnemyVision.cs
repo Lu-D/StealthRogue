@@ -98,8 +98,8 @@ public class EnemyVision {
     {
         Vector3 dir = dirFromAngle(angle);
 
-        //visualization ignores other guards
-        LayerMask viewCastLayer = ~((1 << 11));
+        //visualization ignores other guards - 11 and projectiles - 12
+        LayerMask viewCastLayer = ~((1 << 11) | (1 << 12));
 
         RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance, viewCastLayer);
         if (hit.collider != null){

@@ -220,6 +220,9 @@ namespace BasicEnemyState
 
             if (owner.messageReceiver.message == "die")
                 owner.mainFSM.changeState(Die.Instance);
+
+            if (owner.health <= 0)
+                owner.mainFSM.changeState(Die.Instance);
         }
 
         public override void Exit(EnemyControl owner)

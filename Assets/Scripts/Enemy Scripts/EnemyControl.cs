@@ -26,6 +26,7 @@ public class EnemyControl : MonoBehaviour {
     public bool movingPatrol;
     public bool patrolLoop;
     public State currState;
+    public int health = 1;
 
     //objects associated with enemy
     public GameObject bullet;
