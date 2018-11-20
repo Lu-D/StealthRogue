@@ -7,7 +7,7 @@ using UnityEngine;
 public class AttackPatterns
 {
 
-    //shootgun()
+    //shootThree()
     //Takes gun thats shooting, type of projectile being shot, number of bullets being shot, and cd for attack
     //Fire projectiles in 3 directions: -45 deg, 0 deg, and 45 deg
     //returns IEnumerator for coroutines
@@ -19,6 +19,25 @@ public class AttackPatterns
             gun.GetComponent<GunControl>().Fire(bullet, 0);
             gun.GetComponent<GunControl>().Fire(bullet, 30);
             yield return new WaitForSeconds(.2f);
+        }
+        yield return new WaitForSeconds(CD);
+    }
+
+    //shotgun()
+    //Takes gun thats shooting, type of projectile being shot, number of bullets being shot, and cd for attack
+    //Fire projectiles in 3 directions: -45 deg, 0 deg, and 45 deg
+    //returns IEnumerator for coroutines
+    public IEnumerator shotgun(GameObject gun, GameObject bullet, int bulletNum, float CD)
+    {
+
+        for (int i = 1; i <= bulletNum; ++i)
+        {
+            gun.GetComponent<GunControl>().Fire(bullet, Random.Range(-30, -16));
+            yield return new WaitForSeconds(Random.Range(0, 0.01f));
+            gun.GetComponent<GunControl>().Fire(bullet, Random.Range(-15, 0));
+            gun.GetComponent<GunControl>().Fire(bullet, Random.Range(1, 15));
+            yield return new WaitForSeconds(Random.Range(0, 0.01f));
+            gun.GetComponent<GunControl>().Fire(bullet, Random.Range(16, 30));
         }
         yield return new WaitForSeconds(CD);
     }

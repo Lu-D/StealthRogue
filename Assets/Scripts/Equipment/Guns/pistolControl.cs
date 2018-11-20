@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class pistolControl : EquipmentController
 {
-    AttackPatterns attackPatterns;
     public int bullets;
     public Task fireOneShot;
 
@@ -12,7 +11,6 @@ public class pistolControl : EquipmentController
     {
         base.Awake();
         equipType = (int)Equipment.pistol;
-        attackPatterns = new AttackPatterns();
     }
 
     // Update is called once per frame
