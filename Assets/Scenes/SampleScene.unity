@@ -329,6 +329,12 @@ PrefabInstance:
       propertyPath: health
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 89491025676271883, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01,
+        type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 7140467320633020517, guid: 6e5c9c40786791048a3b6648f55f6f18,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01, type: 3}
 --- !u!1 &77959876
@@ -741,6 +747,7 @@ MonoBehaviour:
   viewMeshFilter: {fileID: 937403905}
   targetControl: {fileID: 0}
   gun: {fileID: 0}
+  itemDrop: {fileID: 0}
   pathFinder: {fileID: 0}
   target: {fileID: 0}
   anim: {fileID: 0}
@@ -2344,6 +2351,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.05
       objectReference: {fileID: 0}
+    - target: {fileID: 89491025676271883, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01,
+        type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 7140467320633020517, guid: 6e5c9c40786791048a3b6648f55f6f18,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01, type: 3}
 --- !u!4 &495253150 stripped
@@ -3592,6 +3605,7 @@ MonoBehaviour:
   viewMeshFilter: {fileID: 576280973}
   targetControl: {fileID: 0}
   gun: {fileID: 0}
+  itemDrop: {fileID: 0}
   pathFinder: {fileID: 0}
   target: {fileID: 0}
   anim: {fileID: 0}
@@ -3924,6 +3938,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.98
       objectReference: {fileID: 0}
+    - target: {fileID: 89491025676271883, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01,
+        type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 7140467320633020517, guid: 6e5c9c40786791048a3b6648f55f6f18,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01, type: 3}
 --- !u!1001 &827740483
@@ -4475,6 +4495,7 @@ MonoBehaviour:
   viewMeshFilter: {fileID: 1098661029}
   targetControl: {fileID: 0}
   gun: {fileID: 0}
+  itemDrop: {fileID: 0}
   pathFinder: {fileID: 0}
   target: {fileID: 0}
   anim: {fileID: 0}
@@ -5253,6 +5274,7 @@ MonoBehaviour:
   viewMeshFilter: {fileID: 43864158}
   targetControl: {fileID: 0}
   gun: {fileID: 0}
+  itemDrop: {fileID: 0}
   pathFinder: {fileID: 0}
   target: {fileID: 0}
   anim: {fileID: 0}
@@ -5485,6 +5507,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1.39
       objectReference: {fileID: 0}
+    - target: {fileID: 89491025676271883, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01,
+        type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 7140467320633020517, guid: 6e5c9c40786791048a3b6648f55f6f18,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad53bf2c6ce9f44b87e2e480ae82c01, type: 3}
 --- !u!1 &1098661029

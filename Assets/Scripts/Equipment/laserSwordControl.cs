@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class laserSwordControl : EquipmentController {
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         equipType = (int)Equipment.laserSword;
-        player = GameObject.FindWithTag("Player");
-        pControl = player.GetComponent<PlayerControl>();
     }
 
     //equip

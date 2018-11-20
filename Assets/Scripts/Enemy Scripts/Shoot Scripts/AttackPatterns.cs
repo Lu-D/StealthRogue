@@ -13,7 +13,6 @@ public class AttackPatterns
     //returns IEnumerator for coroutines
     public IEnumerator shootThree(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
-        yield return new WaitForSeconds(.1f);
         for (int i = 1; i <= bulletNum; ++i)
         {
             gun.GetComponent<GunControl>().Fire(bullet, -30);
@@ -30,8 +29,7 @@ public class AttackPatterns
     //returns IEnumerator for coroutines
     public IEnumerator shootStraight(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
-        yield return new WaitForSeconds(.1f);
-        for (int i = 1; i <= bulletNum; ++i)
+        for (int i = 0; i < bulletNum; ++i)
         {
             gun.GetComponent<GunControl>().Fire(bullet, 0);
             yield return new WaitForSeconds(.05f);
@@ -45,7 +43,6 @@ public class AttackPatterns
     //returns IEnumerator for coroutines
     public IEnumerator shootWave(GameObject gun, GameObject bullet, int bulletNum, float CD)
     {
-        yield return new WaitForSeconds(.1f);
         for (int j = -(5 * bulletNum); j <= 5 * bulletNum; j += 5)
         {
             gun.GetComponent<GunControl>().Fire(bullet, j);

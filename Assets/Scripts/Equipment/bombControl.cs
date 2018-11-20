@@ -6,11 +6,10 @@ public class bombControl : EquipmentController {
     public int bombCount;
     public GameObject bomb;
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         equipType = (int)Equipment.bomb;
-        player = GameObject.FindWithTag("Player");
-        pControl = player.GetComponent<PlayerControl>();
         bombCount = 3;
     }
 

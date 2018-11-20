@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class shovelControl : EquipmentController {
 
-    void Awake () {
+    public override void Awake () {
+        base.Awake();
         equipType = (int)Equipment.shovel;
-        player = GameObject.FindWithTag("Player");
-        pControl = player.GetComponent<PlayerControl>();
     }
 
     public override void onKeyDown()

@@ -8,9 +8,8 @@ public class EnemyProj : BProjectile
     private Collider2D projCollider;
 
     //initialize fields
-    private new void Start()
+    public override void Start()
     {
-        base.Start();
         projCollider = GetComponent<Collider2D>();
     }
 

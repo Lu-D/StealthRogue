@@ -9,6 +9,18 @@ public abstract class EquipmentController : MonoBehaviour {
     protected PlayerControl pControl;
     public int equipType;
 
+    public virtual void Awake()
+    {
+        player = GameObject.Find("Player");
+        pControl = player.GetComponent<PlayerControl>();
+
+        //ignores collisions coming from player
+        Collider2D sceneColl = player.transform.Find("SceneCollider").GetComponent<Collider2D>();
+        Collider2D hurtbox = player.transform.Find("Hurtbox").GetComponent<Collider2D>();
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), sceneColl);
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), hurtbox);
+    }
+
     public enum Equipment
     {
         //0 for no equip
@@ -17,36 +29,55 @@ public abstract class EquipmentController : MonoBehaviour {
         bomb,
         shovel,
         darkSword,
-        map
+        map,
+        pistol,
+        shotgun,
+        rifle
     };
 
     public abstract void onKeyDown();
 
     public abstract void onCollide(Collision2D collision);
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        //only picks up item if player doesnt have one
+        if (collision.gameObject.tag == "Player" && pControl.equip == 0 && GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
         {
-            if (pControl.equip > 0)
-            {
-                spawnPrevEquip(pControl.equip);
-            }
             pControl.equip = equipType;
             pControl.equipment = gameObject;
-            transform.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            transform.gameObject.GetComponent<Collider2D>().enabled = false;
-            transform.parent = player.transform;
+            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
+        }
+
+        if (collision.gameObject.tag == "Enemy" && GetComponent<Rigidbody2D>().velocity.magnitude > 0.2f)
+        {
+            collision.gameObject.GetComponent<EnemyControl>().messageReceiver = new Message("die");
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 
-    public void spawnPrevEquip(int equipType)
+    public void throwEquip(int equipType)
     {
         pControl.equip = 0;
-        pControl.equipment.GetComponent<SpriteRenderer>().enabled = true;
-       // pControl.equipment.transform.position = pControl.equipment.transform.position + new Vector3(0, (float)-0.2, 0);
-        pControl.equipment.GetComponent<Collider2D>().enabled = true;
-        pControl.equipment.transform.parent = null;
+
+        GameObject equipment = pControl.equipment;
+
+        //turns on renderer for equipment
+        equipment.GetComponent<SpriteRenderer>().enabled = true;
+
+        GetComponent<Collider2D>().enabled = true;
+
+        //Throws equipment towards mouse
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0f;
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(player.transform.position);
+        mousePos = mousePos - objectPos;
+
+        equipment.transform.position = player.transform.position;
+        equipment.GetComponent<Rigidbody2D>().AddForce(mousePos);
+
+        //detatches equipment from player
         pControl.equipment = null;
     }
 

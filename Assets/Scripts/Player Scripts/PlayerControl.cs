@@ -29,6 +29,8 @@ public class PlayerControl : MonoBehaviour {
     public int maxStamina;
     public int maxTimeFeul;
 
+    public AttackPatterns attackPatterns;
+
     public int currStamina;
     public int currTimeFuel;
 
@@ -42,13 +44,10 @@ public class PlayerControl : MonoBehaviour {
     private Light playerLight;
     private Light sceneLight;
     private float moveSpeed;
-    private bool timeIsSlowed = false;
     private Renderer myRenderer;
 
-    private bool enoughStam = true;
-
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         lastMove.y = -1;
         isSpotted = false;
 
@@ -56,6 +55,8 @@ public class PlayerControl : MonoBehaviour {
         anim = GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
         myRenderer = GetComponent<Renderer>();
+
+        attackPatterns = new AttackPatterns();
 
         equip = 0;
         capturedBullet = false;
@@ -85,9 +86,21 @@ public class PlayerControl : MonoBehaviour {
             currStamina -= 60;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            gun.GetComponent<GunControl>().Fire(bullet, 0);
+            if(equip == 0)
+            {
+                anim.SetTrigger("IsAttacking");
+            }
+            else
+            {
+                equipment.GetComponent<EquipmentController>().onKeyDown();
+            }
+        }
+
+        if(Input.GetMouseButtonDown(1) && equip != 0)
+        {
+            equipment.GetComponent<EquipmentController>().throwEquip(equip);
         }
 
         playerMove();
@@ -150,15 +163,6 @@ public class PlayerControl : MonoBehaviour {
 
             playerMoving = true;
             lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
-
-        //if (Input.GetKeyDown("space") && !isAttacking)
-        //{
-        //    anim.SetTrigger("IsAttacking");
-        //}
-        if (Input.GetKeyDown("e"))
-        {
-            equipment.GetComponent<EquipmentController>().onKeyDown();
         }
 
         //assigns values to animator
@@ -228,15 +232,6 @@ public class PlayerControl : MonoBehaviour {
         this.myRenderer.material = m;
         this.myRenderer.material.color = c;
     }
-
-    //public void OnCollisionEnter2DHurt(Collision2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Projectile")
-    //    {
-    //        if(health != 0)
-    //            --health;
-    //    }
-    //}
 
     public void OnCollisionEnter2DKnife(Collision2D collision)
     {

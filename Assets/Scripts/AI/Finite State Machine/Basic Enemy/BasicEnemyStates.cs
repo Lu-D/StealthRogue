@@ -185,6 +185,7 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
+            GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
             GameObject.Destroy(owner.gameObject);
         }
 

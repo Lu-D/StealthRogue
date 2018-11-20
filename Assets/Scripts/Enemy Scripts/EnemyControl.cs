@@ -36,6 +36,7 @@ public class EnemyControl : MonoBehaviour {
     public GameObject viewMeshFilter;
     public PlayerControl targetControl;
     public GameObject gun;
+    public GameObject itemDrop;
 
     public EnemyVision enemyVision;
     public AttackPatterns attackPatterns;

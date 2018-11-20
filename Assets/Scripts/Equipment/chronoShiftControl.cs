@@ -8,10 +8,9 @@ public class chronoShiftControl : EquipmentController {
     public int secondsAgo;
     public GameObject shadow;
 
-    void Awake () {
+    public override void Awake () {
+        base.Awake();
         equipType = (int)Equipment.chronoshift;
-        player = GameObject.FindWithTag("Player");
-        pControl = player.GetComponent<PlayerControl>();
         queueSize = 0;
         posQueue = new Queue<Vector3>();
         StartCoroutine(positionTracker());
