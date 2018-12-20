@@ -86,10 +86,11 @@ public class PlayerControl : MonoBehaviour {
             currStamina -= 60;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if(equip == 0)
             {
+                Debug.Log("trigger");
                 anim.SetTrigger("IsAttacking");
             }
             else
@@ -104,11 +105,6 @@ public class PlayerControl : MonoBehaviour {
         }
 
         playerMove();
-
-        //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && currStamina > 0)
-        //{
-        //    sprint();
-        //}
 
         if (currStamina != maxStamina)
         {
@@ -171,14 +167,6 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("PlayerMoving", playerMoving);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
-    }
-
-    public void sprint()
-    {
-        moveSpeed = sprintSpeed;
-        currStamina -= 3;
-        if (currStamina < 0)
-            moveSpeed = defaultSpeed;
     }
 
     public IEnumerator getCaught()
