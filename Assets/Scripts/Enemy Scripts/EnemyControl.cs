@@ -31,15 +31,19 @@ public class EnemyControl : MonoBehaviour {
     //objects associated with enemy
     public GameObject bullet;
     public GameObject waypointControl;
-    public Transform[] wayPoints; //waypoints[1] is waypointControl
     public GameObject texture;
     public GameObject viewMeshFilter;
-    public PlayerControl targetControl;
-    public GameObject gun;
     public GameObject itemDrop;
+    [HideInInspector]
+    public PlayerControl targetControl;
+    [HideInInspector]
+    public GameObject gun;
+    [HideInInspector]
+    public Transform[] wayPoints; //waypoints[1] is waypointControl
 
     public EnemyVision enemyVision;
     public AttackPatterns attackPatterns;
+    [HideInInspector]
     public AIPath pathFinder;
 
     //Finite State Machines
@@ -56,12 +60,16 @@ public class EnemyControl : MonoBehaviour {
     public Message messageReceiver = new Message(Vector3.zero, null);
 
     //helper variables
-    public GameObject target;
-    public Animator anim;
     public int nextWayPoint;
     public IEnumerator attackCoroutine;
     public bool patrolDirection; //false when going backwards
+    [HideInInspector]
+    public GameObject target;
+    [HideInInspector]
+    public Animator anim;
+    [HideInInspector]
     public Quaternion up; //to keep texture upright
+    [HideInInspector]
     public Vector3 locationBeforeAttack;
     public Dictionary<int, int> randomState = new Dictionary<int, int>(); //weighted dectionary of attackStates
 
