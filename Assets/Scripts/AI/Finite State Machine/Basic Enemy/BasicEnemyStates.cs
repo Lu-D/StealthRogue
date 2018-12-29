@@ -187,7 +187,7 @@ namespace BasicEnemyState
             GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
 
             //play animation
-            owner.anim.SetBool("isDead", true);
+            owner.anim.SetTrigger("isDead");
 
         }
 
@@ -224,7 +224,8 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
-            owner.updateAnim();
+            if(owner.mainFSM.currentState != Die.Instance)
+                owner.updateAnim();
 
             if (owner.health <= 0 && owner.mainFSM.currentState != Die.Instance)
                 owner.mainFSM.changeState(Die.Instance);
