@@ -31,12 +31,6 @@ namespace BasicEnemyState
 
             //check if player is spotted every udpate
             owner.playerSpotted = owner.enemyVision.checkVision();
-            if (owner.playerSpotted)
-            {
-                owner.targetControl.isSpotted = true;
-                //play gettingCaught() scene sequence
-                owner.targetControl.gettingCaught = true;
-            }
 
             //changes to attack state if enemy spots player
             if (owner.targetControl.isSpotted && owner.mapLocation == owner.targetControl.mapLocation)
@@ -181,12 +175,25 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
+            //turn off FOV visualization
+            owner.viewMeshFilter.SetActive(false);
+            //turn off all waypoints
+            owner.disableWaypoints();
+
+            //set velocity to zero
+            owner.myRigidbody.velocity = Vector3.zero;
+
+            //drop item
+            GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
+
+            //play animation
+            owner.anim.SetBool("isDead", true);
+
         }
 
         public override void Execute(EnemyControl owner)
         {
-            GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
-            GameObject.Destroy(owner.gameObject);
+            
         }
 
         public override void Exit(EnemyControl owner)
@@ -219,10 +226,7 @@ namespace BasicEnemyState
         {
             owner.updateAnim();
 
-            if (owner.messageReceiver.message == "die")
-                owner.mainFSM.changeState(Die.Instance);
-
-            if (owner.health <= 0)
+            if (owner.health <= 0 && owner.mainFSM.currentState != Die.Instance)
                 owner.mainFSM.changeState(Die.Instance);
         }
 

@@ -52,7 +52,7 @@ public abstract class EquipmentController : MonoBehaviour {
 
         if (collision.gameObject.tag == "Enemy" && GetComponent<Rigidbody2D>().velocity.magnitude > 0.2f)
         {
-            collision.gameObject.GetComponent<EnemyControl>().messageReceiver = new Message("die");
+            collision.gameObject.GetComponent<EnemyControl>().health = 0;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }

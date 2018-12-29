@@ -28,7 +28,7 @@ public class EnemyControl : MonoBehaviour {
     public State currState;
     public int health = 1;
 
-    //objects associated with enemy
+    //enemy children gameobjects
     public GameObject bullet;
     public GameObject waypointControl;
     public GameObject texture;
@@ -68,6 +68,8 @@ public class EnemyControl : MonoBehaviour {
     [HideInInspector]
     public Animator anim;
     [HideInInspector]
+    public Rigidbody2D myRigidbody;
+    [HideInInspector]
     public Quaternion up; //to keep texture upright
     [HideInInspector]
     public Vector3 locationBeforeAttack;
@@ -94,6 +96,7 @@ public class EnemyControl : MonoBehaviour {
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = texture.GetComponent<Animator>();
         enemyVision = new EnemyVision(this);
+        myRigidbody = transform.GetComponent<Rigidbody2D>();
         up = transform.rotation;
 
         //initializing weighted random states
@@ -183,7 +186,7 @@ public class EnemyControl : MonoBehaviour {
         
 
         //determines whether or not to play idle animation
-        if (transform.GetComponent<Rigidbody2D>().velocity != new Vector2(0,0) || pathFinder.canMove)
+        if (myRigidbody.velocity != new Vector2(0,0) || pathFinder.canMove)
             anim.SetBool("isMoving", true);
         else
             anim.SetBool("isMoving", false);
@@ -239,13 +242,13 @@ public class EnemyControl : MonoBehaviour {
     {
         float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
         float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
-        transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        myRigidbody.velocity = new Vector3(0, 0, 0);
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
         StartCoroutine(RotateTo(wayPoints[nextWayPoint].transform.position, 0));
         if (waitToRotate > 0)
             yield return new WaitForSeconds(waitToRotate);
-        transform.GetComponent<Rigidbody2D>().velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
+        myRigidbody.velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
     }
 
     //rotateTowardsNext

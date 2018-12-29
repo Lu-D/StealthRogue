@@ -54,7 +54,7 @@ namespace BasicEnemyAttackState
             owner.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             owner.attackStates();
             owner.attackOneShot = new Task(owner.attackCoroutine);
-            owner.anim.SetTrigger("IsShooting");
+            owner.anim.SetTrigger("isShooting");
             owner.playAttackSound();
             --owner.currAmmo;
         }

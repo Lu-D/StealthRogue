@@ -90,7 +90,6 @@ public class PlayerControl : MonoBehaviour {
         {
             if(equip == 0)
             {
-                Debug.Log("trigger");
                 anim.SetTrigger("IsAttacking");
             }
             else
@@ -225,8 +224,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<EnemyControl>().messageReceiver = new Message("die");
-            Debug.Log("message sent");
+            collision.gameObject.GetComponent<EnemyControl>().health = 0;
         }
         if(equipment != null)
         {
