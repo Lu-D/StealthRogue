@@ -27,6 +27,7 @@ public class EnemyControl : MonoBehaviour {
     public bool patrolLoop;
     public State currState;
     public int health = 1;
+    public bool isDead = false;
 
     //enemy children gameobjects
     public GameObject bullet;
@@ -309,7 +310,6 @@ public class EnemyControl : MonoBehaviour {
                 }
                 else if(nextWayPoint == waypointControl.transform.childCount && patrolLoop)
                 {
-                    Debug.Log("succesful loop");
                     reenableWaypoints();
                     nextWayPoint = 0;
                 }

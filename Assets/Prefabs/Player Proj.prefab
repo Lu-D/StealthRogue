@@ -131,6 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8deb5dc803253734092e2aaf0787e538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projSpeed: 4
+  projSpeed: 8
   damage: 1
   source: {fileID: 0}

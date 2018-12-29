@@ -175,6 +175,8 @@ namespace BasicEnemyState
 
         public override void Enter(EnemyControl owner)
         {
+            owner.isDead = true;
+
             //turn off FOV visualization
             owner.viewMeshFilter.SetActive(false);
             //turn off all waypoints
@@ -188,7 +190,6 @@ namespace BasicEnemyState
 
             //play animation
             owner.anim.SetTrigger("isDead");
-
         }
 
         public override void Execute(EnemyControl owner)
