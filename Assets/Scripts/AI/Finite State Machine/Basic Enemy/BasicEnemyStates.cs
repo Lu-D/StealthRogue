@@ -33,7 +33,7 @@ namespace BasicEnemyState
             owner.playerSpotted = owner.enemyVision.checkVision();
 
             //changes to attack state if enemy spots player
-            if (owner.targetControl.isSpotted && owner.mapLocation == owner.targetControl.mapLocation)
+            if (owner.playerSpotted && owner.mapLocation == owner.targetControl.mapLocation)
                 owner.mainFSM.changeState(AttackPlayer.Instance);
 
             //reenters state if it hits a waypoint
@@ -84,15 +84,15 @@ namespace BasicEnemyState
         public override void Execute(EnemyControl owner)
         {
 
-            owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            //owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
             owner.attackFSM.stateUpdate();
 
             //change to waypoint state if player is no longer spotted
-            if (!owner.targetControl.isSpotted)
-            {
-                owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);      
-            }
+            //if (!owner.targetControl.isSpotted)
+            //{
+            //    owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);      
+            //}
         }
 
         public override void Exit(EnemyControl owner)

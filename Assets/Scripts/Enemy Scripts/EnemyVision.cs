@@ -38,7 +38,18 @@ public class EnemyVision {
         if ((Vector3.Angle(targetDir, enemyTransform.up) < (detectionAngle/2) + 5) && (Vector3.Distance(player.transform.position, enemyTransform.position) < detectionDistance))
         {
             RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir, detectionDistance);
+            //if vision sees player
             if (hit.transform.tag == "Player")
+            {
+                return true;
+            }
+            //if vision sees enemy that sees player
+            else if(hit.transform.tag == "Enemy" && hit.transform.gameObject.GetComponent<EnemyControl>().playerSpotted)
+            {
+                return true;
+            }
+            //if vision sees dead enemy
+            else if (hit.transform.tag == "Enemy" && hit.transform.gameObject.GetComponent<EnemyControl>().isDead)
             {
                 return true;
             }
@@ -99,7 +110,7 @@ public class EnemyVision {
         Vector3 dir = dirFromAngle(angle);
 
         //visualization ignores other guards - 11 and projectiles - 12
-        LayerMask viewCastLayer = ~((1 << 11) | (1 << 12));
+        LayerMask viewCastLayer = ~((1 << 12));
 
         RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance, viewCastLayer);
         if (hit.collider != null){

@@ -18,7 +18,7 @@ public class EnemyControl : MonoBehaviour {
     public float rotateSpeed;
     public float fovResolution;
     public float distToFire;
-    public bool playerSpotted;
+    public bool playerSpotted = false;
     public int currAmmo;
     public int maxAmmo;
     public float reloadTime;

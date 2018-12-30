@@ -407,7 +407,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   rotateSpeed: 140
   fovResolution: 0.5
-  distToFire: 2.25
+  distToFire: 1.5
   playerSpotted: 0
   currAmmo: 3
   maxAmmo: 3
@@ -415,18 +415,22 @@ MonoBehaviour:
   mapLocation: 
   movingPatrol: 1
   patrolLoop: 0
+  health: 1
+  isDead: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 3}
   waypointControl: {fileID: 0}
-  wayPoints: []
   texture: {fileID: 186339302891983578}
   viewMeshFilter: {fileID: 185128583096357276}
+  itemDrop: {fileID: 0}
   targetControl: {fileID: 0}
   gun: {fileID: 0}
+  wayPoints: []
   pathFinder: {fileID: 0}
-  target: {fileID: 0}
-  anim: {fileID: 0}
   nextWayPoint: 0
   patrolDirection: 0
+  target: {fileID: 0}
+  anim: {fileID: 0}
+  myRigidbody: {fileID: 0}
   up: {x: 0, y: 0, z: 0, w: 0}
   locationBeforeAttack: {x: 0, y: 0, z: 0}
 --- !u!50 &153466477691211840
