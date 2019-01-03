@@ -5,18 +5,19 @@ using UnityEngine;
 //enemy vision class held by enemy control script
 public class EnemyVision {
 
-    PlayerControl player;
+    GameObject player;
     Transform enemyTransform;
     float detectionAngle;
     float detectionDistance;
     float fovResolution;
     public MeshFilter viewMeshFilter;
     public Mesh viewMesh;
+    public bool objectInVision;
 
     //Initialize fields
     public EnemyVision(EnemyControl owner)
     {
-        player = owner.targetControl;
+        player = owner.targetControl.gameObject;
         enemyTransform = owner.transform;
         detectionAngle = owner.detectionAngle;
         detectionDistance = owner.detectionDistance;
@@ -34,35 +35,39 @@ public class EnemyVision {
     //return if player is spotted or not
     public bool checkVision()
     {
-        Vector3 targetDir = player.transform.position - enemyTransform.position;
-        if ((Vector3.Angle(targetDir, enemyTransform.up) < (detectionAngle/2) + 5) && (Vector3.Distance(player.transform.position, enemyTransform.position) < detectionDistance))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, targetDir, detectionDistance);
-            //if vision sees player
-            if (hit.transform.tag == "Player")
-            {
-                return true;
-            }
-            //if vision sees enemy that sees player
-            else if(hit.transform.tag == "Enemy" && hit.transform.gameObject.GetComponent<EnemyControl>().playerSpotted)
-            {
-                return true;
-            }
-            //if vision sees dead enemy
-            else if (hit.transform.tag == "Enemy" && hit.transform.gameObject.GetComponent<EnemyControl>().isDead)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
+        int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
+        float stepAngle = detectionAngle / stepCount;
+
+        if (!objectInVision)
             return false;
+
+        for (int i = 0; i <= stepCount; ++i)
+        {
+            float angle = enemyTransform.rotation.eulerAngles.z + 90f - detectionAngle / 2 + stepAngle * i;
+            ViewCastInfo newViewCast = ViewCast(angle);
+            if (newViewCast.hit)
+            {
+                //if vision sees player
+                if (newViewCast.objectHit.transform.tag == "Player")
+                {
+                    return true;
+                }
+                //if vision sees enemy that sees player
+                if (newViewCast.objectHit.transform.tag == "Enemy" &&
+                    newViewCast.objectHit.transform.gameObject.GetComponent<EnemyControl>().playerSpotted)
+                {
+                    return true;
+                }
+                //if vision sees dead enemy
+                if (newViewCast.objectHit.transform.tag == "Enemy" &&
+                    newViewCast.objectHit.transform.gameObject.GetComponent<EnemyControl>().isDead)
+                {
+                    return true;
+                }
+            }
         }
 
+        return false;
     }
 
     //drawFOV
@@ -73,12 +78,17 @@ public class EnemyVision {
         int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
         float stepAngle = detectionAngle / stepCount;
         List<Vector2> viewPoints = new List<Vector2>();
+        objectInVision = false;
 
         for (int i = 0; i <= stepCount; ++i)
         {
             float angle = enemyTransform.rotation.eulerAngles.z + 90f - detectionAngle/2 + stepAngle * i;
             ViewCastInfo newViewCast = ViewCast(angle);
             viewPoints.Add(newViewCast.point);
+            if (newViewCast.hit)
+            {
+                objectInVision = true;
+            }
         }
 
         int vertexCount = viewPoints.Count + 1;
@@ -114,11 +124,11 @@ public class EnemyVision {
 
         RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance, viewCastLayer);
         if (hit.collider != null){
-            return new ViewCastInfo(true, hit.point, hit.distance, angle);
+            return new ViewCastInfo(true, hit.point, hit.distance, angle, hit.collider.gameObject);
         }
         else
         {
-            return new ViewCastInfo(false, enemyTransform.position + dir * detectionDistance, detectionDistance, angle);
+            return new ViewCastInfo(false, enemyTransform.position + dir * detectionDistance, detectionDistance, angle, null);
         }
     }
 
@@ -137,13 +147,15 @@ public class EnemyVision {
         public Vector2 point;
         public float dist;
         public float angle;
+        public GameObject objectHit;
 
-        public ViewCastInfo(bool _hit, Vector2 _point, float _dist, float _angle)
+        public ViewCastInfo(bool _hit, Vector2 _point, float _dist, float _angle, GameObject _objectHit)
         {
             hit = _hit;
             point = _point;
             dist = _dist;
             angle = _angle;
+            objectHit = _objectHit;
         }
     }
 }
