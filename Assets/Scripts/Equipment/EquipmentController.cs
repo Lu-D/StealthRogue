@@ -63,6 +63,12 @@ public abstract class EquipmentController : MonoBehaviour {
         }
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+    }
+
     public void throwEquip(int equipType)
     {
         pControl.equip = 0;
@@ -81,7 +87,7 @@ public abstract class EquipmentController : MonoBehaviour {
         mousePos = mousePos - objectPos;
 
         equipment.transform.position = player.transform.position;
-        equipment.GetComponent<Rigidbody2D>().AddForce(mousePos.normalized * 350);
+        equipment.GetComponent<Rigidbody2D>().AddForce(mousePos.normalized * 450);
 
         //detatches equipment from player
         pControl.equipment = null;
