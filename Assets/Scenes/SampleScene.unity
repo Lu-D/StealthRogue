@@ -740,6 +740,7 @@ MonoBehaviour:
   movingPatrol: 0
   patrolLoop: 0
   health: 1
+  isDead: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 3}
   waypointControl: {fileID: 19332636}
   texture: {fileID: 1988813447}
@@ -753,6 +754,7 @@ MonoBehaviour:
   patrolDirection: 0
   target: {fileID: 0}
   anim: {fileID: 0}
+  myRigidbody: {fileID: 0}
   up: {x: 0, y: 0, z: 0, w: 0}
   locationBeforeAttack: {x: 0, y: 0, z: 0}
 --- !u!1 &162511370 stripped
@@ -3483,6 +3485,7 @@ MonoBehaviour:
   movingPatrol: 0
   patrolLoop: 0
   health: 1
+  isDead: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 3}
   waypointControl: {fileID: 1562097949}
   texture: {fileID: 1173914868}
@@ -3496,6 +3499,7 @@ MonoBehaviour:
   patrolDirection: 0
   target: {fileID: 0}
   anim: {fileID: 0}
+  myRigidbody: {fileID: 0}
   up: {x: 0, y: 0, z: 0, w: 0}
   locationBeforeAttack: {x: 0, y: 0, z: 0}
 --- !u!1 &754095855 stripped
@@ -4299,6 +4303,7 @@ MonoBehaviour:
   movingPatrol: 0
   patrolLoop: 0
   health: 1
+  isDead: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 3}
   waypointControl: {fileID: 1512993565}
   texture: {fileID: 355029936}
@@ -4312,6 +4317,7 @@ MonoBehaviour:
   patrolDirection: 0
   target: {fileID: 0}
   anim: {fileID: 0}
+  myRigidbody: {fileID: 0}
   up: {x: 0, y: 0, z: 0, w: 0}
   locationBeforeAttack: {x: 0, y: 0, z: 0}
 --- !u!1 &937403905
@@ -5004,6 +5010,7 @@ MonoBehaviour:
   movingPatrol: 0
   patrolLoop: 0
   health: 1
+  isDead: 0
   bullet: {fileID: 1657004768814894, guid: bc180f89e2429364a8ff6a9d981e5385, type: 3}
   waypointControl: {fileID: 1004838921}
   texture: {fileID: 1620731368}
@@ -5017,6 +5024,7 @@ MonoBehaviour:
   patrolDirection: 0
   target: {fileID: 0}
   anim: {fileID: 0}
+  myRigidbody: {fileID: 0}
   up: {x: 0, y: 0, z: 0, w: 0}
   locationBeforeAttack: {x: 0, y: 0, z: 0}
 --- !u!1 &1083465760

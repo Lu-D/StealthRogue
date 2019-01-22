@@ -1,5 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!4 &46426606600782749 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 188425182919930484, guid: 771e6cb1afb62024da4dda65b77932ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 160330185009213929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1138469976788470
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,12 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &46426606600782749 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 188425182919930484, guid: 771e6cb1afb62024da4dda65b77932ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 160330185009213929}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4901095801402019154 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1051149659588878, guid: 08d56ca263eea3f40a918b1f9323d7ab,
@@ -122,6 +122,12 @@ PrefabInstance:
       propertyPath: waypointControl
       value: 
       objectReference: {fileID: 4901095801402019154}
+    - target: {fileID: 217427226905948386, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 7140467320633020517, guid: 6e5c9c40786791048a3b6648f55f6f18,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}
 --- !u!1001 &4902041380494836828

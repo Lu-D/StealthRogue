@@ -135,9 +135,7 @@ namespace BasicEnemyAttackState
         public override void Execute(EnemyControl owner)
         {
             if (!owner.lookingAtPlayerOneShot.Running)
-            {
                 owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
-            }
         }
 
         public override void Exit(EnemyControl owner)

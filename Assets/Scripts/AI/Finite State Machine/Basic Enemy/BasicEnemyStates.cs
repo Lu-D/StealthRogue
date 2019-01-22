@@ -33,7 +33,7 @@ namespace BasicEnemyState
             owner.playerSpotted = owner.enemyVision.checkVision();
 
             //changes to attack state if enemy spots player
-            if (owner.playerSpotted && owner.mapLocation == owner.targetControl.mapLocation)
+            if (owner.playerSpotted)
                 owner.mainFSM.changeState(AttackPlayer.Instance);
 
             //reenters state if it hits a waypoint
