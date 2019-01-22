@@ -42,9 +42,9 @@ public abstract class EquipmentController : MonoBehaviour {
     public void OnTriggerStay2D(Collider2D collision)
     {
         //only picks up item if player doesnt have one
-        if (collision.gameObject.tag == "Player") 
-            //&& pControl.equip == 0 
-            //&& GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
+        if (collision.gameObject.tag == "Player" 
+            && pControl.equip == 0 
+            && GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
         {
             Debug.Log("picking i[");
             pControl.equip = equipType;
