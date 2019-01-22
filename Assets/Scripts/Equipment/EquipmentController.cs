@@ -39,6 +39,8 @@ public abstract class EquipmentController : MonoBehaviour {
 
     public abstract void onCollide(Collision2D collision);
 
+    //IMPORTANT
+    //Components need to be ordered correctly to work, first collider than trigger collider
     public void OnTriggerStay2D(Collider2D collision)
     {
         //only picks up item if player doesnt have one
