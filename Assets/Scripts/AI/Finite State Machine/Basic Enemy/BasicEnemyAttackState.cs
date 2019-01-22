@@ -142,7 +142,9 @@ namespace BasicEnemyAttackState
 
         public override void Exit(EnemyControl owner)
         {
-           owner.lookingAtPlayerOneShot.Stop();
+            owner.pathFinder.canSearch = false;
+            owner.pathFinder.canMove = false;
+            owner.lookingAtPlayerOneShot.Stop();
         }
 
         //singleton

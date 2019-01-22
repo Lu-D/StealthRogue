@@ -16,7 +16,6 @@ public class pistolControl : EquipmentController
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     //equip

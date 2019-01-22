@@ -18,7 +18,7 @@ public class EnemyControl : MonoBehaviour {
     public float rotateSpeed;
     public float fovResolution;
     public float distToFire;
-    public bool playerSpotted = false;
+    public bool playerSpotted;
     public int currAmmo;
     public int maxAmmo;
     public float reloadTime;
@@ -27,7 +27,7 @@ public class EnemyControl : MonoBehaviour {
     public bool patrolLoop;
     public State currState;
     public int health = 1;
-    public bool isDead = false;
+    public bool isDead;
 
     //enemy children gameobjects
     public GameObject bullet;
@@ -94,6 +94,8 @@ public class EnemyControl : MonoBehaviour {
         attackPatterns = new AttackPatterns();
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
         patrolDirection = true;
+        playerSpotted = false;
+        isDead = false;
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
         anim = texture.GetComponent<Animator>();
         enemyVision = new EnemyVision(this);

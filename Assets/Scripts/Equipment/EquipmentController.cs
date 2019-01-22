@@ -42,16 +42,22 @@ public abstract class EquipmentController : MonoBehaviour {
     public void OnTriggerStay2D(Collider2D collision)
     {
         //only picks up item if player doesnt have one
-        if (collision.gameObject.tag == "Player" && pControl.equip == 0 && GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
+        if (collision.gameObject.tag == "Player") 
+            //&& pControl.equip == 0 
+            //&& GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
         {
+            Debug.Log("picking i[");
             pControl.equip = equipType;
             pControl.equipment = gameObject;
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<Collider2D>().enabled = false;
         }
 
-        if (collision.gameObject.tag == "Enemy" && GetComponent<Rigidbody2D>().velocity.magnitude > 0.2f)
+        if (GetComponent<Rigidbody2D>().velocity.magnitude > 1f 
+            && collision.gameObject.tag == "Enemy")
         {
+            Debug.Log("success");
+
             collision.gameObject.GetComponent<EnemyControl>().health = 0;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
@@ -75,7 +81,7 @@ public abstract class EquipmentController : MonoBehaviour {
         mousePos = mousePos - objectPos;
 
         equipment.transform.position = player.transform.position;
-        equipment.GetComponent<Rigidbody2D>().AddForce(mousePos);
+        equipment.GetComponent<Rigidbody2D>().AddForce(mousePos.normalized * 350);
 
         //detatches equipment from player
         pControl.equipment = null;

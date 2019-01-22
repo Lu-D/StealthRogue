@@ -83,16 +83,7 @@ namespace BasicEnemyState
 
         public override void Execute(EnemyControl owner)
         {
-
-            //owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
-
             owner.attackFSM.stateUpdate();
-
-            //change to waypoint state if player is no longer spotted
-            //if (!owner.targetControl.isSpotted)
-            //{
-            //    owner.revertPositionBeforeAttack(PatrolWaypoint.Instance);      
-            //}
         }
 
         public override void Exit(EnemyControl owner)
