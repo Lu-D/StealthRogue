@@ -25,8 +25,7 @@ public class EnemyControl : MonoBehaviour {
     public string mapLocation;
     public bool movingPatrol;
     public bool patrolLoop;
-    public State currState;
-    public int health = 1;
+    public int health;
     public bool isDead;
 
     //enemy children gameobjects
@@ -74,7 +73,6 @@ public class EnemyControl : MonoBehaviour {
     public Quaternion up; //to keep texture upright
     [HideInInspector]
     public Vector3 locationBeforeAttack;
-    public Dictionary<int, int> randomState = new Dictionary<int, int>(); //weighted dectionary of attackStates
 
     //animDirection
     //Struct for keeping track of directions for animator
@@ -88,26 +86,22 @@ public class EnemyControl : MonoBehaviour {
     //on start script
     void Awake()
     {
+        //variable initalization
+        patrolDirection = true;
+        playerSpotted = false;
+        isDead = false;
+        health = 1;
+        up = transform.rotation;
+        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
+
+        //class and component initialization
         target = GameObject.FindWithTag("Player");
         targetControl = target.GetComponent<PlayerControl>();
         gun = transform.Find("Gun").gameObject;
         attackPatterns = new AttackPatterns();
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
-        patrolDirection = true;
-        playerSpotted = false;
-        isDead = false;
-        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
-        anim = texture.GetComponent<Animator>();
         enemyVision = new EnemyVision(this);
         myRigidbody = transform.GetComponent<Rigidbody2D>();
-        up = transform.rotation;
-
-        //initializing weighted random states
-        randomState.Add(0, 10);
-        randomState.Add(1, 80);
-        randomState.Add(2, 10);
-
-        //initialize pathFinder
         pathFinder = GetComponent<AIPath>();
 
         //initialize state machine and enter first state
@@ -116,7 +110,6 @@ public class EnemyControl : MonoBehaviour {
         mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
 
         attackFSM = new StateMachine(this);
-        currState = mainFSM.currentState;
     }
 
     //Update
@@ -216,27 +209,10 @@ public class EnemyControl : MonoBehaviour {
     }
 
     //attackStates
-    //randomly choose attackPattern
+    //chosses shootStraight attackPattern
     public void attackStates()
     {
-
-        switch (WeightedRandomizer.From(randomState).TakeOne())
-        {
-            //case 0:
-            //    attackCoroutine = attackPatterns.shootThree(gun, bullet, 5, .5f);
-            //    break;
-            //case 1:
-            //    attackCoroutine = attackPatterns.shootStraight(gun, bullet, 5, .5f);
-            //    break;
-            //case 2:
-            //    attackCoroutine = attackPatterns.shootWave(gun, bullet, 10, 1f);
-            //    break;
-            default:
-                attackCoroutine = attackPatterns.shootStraight(gun, bullet, 3, .5f);
-                //Debug.Log("invalid attack patern #");
-                break;
-
-        }
+        attackCoroutine = attackPatterns.shootStraight(gun, bullet, 3, .5f);
     }
     
     //moveTowardsNext

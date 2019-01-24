@@ -17,7 +17,11 @@ public class FindRoom : State
 
     public override void Execute(EnemyControl owner)
     {
-
+        
+        if (owner.mapLocation == owner.targetControl.mapLocation)
+            owner.mainFSM.changeState(SearchRoom.Instance);
+        if (owner.playerSpotted)
+            owner.mainFSM.changeState(AttackPlayer.Instance);
     }
 
     public override void Exit(EnemyControl owner)
