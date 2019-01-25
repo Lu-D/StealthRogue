@@ -1,78 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using BasicEnemyState;
-using BasicEnemyAttackState;
+using PatrolEnemyStates;
 using Pathfinding;
 
 
 //EnemyControl
 //class to control enemy behavior
-public class EnemyControl : MonoBehaviour {
-
-    //enemy properties
-    public float detectionAngle;
-    public float detectionDistance;
-    public float moveSpeed;
-    public float rotateSpeed;
-    public float fovResolution;
-    public float distToFire;
-    public bool playerSpotted;
-    public int currAmmo;
-    public int maxAmmo;
-    public float reloadTime;
-    public string mapLocation;
-    public bool movingPatrol;
-    public bool patrolLoop;
-    public int health;
-    public bool isDead;
+public class EnemyPatrol : BEnemy {
 
     //enemy children gameobjects
     public GameObject bullet;
     public GameObject waypointControl;
-    public GameObject texture;
-    public GameObject viewMeshFilter;
-    public GameObject itemDrop;
-    [HideInInspector]
-    public PlayerControl targetControl;
-    [HideInInspector]
-    public GameObject gun;
     [HideInInspector]
     public Transform[] wayPoints; //waypoints[1] is waypointControl
-
-    public EnemyVision enemyVision;
-    public AttackPatterns attackPatterns;
-    [HideInInspector]
-    public AIPath pathFinder;
-
-    //Finite State Machines
-    public StateMachine mainFSM;
-    public StateMachine attackFSM;
-
-    //coroutines in attackPlayer state
-    public Task attackOneShot;
-    public Task lookingAtPlayerOneShot;
-    public Task reloadOneShot;
-    public Task lookAtMeOneShot;
-
-    //Receives messages
-    public Message messageReceiver = new Message(Vector3.zero, null);
 
     //helper variables
     public int nextWayPoint;
     public IEnumerator attackCoroutine;
-    public bool patrolDirection; //false when going backwards
     [HideInInspector]
-    public GameObject target;
-    [HideInInspector]
-    public Animator anim;
-    [HideInInspector]
-    public Rigidbody2D myRigidbody;
-    [HideInInspector]
-    public Quaternion up; //to keep texture upright
-    [HideInInspector]
-    public Vector3 locationBeforeAttack;
+    private Quaternion up; //to keep texture upright
 
     //animDirection
     //Struct for keeping track of directions for animator
@@ -84,32 +30,17 @@ public class EnemyControl : MonoBehaviour {
 
     //Awake
     //on start script
-    void Awake()
+    protected override void myAwake()
     {
-        //variable initalization
-        patrolDirection = true;
-        playerSpotted = false;
-        isDead = false;
-        health = 1;
         up = transform.rotation;
         nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
 
         //class and component initialization
-        target = GameObject.FindWithTag("Player");
-        targetControl = target.GetComponent<PlayerControl>();
-        gun = transform.Find("Gun").gameObject;
-        attackPatterns = new AttackPatterns();
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
-        enemyVision = new EnemyVision(this);
-        myRigidbody = transform.GetComponent<Rigidbody2D>();
-        pathFinder = GetComponent<AIPath>();
 
         //initialize state machine and enter first state
-        mainFSM = new StateMachine(this);
         mainFSM.changeState(PatrolWaypoint.Instance);
         mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
-
-        attackFSM = new StateMachine(this);
     }
 
     //Update
@@ -126,26 +57,12 @@ public class EnemyControl : MonoBehaviour {
         enemyVision.drawFOV();
     }
 
-    //Moves enemy back to position before attack
-    public void revertPositionBeforeAttack(State newState)
-    {
-
-        pathFinder.canSearch = true;
-        pathFinder.canMove = true;
-        pathFinder.destination = locationBeforeAttack;
-
-        if (pathFinder.reachedEndOfPath)
-        {
-            pathFinder.canSearch = false;
-            pathFinder.canMove = false;
-            mainFSM.changeState(newState);
-        }
-    }
-
     //updateVision
     //update animator with direction state
-    public void updateAnim()
+    protected override void updateAnim()
     {
+        Animator anim = transform.Find("Texture").GetComponent<Animator>();
+        GameObject gun = transform.Find("Gun").gameObject;
         Vector3 directionVector = gun.transform.position - transform.position;
 
         if (directionVector.x > 0.01f)
@@ -177,51 +94,27 @@ public class EnemyControl : MonoBehaviour {
         anim.SetFloat("MoveY", animDirection.y);
 
         //keeps animation texture upright
-        if(texture.transform.rotation != up)
-            texture.transform.rotation = up;
+        Transform texture = transform.Find("Texture");
+        if(texture.rotation != up)
+            texture.rotation = up;
         
 
         //determines whether or not to play idle animation
-        if (myRigidbody.velocity != new Vector2(0,0) || pathFinder.canMove)
+        if (transform.GetComponent<Rigidbody2D>().velocity != new Vector2(0,0) || pathFinder.canMove)
             anim.SetBool("isMoving", true);
         else
             anim.SetBool("isMoving", false);
-    }
-
-    public IEnumerator Reload(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    }
-
-    //RotateTo
-    //rotates enemy to face target
-    //coroutine stops when enemy is facing target
-    public IEnumerator RotateTo(Vector3 targ, float delayAfter)
-    {
-        Quaternion lookDirection = Quaternion.LookRotation(Vector3.forward, (targ - transform.position).normalized);
-        while (Quaternion.Angle(transform.rotation, lookDirection) > .01f)
-        {
-            Debug.DrawRay(transform.position, (targ - transform.position), Color.red);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, rotateSpeed * Time.deltaTime);
-            yield return null;
-        }
-        yield return new WaitForSeconds(delayAfter);
-    }
-
-    //attackStates
-    //chosses shootStraight attackPattern
-    public void attackStates()
-    {
-        attackCoroutine = attackPatterns.shootStraight(gun, bullet, 3, .5f);
     }
     
     //moveTowardsNext
     //move towards next waypoint in wayPoints
     public IEnumerator moveTowardsNext()
     {
+        Rigidbody2D myRigidbody = transform.GetComponent<Rigidbody2D>();
         float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
         float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
         myRigidbody.velocity = new Vector3(0, 0, 0);
+
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
         StartCoroutine(RotateTo(wayPoints[nextWayPoint].transform.position, 0));
@@ -305,6 +198,7 @@ public class EnemyControl : MonoBehaviour {
 
     public void playAttackSound()
     {
-        targetControl.myAudioSource.PlayOneShot(targetControl.audioClips[3], .5f);
+        PlayerControl player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        player.myAudioSource.PlayOneShot(player.audioClips[3], .5f);
     }
 }

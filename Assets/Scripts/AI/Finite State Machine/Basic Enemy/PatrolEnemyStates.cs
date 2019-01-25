@@ -3,32 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using BasicEnemyAttackState;
 
-namespace BasicEnemyState
+namespace PatrolEnemyStates
 {
 public class PatrolWaypoint : State
 {
     //singleton of state
     private static PatrolWaypoint instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         //turn on FOV visualization
         owner.viewMeshFilter.SetActive(true);
 
         //turn on all waypoints
-        owner.reenableWaypoints();
+        ((EnemyPatrol)owner).reenableWaypoints();
 
         if (owner.movingPatrol)
-            new Task(owner.moveTowardsNext());
+            new Task(((EnemyPatrol)owner).moveTowardsNext());
         else
-            new Task(owner.rotateTowardsNext());
+            new Task(((EnemyPatrol)owner).rotateTowardsNext());
 
         owner.playerSpotted = false;
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
-
         //check if player is spotted every udpate
         owner.playerSpotted = owner.enemyVision.checkVision();
 
@@ -46,10 +45,9 @@ public class PatrolWaypoint : State
 
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.StopAllCoroutines();
-        owner.locationBeforeAttack = owner.transform.position;
     }
 
     //singleton
@@ -70,23 +68,23 @@ public class AttackPlayer : State
     //singleton of state
     private static AttackPlayer instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
         //turn off all waypoints
-        owner.disableWaypoints();
+        ((EnemyPatrol)owner).disableWaypoints();
 
         owner.attackFSM.changeState(Search.Instance);
         owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         owner.attackFSM.stateUpdate();
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.attackFSM.globalState.Exit(owner);
     }
@@ -110,38 +108,32 @@ public class LookAtMe : State
     private static LookAtMe instance = null;
         
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         Vector3 bombPosition = owner.messageReceiver.senderPosition;
-        owner.lookAtMeOneShot = new Task(owner.RotateTo(bombPosition, 5f));
+        owner.oneShot1 = new Task(owner.RotateTo(bombPosition, 5f));
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
         //check if player is spotted every udpate
         owner.playerSpotted = owner.enemyVision.checkVision();
-        if (owner.playerSpotted)
-        {
-            owner.targetControl.isSpotted = true;
-            //play gettingCaught() scene sequence
-            owner.targetControl.gettingCaught = true;
-        }
 
-            //Change to attack state if player is spotted
-            if (owner.targetControl.isSpotted)
+        //Change to attack state if player is spotted
+        if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
         //overrides current state for a new lookatme
         if (owner.messageReceiver.message == "look at me")
             owner.mainFSM.reenterState();
         //Reverts back to patrol waypoint state after coroutine is done running
-        if (!owner.lookAtMeOneShot.Running)
+        if (!owner.oneShot1.Running)
             owner.mainFSM.changeState(PatrolWaypoint.Instance);
 
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.StopAllCoroutines();
     }
@@ -164,31 +156,31 @@ public class Die : State
     //singleton of state
     private static Die instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         owner.isDead = true;
 
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
         //turn off all waypoints
-        owner.disableWaypoints();
+        ((EnemyPatrol)owner).disableWaypoints();
 
         //set velocity to zero
-        owner.myRigidbody.velocity = Vector3.zero;
+        owner.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
         //drop item
         GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
 
         //play animation
-        owner.anim.SetTrigger("isDead");
+        owner.transform.Find("Texture").GetComponent<Animator>().SetTrigger("isDead");
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
             
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 
@@ -210,20 +202,23 @@ public class BasicEnemyGlobal : State
     //singleton of state
     private static BasicEnemyGlobal instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
-    }
+        EnemyPatrol test = owner as EnemyPatrol;
+        if(test == null)
+            throw new System.ArgumentException("Only enemy Patrol can use the Patrol Enemy States");
+        }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         if(owner.mainFSM.currentState != Die.Instance)
-            owner.updateAnim();
+            owner.BupdateAnim();
 
         if (owner.health <= 0 && owner.mainFSM.currentState != Die.Instance)
             owner.mainFSM.changeState(Die.Instance);
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 
@@ -240,4 +235,3 @@ public class BasicEnemyGlobal : State
     }
 }
 }
-

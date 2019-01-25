@@ -25,7 +25,7 @@ public class LocatePlayer : MonoBehaviour {
     {
         if (collision.tag == "Enemy")
         {
-            collision.GetComponent<EnemyControl>().mapLocation = transform.parent.name;
+            collision.GetComponent<BEnemy>().mapLocation = transform.parent.name;
         }
 
     }

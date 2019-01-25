@@ -15,9 +15,9 @@ public class EnemyVision {
     public bool objectInVision;
 
     //Initialize fields
-    public EnemyVision(EnemyControl owner)
+    public EnemyVision(BEnemy owner)
     {
-        player = owner.targetControl.gameObject;
+        player = owner.player.gameObject;
         enemyTransform = owner.transform;
         detectionAngle = owner.detectionAngle;
         detectionDistance = owner.detectionDistance;
@@ -54,13 +54,13 @@ public class EnemyVision {
                 }
                 //if vision sees enemy that sees player
                 if (newViewCast.objectHit.transform.tag == "Enemy" &&
-                    newViewCast.objectHit.transform.gameObject.GetComponent<EnemyControl>().playerSpotted)
+                    newViewCast.objectHit.transform.gameObject.GetComponent<BEnemy>().playerSpotted)
                 {
                     return true;
                 }
                 //if vision sees dead enemy
                 if (newViewCast.objectHit.transform.tag == "Enemy" &&
-                    newViewCast.objectHit.transform.gameObject.GetComponent<EnemyControl>().isDead)
+                    newViewCast.objectHit.transform.gameObject.GetComponent<BEnemy>().isDead)
                 {
                     return true;
                 }

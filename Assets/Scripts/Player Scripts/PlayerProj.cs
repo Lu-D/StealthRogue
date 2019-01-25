@@ -28,7 +28,7 @@ public class PlayerProj : BProjectile
         
         if(collision.gameObject.tag == "Enemy")
         {
-            EnemyControl enemy = collision.gameObject.GetComponent<EnemyControl>();
+            BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
             --enemy.health;
         }
     }

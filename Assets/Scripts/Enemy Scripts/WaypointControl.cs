@@ -21,7 +21,7 @@ public class WaypointControl : MonoBehaviour {
     {
         if(triggerFunction.Length > 0)
         {
-            other.gameObject.GetComponent<EnemyControl>().Invoke(triggerFunction, 0);
+            other.gameObject.GetComponent<BEnemy>().Invoke(triggerFunction, 0);
         }
         //other.gameObject.GetComponent<EnemyControl>().DoThis();
     }

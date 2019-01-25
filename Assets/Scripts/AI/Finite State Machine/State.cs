@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class State{   
-    public abstract void Enter(EnemyControl owner);
-    public abstract void Execute(EnemyControl owner);
-    public abstract void Exit(EnemyControl owner);
+    public abstract void Enter(BEnemy owner);
+    public abstract void Execute(BEnemy owner);
+    public abstract void Exit(BEnemy owner);
 }

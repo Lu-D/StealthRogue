@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class StateMachine{
 
-    EnemyControl owner;
+    BEnemy owner;
     public State currentState;
     public State prevState;
     public State globalState;
 
     //constructor for state machine
-    public StateMachine(EnemyControl currOwner)
+    public StateMachine(BEnemy currOwner)
     {
         owner = currOwner;
         currentState = null;

@@ -9,22 +9,22 @@ public class FindRoom : State
     //singleton of state
     private static FindRoom instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         owner.pathFinder.canSearch = true;
         owner.pathFinder.canMove = true;
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         
-        if (owner.mapLocation == owner.targetControl.mapLocation)
+        if (owner.mapLocation == owner.player.mapLocation)
             owner.mainFSM.changeState(SearchRoom.Instance);
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 
@@ -45,16 +45,16 @@ public class SearchRoom : State
     //singleton of state
     private static SearchRoom instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
 
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 
@@ -75,16 +75,16 @@ public class AttackPlayer : State
     //singleton of state
     private static AttackPlayer instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
 
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 
@@ -105,16 +105,16 @@ public class ChaserStateGlobal : State
     //singleton of state
     private static ChaserStateGlobal instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
     }
 

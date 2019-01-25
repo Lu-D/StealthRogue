@@ -8,25 +8,25 @@ public class Search : State
 {
     private static Search instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         owner.pathFinder.canSearch = true;
         owner.pathFinder.canMove = true;
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
-        owner.pathFinder.destination = owner.targetControl.transform.position;
+        owner.pathFinder.destination = owner.player.transform.position;
 
         //check if enemy can hit player, if so change to fire state
-        Vector3 targetDir = owner.targetControl.transform.position - owner.transform.position;
+        Vector3 targetDir = owner.player.transform.position - owner.transform.position;
         RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, targetDir, owner.distToFire);
         if (hit.transform != null && hit.transform.tag == "Player")
             owner.attackFSM.changeState(Fire.Instance);
 
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.pathFinder.canSearch = false;
         owner.pathFinder.canMove = false;
@@ -49,28 +49,28 @@ public class Fire : State
 {
     private static Fire instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
         owner.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        owner.attackStates();
-        owner.attackOneShot = new Task(owner.attackCoroutine);
-        owner.anim.SetTrigger("isShooting");
-        owner.playAttackSound();
+        IEnumerator attackCoroutine = owner.attackPatterns.shootStraight(owner.transform.Find("Gun").gameObject, ((EnemyPatrol)owner).bullet, 3, .5f);
+        owner.oneShot1 = new Task(attackCoroutine);
+        owner.transform.Find("Texture").GetComponent<Animator>().SetTrigger("isShooting");
+        ((EnemyPatrol)owner).playAttackSound();
         --owner.currAmmo;
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
         if(owner.currAmmo == 0)
             owner.attackFSM.changeState(Reload.Instance);
 
-        if (!owner.attackOneShot.Running)
+        if (!owner.oneShot1.Running)
         {
             owner.attackFSM.changeState(Search.Instance);
         }
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.StopAllCoroutines();
     }
@@ -92,18 +92,18 @@ public class Reload : State
 {
     private static Reload instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
-        owner.reloadOneShot = new Task(owner.Reload(owner.reloadTime));
+        owner.oneShot1 = new Task(owner.Wait(owner.reloadTime));
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
-        if (!owner.reloadOneShot.Running)
+        if (!owner.oneShot1.Running)
             owner.attackFSM.changeState(Search.Instance);
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.currAmmo = owner.maxAmmo;
     }
@@ -127,22 +127,22 @@ public class BasicEnemyAttackGlobal : State
 {
     private static BasicEnemyAttackGlobal instance = null;
 
-    public override void Enter(EnemyControl owner)
+    public override void Enter(BEnemy owner)
     {
-        owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
+        owner.oneShot1 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
-    public override void Execute(EnemyControl owner)
+    public override void Execute(BEnemy owner)
     {
-        if (!owner.lookingAtPlayerOneShot.Running)
-            owner.lookingAtPlayerOneShot = new Task(owner.RotateTo(owner.targetControl.transform.position, 0f));
+        if (!owner.oneShot1.Running)
+            owner.oneShot1 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
-    public override void Exit(EnemyControl owner)
+    public override void Exit(BEnemy owner)
     {
         owner.pathFinder.canSearch = false;
         owner.pathFinder.canMove = false;
-        owner.lookingAtPlayerOneShot.Stop();
+        owner.StopAllCoroutines();
     }
 
     //singleton

@@ -60,7 +60,7 @@ public abstract class EquipmentController : MonoBehaviour {
         {
             Debug.Log("success");
 
-            collision.gameObject.GetComponent<EnemyControl>().health = 0;
+            collision.gameObject.GetComponent<BEnemy>().health = 0;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
@@ -94,5 +94,4 @@ public abstract class EquipmentController : MonoBehaviour {
         //detatches equipment from player
         pControl.equipment = null;
     }
-
 }

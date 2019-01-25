@@ -224,7 +224,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            collision.gameObject.GetComponent<EnemyControl>().health = 0;
+            collision.gameObject.GetComponent<BEnemy>().health = 0;
         }
         if(equipment != null)
         {
