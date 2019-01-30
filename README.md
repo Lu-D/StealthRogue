@@ -2,7 +2,11 @@
 
 Daiwei (David) Lu and Don Choi
 
-This game is currently a prototype of a stealth game which transitions to a bullet hell game as soon as you are spotted.
+Art by Jack Rong
+
+Music by Jesse Li
+
+This game is a roguelike action/stealth game under development.  Current game assets included are royalty free non-final standins.
 
 
 ## Current Task List
@@ -15,8 +19,8 @@ Jack - Art Prototyping
 
 Jesse - Music Prototyping
 
-## Next Meeting
 
+## Next Meeting
 
 3:00 PM Saturday, February 2
 
