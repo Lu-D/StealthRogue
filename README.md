@@ -14,3 +14,10 @@ Don - Enemy behavior
 Jack - Art Prototyping
 
 Jesse - Music Prototyping
+
+## Next Meeting
+
+
+3:00 PM Saturday, February 2
+
+Lewis 408
