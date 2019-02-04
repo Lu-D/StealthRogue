@@ -5,9 +5,9 @@ using UnityEngine;
 public class StateMachine{
 
     BEnemy owner;
-    public State currentState;
-    public State prevState;
-    public State globalState;
+    private State currentState;
+    private State prevState;
+    private State globalState;
 
     //constructor for state machine
     public StateMachine(BEnemy currOwner)
@@ -65,5 +65,15 @@ public class StateMachine{
             currentState.Execute(owner);
         if (globalState != null)
             globalState.Execute(owner);
+    }
+
+    public State getCurrentState()
+    {
+        return currentState;
+    }
+
+    public State getGlobalState()
+    {
+        return globalState;
     }
 }

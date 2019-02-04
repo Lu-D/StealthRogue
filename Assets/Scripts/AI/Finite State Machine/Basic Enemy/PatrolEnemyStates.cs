@@ -86,7 +86,7 @@ public class AttackPlayer : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.attackFSM.globalState.Exit(owner);
+        owner.attackFSM.getGlobalState().Exit(owner);
     }
 
     //singleton
@@ -211,10 +211,10 @@ public class BasicEnemyGlobal : State
 
     public override void Execute(BEnemy owner)
     {
-        if(owner.mainFSM.currentState != Die.Instance)
+        if(owner.mainFSM.getCurrentState() != Die.Instance)
             owner.BupdateAnim();
 
-        if (owner.health <= 0 && owner.mainFSM.currentState != Die.Instance)
+        if (owner.health <= 0 && owner.mainFSM.getCurrentState() != Die.Instance)
             owner.mainFSM.changeState(Die.Instance);
     }
 
