@@ -95,6 +95,10 @@ public class BEnemy : MonoBehaviour
         yield return new WaitForSeconds(delay);
     }
 
+    public T castTo<T>() where T:BEnemy
+    {
+        return (T)this;
+    }
 
     protected new void StopAllCoroutines()
     {

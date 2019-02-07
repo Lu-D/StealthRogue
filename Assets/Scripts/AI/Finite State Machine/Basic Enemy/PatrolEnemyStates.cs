@@ -19,9 +19,9 @@ public class PatrolWaypoint : State
         ((EnemyPatrol)owner).reenableWaypoints();
 
         if (owner.movingPatrol)
-            new Task(((EnemyPatrol)owner).moveTowardsNext());
+            new Task(owner.castTo<EnemyPatrol>().moveTowardsNext());
         else
-            new Task(((EnemyPatrol)owner).rotateTowardsNext());
+            new Task(owner.castTo<EnemyPatrol>().rotateTowardsNext());
 
         owner.playerSpotted = false;
     }
@@ -73,7 +73,7 @@ public class AttackPlayer : State
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
         //turn off all waypoints
-        ((EnemyPatrol)owner).disableWaypoints();
+        owner.castTo<EnemyPatrol>().disableWaypoints();
 
         owner.attackFSM.changeState(Search.Instance);
         owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
@@ -163,7 +163,7 @@ public class Die : State
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
         //turn off all waypoints
-        ((EnemyPatrol)owner).disableWaypoints();
+        owner.castTo<EnemyPatrol>().disableWaypoints();
 
         //set velocity to zero
         owner.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
@@ -204,9 +204,8 @@ public class BasicEnemyGlobal : State
 
     public override void Enter(BEnemy owner)
     {
-        EnemyPatrol test = owner as EnemyPatrol;
-        if(test == null)
-            throw new System.ArgumentException("Only enemy Patrol can use the Patrol Enemy States");
+        if(owner as EnemyPatrol == null)
+            throw new System.ArgumentException("Incorrect Assignment of States to Enemy");
         }
 
     public override void Execute(BEnemy owner)
