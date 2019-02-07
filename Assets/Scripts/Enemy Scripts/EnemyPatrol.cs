@@ -59,7 +59,7 @@ public class EnemyPatrol : BEnemy {
 
     //updateVision
     //update animator with direction state
-    public override void updateAnim()
+    protected override void updateAnim()
     {
         Animator anim = transform.Find("Texture").GetComponent<Animator>();
         GameObject gun = transform.Find("Gun").gameObject;
@@ -191,7 +191,7 @@ public class EnemyPatrol : BEnemy {
                     ++nextWayPoint;
                 else
                     --nextWayPoint;
-                messageReceiver = new Message<Vector3>("next waypoint");
+                messageReceiver = new Message<int>("next waypoint");
             }
         }
     }

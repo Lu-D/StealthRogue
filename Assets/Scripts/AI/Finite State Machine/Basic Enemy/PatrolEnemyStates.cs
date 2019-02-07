@@ -110,8 +110,7 @@ public class LookAtMe : State
 
     public override void Enter(BEnemy owner)
     {
-        Message<Vector3> tmpMsg = (Message<Vector3>)owner.messageReceiver;
-        Vector3 bombPosition = tmpMsg.messageContent;
+        Vector3 bombPosition = owner.messageReceiver.getMessageContent<Vector3>();
         owner.oneShot1 = new Task(owner.RotateTo(bombPosition, 5f)); 
     }
 
@@ -213,7 +212,7 @@ public class BasicEnemyGlobal : State
     public override void Execute(BEnemy owner)
     {
         if(owner.mainFSM.getCurrentState() != Die.Instance)
-            owner.updateAnim();
+            owner.BupdateAnim();
 
         if (owner.health <= 0 && owner.mainFSM.getCurrentState() != Die.Instance)
             owner.mainFSM.changeState(Die.Instance);

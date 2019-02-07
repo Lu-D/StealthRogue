@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class MessageReceiver {
     public string message;
-};
+
+    public MessageReceiver()
+    {
+        message = null;
+    }
+
+    public T getMessageContent<T>()
+    {
+        return ((Message<T>)this).messageContent;   
+    }
+}
 
 public class Message<T> : MessageReceiver
 {
