@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Message
-{
-    public Vector3 senderPosition;
+public class MessageReceiver {
     public string message;
+};
+
+public class Message<T> : MessageReceiver
+{
+    public T messageContent;
 
     public Message(string _message)
     {
         message = _message;
-        senderPosition = Vector3.zero;
+        messageContent = default(T);
     }
 
-    public Message(Vector3 _sender, string _message)
+    public Message(string _message, T _messageContent)
     {
-        senderPosition = _sender;
+        messageContent = _messageContent;
         message = _message;
     }
 }

@@ -55,8 +55,7 @@ public class StateMachine{
 
     public void clearMessages()
     {
-        owner.messageReceiver.senderPosition = Vector3.zero;
-        owner.messageReceiver.message = "";
+        owner.messageReceiver = null;
     }
 
     public void stateUpdate()

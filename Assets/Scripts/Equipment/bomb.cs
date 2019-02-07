@@ -6,7 +6,7 @@ public class bomb : MonoBehaviour {
     public float blastRadius;
     public float enemyAlertRadius;
     public float fuseLength;
-    public Message lookAtMe;
+    public Message<Vector3> lookAtMe;
 	
 	void Update () {
         fuseLength -= Time.deltaTime;
@@ -34,7 +34,7 @@ public class bomb : MonoBehaviour {
         {
             if (alert.gameObject.tag == "Enemy")
             {
-                lookAtMe = new Message(gameObject.transform.position, "look at me");
+                lookAtMe = new Message<Vector3>("look at me", gameObject.transform.position);
                 alert.gameObject.GetComponent<BEnemy>().messageReceiver = lookAtMe;
             }
         }

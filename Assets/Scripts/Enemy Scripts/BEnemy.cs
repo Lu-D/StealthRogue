@@ -34,8 +34,8 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public AIPath pathFinder;
 
-    //Receives messages
-    public Message messageReceiver = new Message(Vector3.zero, null);
+    //Receives mes,sages
+    public MessageReceiver messageReceiver;
 
     [HideInInspector]
     public GameObject viewMeshFilter;
@@ -46,7 +46,7 @@ public class BEnemy : MonoBehaviour
     public Task oneShot1;
     public Task oneShot2;
 
- //private stuff
+//private stuff
     private void Awake()
     {
         //variable initalization
@@ -71,9 +71,8 @@ public class BEnemy : MonoBehaviour
     }
     protected virtual void myAwake(){ }
 
-  //public stuff
-    public void BupdateAnim(){ updateAnim(); }
-    protected virtual void updateAnim(){ }
+//public stuff
+    public virtual void updateAnim(){ }
 
     //RotateTo
     //rotates enemy to face target
@@ -96,7 +95,7 @@ public class BEnemy : MonoBehaviour
     }
 
 
-    public new void StopAllCoroutines()
+    protected new void StopAllCoroutines()
     {
         if(oneShot1 != null && oneShot1.Running)
             oneShot1.Stop();
