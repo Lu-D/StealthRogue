@@ -11,7 +11,7 @@ This game is a roguelike action/stealth game under development.  Current game as
 
 ## Current Task List
 
-David - Bugfixes and Code Revision/Cleanup
+David - Unifying / encapsulating waypoint system
 
 Don - Enemy behavior
 
