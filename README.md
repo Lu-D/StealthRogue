@@ -34,18 +34,30 @@ Necessary for making any modifications far simpler
 ## Functions
 
 /\*
+
  \* Description: _what does following method do_
+
  \* 
+
+
  \* Dependants: _whenever you create a function calling this method, add it to this list_
+
  \* 
+
  \* _any additional comments_
+
  \*/
 
 ## Variables/Other Objects
 
-/\*
+/*
+
  \*Purpose: _what variable is used for_
+
  \*
+
  \*Dependants: _any methods accessing this variable_
+
  \*
+
  \*/
