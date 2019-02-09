@@ -33,19 +33,19 @@ Necessary for making any modifications far simpler
 
 ## Functions
 
-/ <nowiki>*</nowiki>
- <nowiki>*</nowiki> Description: _what does following method do_
- <nowiki>*</nowiki>
- <nowiki>*</nowiki> Dependants: _whenever you create a function calling this method, add it to this list_
- <nowiki>*</nowiki>
- <nowiki>*</nowiki> _any additional comments_
- <nowiki>*</nowiki>v/
+/\*
+ \* Description: _what does following method do_
+ \* 
+ \* Dependants: _whenever you create a function calling this method, add it to this list_
+ \* 
+ \* _any additional comments_
+ \*/
 
 ## Variables/Other Objects
 
-/ <nowiki>*</nowiki>
- <nowiki>*</nowiki> Purpose: _what variable is used for_
- <nowiki>*</nowiki> 
- <nowiki>*</nowiki> Dependants: _any methods accessing this variable_
- <nowiki>*</nowiki>
- <nowiki>*</nowiki> /
+/\*
+ \*Purpose: _what variable is used for_
+ \*
+ \*Dependants: _any methods accessing this variable_
+ \*
+ \*/
