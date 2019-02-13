@@ -95,7 +95,7 @@ public class BEnemy : MonoBehaviour
         yield return new WaitForSeconds(delay);
     }
 
-    public T castTo<T>() where T:BEnemy
+    public T castTo<T>() where T : BEnemy
     {
         return (T)this;
     }
@@ -104,7 +104,5 @@ public class BEnemy : MonoBehaviour
     {
         if(oneShot1 != null && oneShot1.Running)
             oneShot1.Stop();
-        if(oneShot2 != null && oneShot2.Running)
-            oneShot2.Stop();
     }
 }

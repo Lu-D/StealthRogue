@@ -142,7 +142,7 @@ public class EnemyPatrol : BEnemy {
             --nextWayPoint;
 
         yield return new WaitForSeconds(waitToRotate);
-        messageReceiver = new Message<Vector3>("next waypoint");
+        messageReceiver = new Message<Vector3>(message_type.nextWaypoint);
     }
 
     //disableWaypoints
@@ -191,7 +191,7 @@ public class EnemyPatrol : BEnemy {
                     ++nextWayPoint;
                 else
                     --nextWayPoint;
-                messageReceiver = new Message<int>("next waypoint");
+                messageReceiver = new Message<int>(message_type.nextWaypoint);
             }
         }
     }

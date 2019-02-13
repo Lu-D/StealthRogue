@@ -8,6 +8,10 @@ Music by Jesse Li
 
 This game is a roguelike action/stealth game under development.  Current game assets included are royalty free non-final standins.
 
+## Ideas List
+Bell Boss
+Trapper Boss
+Eater Boss
 
 ## Current Task List
 

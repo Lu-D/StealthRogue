@@ -129,20 +129,20 @@ public class BasicEnemyAttackGlobal : State
 
     public override void Enter(BEnemy owner)
     {
-        owner.oneShot1 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
+        owner.oneShot2 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
     public override void Execute(BEnemy owner)
     {
-        if (!owner.oneShot1.Running)
-            owner.oneShot1 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
+        if (!owner.oneShot2.Running)
+            owner.oneShot2 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
     public override void Exit(BEnemy owner)
     {
         owner.pathFinder.canSearch = false;
         owner.pathFinder.canMove = false;
-        owner.StopAllCoroutines();
+        owner.oneShot2.Stop();
     }
 
     //singleton

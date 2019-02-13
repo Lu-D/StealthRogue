@@ -36,11 +36,11 @@ public class PatrolWaypoint : State
             owner.mainFSM.changeState(AttackPlayer.Instance);
 
         //reenters state if it hits a waypoint
-        if (owner.messageReceiver.message == "next waypoint")
+        if (owner.messageReceiver.message == message_type.nextWaypoint)
             owner.mainFSM.reenterState();
 
         //changes to lookAtMe state when lookatme message is received
-        if(owner.messageReceiver.message == "look at me")
+        if(owner.messageReceiver.message == message_type.lookAtMe)
             owner.mainFSM.changeState(LookAtMe.Instance);
 
     }
@@ -125,7 +125,7 @@ public class LookAtMe : State
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
         //overrides current state for a new lookatme
-        if (owner.messageReceiver.message == "look at me")
+        if (owner.messageReceiver.message == message_type.lookAtMe)
             owner.mainFSM.reenterState();
         //Reverts back to patrol waypoint state after coroutine is done running
         if (!owner.oneShot1.Running)
@@ -205,7 +205,7 @@ public class BasicEnemyGlobal : State
     public override void Enter(BEnemy owner)
     {
         if(owner as EnemyPatrol == null)
-            throw new System.ArgumentException("Incorrect Assignment of States to Enemy");
+            Debug.LogError("Incorrect Assignment of EnemyPatrolStates to Enemy");
         }
 
     public override void Execute(BEnemy owner)
