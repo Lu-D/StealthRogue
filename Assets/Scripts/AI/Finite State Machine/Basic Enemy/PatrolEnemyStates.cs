@@ -19,9 +19,9 @@ public class PatrolWaypoint : State
         ((EnemyPatrol)owner).reenableWaypoints();
 
         if (owner.movingPatrol)
-            new Task(owner.castTo<EnemyPatrol>().moveTowardsNext());
+            owner.taskList["NextWaypoint"] = new Task(owner.castTo<EnemyPatrol>().moveTowardsNext());
         else
-            new Task(owner.castTo<EnemyPatrol>().rotateTowardsNext());
+            owner.taskList["NextWaypoint"] = new Task(owner.castTo<EnemyPatrol>().rotateTowardsNext());
 
         owner.playerSpotted = false;
     }
@@ -47,7 +47,8 @@ public class PatrolWaypoint : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.StopAllCoroutines();
+        owner.taskList["NextWaypoint"].Stop();
+            owner.taskList.clear("NextWaypoint");
     }
 
     //singleton
@@ -111,7 +112,7 @@ public class LookAtMe : State
     public override void Enter(BEnemy owner)
     {
         Vector3 bombPosition = owner.messageReceiver.getMessageContent<Vector3>();
-        owner.oneShot1 = new Task(owner.RotateTo(bombPosition, 5f)); 
+        owner.taskList["LookAtMe"] = new Task(owner.RotateTo(bombPosition, 5f));
     }
 
     public override void Execute(BEnemy owner)
@@ -128,14 +129,15 @@ public class LookAtMe : State
         if (owner.messageReceiver.message == message_type.lookAtMe)
             owner.mainFSM.reenterState();
         //Reverts back to patrol waypoint state after coroutine is done running
-        if (!owner.oneShot1.Running)
+        if (!owner.taskList["LookAtMe"].Running)
             owner.mainFSM.changeState(PatrolWaypoint.Instance);
 
     }
 
     public override void Exit(BEnemy owner)
     {
-        owner.StopAllCoroutines();
+        owner.taskList["LookAtMe"].Stop();
+        owner.taskList.clear("LookAtMe");
     }
 
     //singleton

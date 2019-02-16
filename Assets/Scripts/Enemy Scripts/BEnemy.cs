@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+
 public class BEnemy : MonoBehaviour
 {
     //enemy properties
@@ -42,9 +43,7 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public PlayerControl player;
 
-    //Oneshot Tasks
-    public Task oneShot1;
-    public Task oneShot2;
+    public TaskList taskList;
 
 //private stuff
     private void Awake()
@@ -55,11 +54,11 @@ public class BEnemy : MonoBehaviour
         isDead = false;
         health = 1;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        oneShot1 = null;
-        oneShot2 = null;
+        //taskManager = new TaskManager.TaskState();
 
         //class and component initialization
         attackPatterns = new AttackPatterns();
+        taskList = new TaskList();
         enemyVision = new EnemyVision(this);
         pathFinder = GetComponent<AIPath>();
 
@@ -98,11 +97,5 @@ public class BEnemy : MonoBehaviour
     public T castTo<T>() where T : BEnemy
     {
         return (T)this;
-    }
-
-    protected new void StopAllCoroutines()
-    {
-        if(oneShot1 != null && oneShot1.Running)
-            oneShot1.Stop();
     }
 }

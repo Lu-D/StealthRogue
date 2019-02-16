@@ -53,7 +53,7 @@ public class Fire : State
     {
         owner.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         IEnumerator attackCoroutine = owner.attackPatterns.shootStraight(owner.transform.Find("Gun").gameObject, ((EnemyPatrol)owner).bullet, 3, .5f);
-        owner.oneShot1 = new Task(attackCoroutine);
+        owner.taskList["Shoot"] = new Task(attackCoroutine);
         owner.transform.Find("Texture").GetComponent<Animator>().SetTrigger("isShooting");
         ((EnemyPatrol)owner).playAttackSound();
         --owner.currAmmo;
@@ -64,7 +64,7 @@ public class Fire : State
         if(owner.currAmmo == 0)
             owner.attackFSM.changeState(Reload.Instance);
 
-        if (!owner.oneShot1.Running)
+        if (!owner.taskList["Shoot"].Running)
         {
             owner.attackFSM.changeState(Search.Instance);
         }
@@ -72,7 +72,8 @@ public class Fire : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.StopAllCoroutines();
+        owner.taskList["Shoot"].Stop();
+        owner.taskList.clear("Shoot");
     }
 
     //singleton
@@ -94,18 +95,20 @@ public class Reload : State
 
     public override void Enter(BEnemy owner)
     {
-        owner.oneShot1 = new Task(owner.Wait(owner.reloadTime));
+        owner.taskList["Reload"] = new Task(owner.Wait(owner.reloadTime));
     }
 
     public override void Execute(BEnemy owner)
     {
-        if (!owner.oneShot1.Running)
+        if (!owner.taskList["Reload"].Running)
             owner.attackFSM.changeState(Search.Instance);
     }
 
     public override void Exit(BEnemy owner)
     {
         owner.currAmmo = owner.maxAmmo;
+        owner.taskList["Reload"].Stop();
+        owner.taskList.clear("Reload");
     }
 
     //singleton
@@ -129,20 +132,21 @@ public class BasicEnemyAttackGlobal : State
 
     public override void Enter(BEnemy owner)
     {
-        owner.oneShot2 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
+        owner.taskList["FacePlayer"] = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
     public override void Execute(BEnemy owner)
     {
-        if (!owner.oneShot2.Running)
-            owner.oneShot2 = new Task(owner.RotateTo(owner.player.transform.position, 0f));
+        if (!owner.taskList["FacePlayer"].Running)
+            owner.taskList["FacePlayer"] = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 
     public override void Exit(BEnemy owner)
     {
         owner.pathFinder.canSearch = false;
         owner.pathFinder.canMove = false;
-        owner.oneShot2.Stop();
+        owner.taskList["FacePlayer"].Stop();
+        owner.taskList.clear("FacePlayer");
     }
 
     //singleton

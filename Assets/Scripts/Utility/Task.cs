@@ -109,7 +109,7 @@ public class Task
     TaskManager.TaskState task;
 }
 
-class TaskManager : MonoBehaviour
+public class TaskManager : MonoBehaviour
 {
     public class TaskState
     {
@@ -201,5 +201,53 @@ class TaskManager : MonoBehaviour
             singleton = go.AddComponent<TaskManager>();
         }
         return new TaskState(coroutine);
+    }
+}
+
+public class TaskList : MonoBehaviour
+{
+    private Dictionary<string, Task> taskList;
+
+    public TaskList(){
+        taskList = new Dictionary<string, Task>();
+    }
+
+    public void clear(string key)
+    {
+        taskList.Remove(key);
+    }
+
+    public Task this[string key]
+    {
+        get
+        {
+            return getTask(key);
+        }
+        set
+        {
+            createTask(value, key);
+        }
+    }
+
+    private Task getTask(string key)
+    {
+        if (!taskList.ContainsKey(key))
+        {
+            Debug.LogError("Attempt to access nonexistant key: " + key);
+            return null;
+        }
+        else
+            return taskList[key];
+    }
+
+    private void createTask(Task newItem, string key)
+    {
+        if (taskList.ContainsKey(key)
+        && taskList[key].Running == true)
+        {
+            Debug.LogError("Attempt to overwrite existing key: " + key);
+        }
+        else
+            taskList[key] = newItem;
     }
 }
