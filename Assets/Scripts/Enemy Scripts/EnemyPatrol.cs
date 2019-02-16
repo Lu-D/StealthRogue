@@ -7,7 +7,10 @@ using Pathfinding;
 //EnemyControl
 //class to control enemy behavior
 public class EnemyPatrol : BEnemy {
-
+    /* Do not set, will be automatically set by wayPointMaster
+     * 
+     */
+    public GameObject waypointMaster;
     //enemy children gameobjects
     public GameObject bullet;
     public GameObject waypointControl;
@@ -33,7 +36,7 @@ public class EnemyPatrol : BEnemy {
     protected override void myAwake()
     {
         up = transform.rotation;
-        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
+        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an endpoint
 
         //class and component initialization
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
@@ -165,6 +168,8 @@ public class EnemyPatrol : BEnemy {
         }
     }
 
+
+    //MOVE LOGIC TO WAYPOINTMASTER
     //OnTriggerEnter2D
     //determines whether waypoint is waypoint or endpoint
     //reverses direction on collision with endpoint
@@ -172,6 +177,8 @@ public class EnemyPatrol : BEnemy {
     {
         if (other.transform.tag == "Waypoint")
         {
+            //CALL WAYPOINTMASTER
+            /*
             if(GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
             {
                 if ((nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1) && !patrolLoop)
@@ -193,6 +200,7 @@ public class EnemyPatrol : BEnemy {
                     --nextWayPoint;
                 messageReceiver = new Message<int>(message_type.nextWaypoint);
             }
+            */
         }
     }
 
