@@ -72,8 +72,7 @@ public class Fire : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.taskList["Shoot"].Stop();
-        owner.taskList.clear("Shoot");
+        owner.taskList.Stop("Shoot");
     }
 
     //singleton
@@ -107,8 +106,7 @@ public class Reload : State
     public override void Exit(BEnemy owner)
     {
         owner.currAmmo = owner.maxAmmo;
-        owner.taskList["Reload"].Stop();
-        owner.taskList.clear("Reload");
+        owner.taskList.Stop("Reload");
     }
 
     //singleton
@@ -145,8 +143,7 @@ public class BasicEnemyAttackGlobal : State
     {
         owner.pathFinder.canSearch = false;
         owner.pathFinder.canMove = false;
-        owner.taskList["FacePlayer"].Stop();
-        owner.taskList.clear("FacePlayer");
+        owner.taskList.Stop("FacePlayer");
     }
 
     //singleton

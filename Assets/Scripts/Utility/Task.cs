@@ -204,6 +204,23 @@ public class TaskManager : MonoBehaviour
     }
 }
 
+/* Example Usage of TaskList
+
+//To create a new task, use a unique string key, otherwise error will be thrown
+TaskList["Task Key"] = new Task(--coroutine);
+
+//To access task
+TaskList["Task Key"].Pause();
+                    .Running();
+                    etc
+
+//To stop task
+TaskList.Stop("Task Key");
+Note: Do not manually stop task with TaskList["Task Key"].Stop(), use TaskList.Stop() to free up memory in dictionary
+when task is done being used.
+*/
+
+/// TaskList allows for the instantiation and deletion of coroutines, organized by dictionary keys
 public class TaskList : MonoBehaviour
 {
     private Dictionary<string, Task> taskList;
@@ -212,8 +229,9 @@ public class TaskList : MonoBehaviour
         taskList = new Dictionary<string, Task>();
     }
 
-    public void clear(string key)
+    public void Stop(string key)
     {
+        taskList[key].Stop();
         taskList.Remove(key);
     }
 
@@ -245,7 +263,7 @@ public class TaskList : MonoBehaviour
         if (taskList.ContainsKey(key)
         && taskList[key].Running == true)
         {
-            Debug.LogError("Attempt to overwrite existing key: " + key);
+            Debug.LogError("Attempt to overwrite existing key in taskDic: " + key);
         }
         else
             taskList[key] = newItem;

@@ -47,8 +47,7 @@ public class PatrolWaypoint : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.taskList["NextWaypoint"].Stop();
-            owner.taskList.clear("NextWaypoint");
+        owner.taskList.Stop("NextWaypoint");
     }
 
     //singleton
@@ -136,8 +135,7 @@ public class LookAtMe : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.taskList["LookAtMe"].Stop();
-        owner.taskList.clear("LookAtMe");
+        owner.taskList.Stop("LookAtMe");
     }
 
     //singleton

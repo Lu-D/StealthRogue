@@ -27,22 +27,27 @@ public class BEnemy : MonoBehaviour
     public GameObject itemDrop;
 
     //Finite State Machines
+    [HideInInspector]
     public StateMachine mainFSM;
+    [HideInInspector]
     public StateMachine attackFSM;
 
+    [HideInInspector]
     public EnemyVision enemyVision;
+    [HideInInspector]
     public AttackPatterns attackPatterns;
     [HideInInspector]
     public AIPath pathFinder;
 
     //Receives messages
+    [HideInInspector]
     public MessageReceiver messageReceiver = new MessageReceiver();
 
     [HideInInspector]
     public GameObject viewMeshFilter;
     [HideInInspector]
     public PlayerControl player;
-
+    [HideInInspector]
     public TaskList taskList;
 
 //private stuff

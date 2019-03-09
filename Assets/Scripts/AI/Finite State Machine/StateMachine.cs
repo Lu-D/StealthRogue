@@ -55,7 +55,7 @@ public class StateMachine{
 
     public void clearMessages()
     {
-        owner.messageReceiver.message = 0;
+        owner.messageReceiver.clearMessages();
     }
 
     public void stateUpdate()
