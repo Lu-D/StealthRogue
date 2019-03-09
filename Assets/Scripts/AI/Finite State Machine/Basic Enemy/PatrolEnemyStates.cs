@@ -48,6 +48,7 @@ public class PatrolWaypoint : State
     public override void Exit(BEnemy owner)
     {
         owner.taskList.Stop("NextWaypoint");
+        //owner.StopAllCoroutines();
     }
 
     //singleton
@@ -210,7 +211,7 @@ public class BasicEnemyGlobal : State
 
     public override void Execute(BEnemy owner)
     {
-        if(owner.mainFSM.getCurrentState() != Die.Instance)
+        if (owner.mainFSM.getCurrentState() != Die.Instance)
             owner.BupdateAnim();
 
         if (owner.health <= 0 && owner.mainFSM.getCurrentState() != Die.Instance)

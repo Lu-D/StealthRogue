@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-
 public class BEnemy : MonoBehaviour
 {
     //enemy properties

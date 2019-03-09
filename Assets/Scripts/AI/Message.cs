@@ -75,12 +75,12 @@ public class Message<T> : MessageReceiver
  * */
 public enum message_type{
     empty = 0,
-    nextWaypoint, //0 is empty message
+    nextWaypoint, 
     lookAtMe
 };
 
 /*
- * Use this to convert strings to message_type (more efficeint than Systems.Enum algorithms)
+ * Use this to convert strings to message_type (more efficeint than Systems.Enum.TryParse algorithms)
  * */
 public class messageTypeLookup
 {

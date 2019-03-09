@@ -117,7 +117,7 @@ public class EnemyPatrol : BEnemy {
 
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
-        StartCoroutine(RotateTo(wayPoints[nextWayPoint].transform.position, 0));
+        yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
         if (waitToRotate > 0)
             yield return new WaitForSeconds(waitToRotate);
         myRigidbody.velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
@@ -129,7 +129,7 @@ public class EnemyPatrol : BEnemy {
     {
         float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
         float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
-        StartCoroutine(RotateTo(wayPoints[nextWayPoint].transform.position, 0));
+        yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
 
         if (nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1)
         {
