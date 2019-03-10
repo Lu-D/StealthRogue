@@ -209,15 +209,6 @@ public class TaskManager : MonoBehaviour
 //To create a new task, use a unique string key, otherwise error will be thrown
 TaskList["Task Key"] = new Task(--coroutine);
 
-//To access task
-TaskList["Task Key"].Pause();
-                    .Running();
-                    etc
-
-//To stop task
-TaskList.Stop("Task Key");
-Note: Do not manually stop task with TaskList["Task Key"].Stop(), use TaskList.Stop() to free up memory in dictionary
-when task is done being used.
 */
 
 /// TaskList allows for the instantiation and deletion of coroutines, organized by dictionary keys
@@ -229,6 +220,31 @@ public class TaskList : MonoBehaviour
         taskList = new Dictionary<string, Task>();
     }
 
+    public bool Running(string key)
+    {
+        return taskList[key].Paused;
+    }
+
+    public bool Paused(string key)
+    {
+        return taskList[key].Running;
+    }
+
+    public void Pause(string key)
+    {
+        taskList[key].Pause();
+    }
+
+    public void Unpause(string key)
+    {
+        taskList[key].Unpause();
+    }
+
+    public void Start(string key)
+    {
+        taskList[key].Start();
+    }
+
     public void Stop(string key)
     {
         taskList[key].Stop();
@@ -237,10 +253,6 @@ public class TaskList : MonoBehaviour
 
     public Task this[string key]
     {
-        get
-        {
-            return getTask(key);
-        }
         set
         {
             createTask(value, key);

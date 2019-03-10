@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 public class BEnemy : MonoBehaviour
 {
@@ -13,16 +12,16 @@ public class BEnemy : MonoBehaviour
     public float rotateSpeed;
     public float fovResolution;
     public float distToFire;
-    public bool playerSpotted;
+    public bool playerSpotted = false;
     public int currAmmo;
     public int maxAmmo;
     public float reloadTime;
     public string mapLocation;
     public bool movingPatrol;
     public bool patrolLoop;
-    public int health;
-    public bool isDead;
-    public bool patrolDirection; //false when going backwards
+    public int health = 1;
+    public bool isDead = false;
+    public bool patrolDirection = true; //false when going backwards
     public GameObject itemDrop;
 
     //Finite State Machines
@@ -34,9 +33,9 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public EnemyVision enemyVision;
     [HideInInspector]
-    public AttackPatterns attackPatterns;
+    public AttackPatterns attackPatterns = new AttackPatterns();
     [HideInInspector]
-    public AIPath pathFinder;
+    public Pathfinding.AIPath pathFinder;
 
     //Receives messages
     [HideInInspector]
@@ -45,26 +44,15 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public GameObject viewMeshFilter;
     [HideInInspector]
-    public PlayerControl player;
+    public PlayerControl player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
     [HideInInspector]
-    public TaskList taskList;
+    public TaskList taskList = new TaskList();
 
 //private stuff
     private void Awake()
     {
-        //variable initalization
-        patrolDirection = true;
-        playerSpotted = false;
-        isDead = false;
-        health = 1;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        //taskManager = new TaskManager.TaskState();
-
-        //class and component initialization
-        attackPatterns = new AttackPatterns();
-        taskList = new TaskList();
         enemyVision = new EnemyVision(this);
-        pathFinder = GetComponent<AIPath>();
+        pathFinder = GetComponent<Pathfinding.AIPath>();
 
         //initialize state machines
         mainFSM = new StateMachine(this);

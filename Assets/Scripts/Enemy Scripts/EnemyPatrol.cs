@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using PatrolEnemyStates;
-using Pathfinding;
 
 
 //EnemyControl
@@ -15,7 +13,7 @@ public class EnemyPatrol : BEnemy {
     public Transform[] wayPoints; //waypoints[1] is waypointControl
 
     //helper variables
-    public int nextWayPoint;
+    public int nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
     public IEnumerator attackCoroutine;
     [HideInInspector]
     private Quaternion up; //to keep texture upright
@@ -33,14 +31,13 @@ public class EnemyPatrol : BEnemy {
     protected override void myAwake()
     {
         up = transform.rotation;
-        nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
 
         //class and component initialization
         wayPoints = waypointControl.GetComponentsInChildren<Transform>();
 
         //initialize state machine and enter first state
-        mainFSM.changeState(PatrolWaypoint.Instance);
-        mainFSM.changeGlobalState(BasicEnemyGlobal.Instance);
+        mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
+        mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
     }
 
     //Update
@@ -111,8 +108,8 @@ public class EnemyPatrol : BEnemy {
     public IEnumerator moveTowardsNext()
     {
         Rigidbody2D myRigidbody = transform.GetComponent<Rigidbody2D>();
-        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
-        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
+        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitTime;
+        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitToRotate;
         myRigidbody.velocity = new Vector3(0, 0, 0);
 
         if (waitTime > 0)
@@ -127,8 +124,8 @@ public class EnemyPatrol : BEnemy {
     //rotates towards next waypoint if enemy patrol is stationary
     public IEnumerator rotateTowardsNext()
     {
-        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
-        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
+        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitTime;
+        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitToRotate;
         yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
 
         if (nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1)

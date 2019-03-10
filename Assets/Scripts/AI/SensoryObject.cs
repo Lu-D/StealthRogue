@@ -3,12 +3,12 @@ using UnityEngine;
 
 class SensoryObject : MonoBehaviour
 {
-    public string messageType;
+
+    public string messageType = "empty";
     private message_type message;
-    private messageTypeLookup dictionary;
 
     private void  Awake(){
-        message = dictionary[messageType];
+        message = messageTypeLookup.Instance[messageType];
     }
 
     public message_type senseObject(){

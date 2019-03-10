@@ -80,10 +80,11 @@ public enum message_type{
 };
 
 /*
- * Use this to convert strings to message_type (more efficeint than Systems.Enum.TryParse algorithms)
+ * Use this to convert strings to message_type (more efficeint than Systems.Enum.Parse algorithms)
  * */
 public class messageTypeLookup
 {
+    public static messageTypeLookup instance;
     public Dictionary<string, message_type> messageDictionary;
 
     public messageTypeLookup()
@@ -113,4 +114,14 @@ public class messageTypeLookup
             return messageDictionary[key];
     }
 
+    public static messageTypeLookup Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = new messageTypeLookup();
+
+            return instance;
+        }
+    }
 }

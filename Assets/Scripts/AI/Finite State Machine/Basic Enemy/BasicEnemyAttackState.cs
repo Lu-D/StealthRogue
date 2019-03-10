@@ -64,7 +64,7 @@ public class Fire : State
         if(owner.currAmmo == 0)
             owner.attackFSM.changeState(Reload.Instance);
 
-        if (!owner.taskList["Shoot"].Running)
+        if (!owner.taskList.Running("Shoot"))
         {
             owner.attackFSM.changeState(Search.Instance);
         }
@@ -99,7 +99,7 @@ public class Reload : State
 
     public override void Execute(BEnemy owner)
     {
-        if (!owner.taskList["Reload"].Running)
+        if (!owner.taskList.Running("Reload"))
             owner.attackFSM.changeState(Search.Instance);
     }
 
@@ -135,7 +135,7 @@ public class BasicEnemyAttackGlobal : State
 
     public override void Execute(BEnemy owner)
     {
-        if (!owner.taskList["FacePlayer"].Running)
+        if (!owner.taskList.Running("FacePlayer"))
             owner.taskList["FacePlayer"] = new Task(owner.RotateTo(owner.player.transform.position, 0f));
     }
 

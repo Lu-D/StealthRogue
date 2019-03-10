@@ -48,7 +48,6 @@ public class PatrolWaypoint : State
     public override void Exit(BEnemy owner)
     {
         owner.taskList.Stop("NextWaypoint");
-        //owner.StopAllCoroutines();
     }
 
     //singleton
@@ -129,7 +128,7 @@ public class LookAtMe : State
         if (owner.messageReceiver.message == message_type.lookAtMe)
             owner.mainFSM.reenterState();
         //Reverts back to patrol waypoint state after coroutine is done running
-        if (!owner.taskList["LookAtMe"].Running)
+        if (!owner.taskList.Running("LookAtMe"))
             owner.mainFSM.changeState(PatrolWaypoint.Instance);
 
     }
@@ -198,10 +197,10 @@ public class Die : State
     }
 }
 
-public class BasicEnemyGlobal : State
+public class PatrolEnemyGlobal : State
 {
     //singleton of state
-    private static BasicEnemyGlobal instance = null;
+    private static PatrolEnemyGlobal instance = null;
 
     public override void Enter(BEnemy owner)
     {
@@ -223,12 +222,12 @@ public class BasicEnemyGlobal : State
     }
 
     //singleton
-    public static BasicEnemyGlobal Instance
+    public static PatrolEnemyGlobal Instance
     {
         get
         {
             if (instance == null)
-                instance = new BasicEnemyGlobal();
+                instance = new PatrolEnemyGlobal();
 
             return instance;
         }

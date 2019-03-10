@@ -17,7 +17,7 @@ using UnityEngine;
 
 //WaypointControl
 //maintains variables for delays at each waypoint
-public class WaypointControl : MonoBehaviour {
+public class WaypointNode : MonoBehaviour {
     private void Start()
     {
         GetComponent<SpriteRenderer>().enabled = false;

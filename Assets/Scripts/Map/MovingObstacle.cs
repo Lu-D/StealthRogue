@@ -25,8 +25,8 @@ public class MovingObstacle : MonoBehaviour {
     //move towards next waypoint in wayPoints
     public IEnumerator moveTowardsNext()
     {
-        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitTime;
-        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointControl>().waitToRotate;
+        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitTime;
+        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitToRotate;
         transform.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
         if (waitTime > 0)
             yield return new WaitForSeconds(waitTime);
