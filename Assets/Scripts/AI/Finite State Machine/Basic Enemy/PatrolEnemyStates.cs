@@ -15,14 +15,6 @@ public class PatrolWaypoint : State
         //turn on FOV visualization
         owner.viewMeshFilter.SetActive(true);
 
-        //turn on all waypoints
-        ((EnemyPatrol)owner).reenableWaypoints();
-
-        if (owner.movingPatrol)
-            owner.taskList["NextWaypoint"] = new Task(owner.castTo<EnemyPatrol>().moveTowardsNext());
-        else
-            owner.taskList["NextWaypoint"] = new Task(owner.castTo<EnemyPatrol>().rotateTowardsNext());
-
         owner.playerSpotted = false;
     }
 
@@ -30,14 +22,11 @@ public class PatrolWaypoint : State
     {
         //check if player is spotted every udpate
         owner.playerSpotted = owner.enemyVision.checkVision();
+        owner.waypointNav.navForwardBack();
 
         //changes to attack state if enemy spots player
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
-
-        //reenters state if it hits a waypoint
-        if (owner.messageReceiver.message == message_type.nextWaypoint)
-            owner.mainFSM.reenterState();
 
         //changes to lookAtMe state when lookatme message is received
         if(owner.messageReceiver.message == message_type.lookAtMe)
@@ -47,7 +36,7 @@ public class PatrolWaypoint : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.taskList.Stop("NextWaypoint");
+        owner.waypointNav.stopNav();
     }
 
     //singleton
@@ -72,8 +61,6 @@ public class AttackPlayer : State
     {
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
-        //turn off all waypoints
-        owner.castTo<EnemyPatrol>().disableWaypoints();
 
         owner.attackFSM.changeState(Search.Instance);
         owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
@@ -115,7 +102,7 @@ public class LookAtMe : State
     }
 
     public override void Execute(BEnemy owner)
-    {
+    {        
         owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
         //check if player is spotted every udpate
@@ -162,8 +149,6 @@ public class Die : State
 
         //turn off FOV visualization
         owner.viewMeshFilter.SetActive(false);
-        //turn off all waypoints
-        owner.castTo<EnemyPatrol>().disableWaypoints();
 
         //set velocity to zero
         owner.GetComponent<Rigidbody2D>().velocity = Vector3.zero;

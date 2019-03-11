@@ -29,34 +29,43 @@ public class BEnemy : MonoBehaviour
     public StateMachine mainFSM;
     [HideInInspector]
     public StateMachine attackFSM;
-
     [HideInInspector]
     public EnemyVision enemyVision;
     [HideInInspector]
-    public AttackPatterns attackPatterns = new AttackPatterns();
+    public AttackPatterns attackPatterns;
     [HideInInspector]
     public Pathfinding.AIPath pathFinder;
+    [HideInInspector]
+    public WaypointNav waypointNav;
 
     //Receives messages
     [HideInInspector]
-    public MessageReceiver messageReceiver = new MessageReceiver();
+    public MessageReceiver messageReceiver;
 
     [HideInInspector]
     public GameObject viewMeshFilter;
     [HideInInspector]
-    public PlayerControl player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+    public PlayerControl player;
     [HideInInspector]
-    public TaskList taskList = new TaskList();
+    public TaskList taskList;
 
 //private stuff
     private void Awake()
     {
+        taskList = new TaskList();
+        messageReceiver = new MessageReceiver();
+        attackPatterns = new AttackPatterns();
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+
         enemyVision = new EnemyVision(this);
         pathFinder = GetComponent<Pathfinding.AIPath>();
 
         //initialize state machines
         mainFSM = new StateMachine(this);
         attackFSM = new StateMachine(this);
+
+        waypointNav = new WaypointNav(this);
 
         myAwake(); //called from derived class
     }

@@ -17,24 +17,35 @@ using UnityEngine;
 
 //WaypointControl
 //maintains variables for delays at each waypoint
-public class WaypointNode : MonoBehaviour {
-    private void Start()
-    {
-        GetComponent<SpriteRenderer>().enabled = false;
-    }
-    
+public class WaypointNode
+{
+    public Vector3 position;
     public float waitTime; //wait before any action upon touching waypoint
     public float waitToRotate; //wait to start moving after rotation begins
-    public IEnumerator triggerRoutine;
-    public string triggerFunction;
-    //public Func<Vector3> triggerFunctionVector;
+    public bool visited = false;
 
-    public void OnTriggerEnter2D(Collider2D other)
+    public WaypointNode(GameObject node)
     {
-        if(triggerFunction.Length > 0)
-        {
-            other.gameObject.GetComponent<BEnemy>().Invoke(triggerFunction, 0);
-        }
-        //other.gameObject.GetComponent<EnemyControl>().DoThis();
+        waitTime = node.GetComponent<WaypointGameObject>().waitTime;
+        waitToRotate = node.GetComponent<WaypointGameObject>().waitTime;
+        position = node.transform.position;
     }
+
+    public WaypointNode(Vector3 node)
+    {
+        waitTime = 0;
+        waitToRotate = 0;
+        position = node;
+    }
+
+    //public IEnumerator triggerRoutine;
+    //public string triggerFunction;
+
+    //public void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if(triggerFunction.Length > 0)
+    //    {
+    //        other.gameObject.GetComponent<BEnemy>().Invoke(triggerFunction, 0);
+    //    }
+    //}
 }

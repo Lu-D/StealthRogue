@@ -10,10 +10,8 @@ public class EnemyPatrol : BEnemy {
     public GameObject bullet;
     public GameObject waypointControl;
     [HideInInspector]
-    public Transform[] wayPoints; //waypoints[1] is waypointControl
 
     //helper variables
-    public int nextWayPoint = 2; //set to two to navigate towards first waypoint that is not an enpoint
     public IEnumerator attackCoroutine;
     [HideInInspector]
     private Quaternion up; //to keep texture upright
@@ -32,12 +30,11 @@ public class EnemyPatrol : BEnemy {
     {
         up = transform.rotation;
 
-        //class and component initialization
-        wayPoints = waypointControl.GetComponentsInChildren<Transform>();
-
         //initialize state machine and enter first state
         mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
         mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
+
+        waypointNav.setWaypoints(waypointControl);
     }
 
     //Update
@@ -101,96 +98,6 @@ public class EnemyPatrol : BEnemy {
             anim.SetBool("isMoving", true);
         else
             anim.SetBool("isMoving", false);
-    }
-    
-    //moveTowardsNext
-    //move towards next waypoint in wayPoints
-    public IEnumerator moveTowardsNext()
-    {
-        Rigidbody2D myRigidbody = transform.GetComponent<Rigidbody2D>();
-        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitTime;
-        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitToRotate;
-        myRigidbody.velocity = new Vector3(0, 0, 0);
-
-        if (waitTime > 0)
-            yield return new WaitForSeconds(waitTime);
-        yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
-        if (waitToRotate > 0)
-            yield return new WaitForSeconds(waitToRotate);
-        myRigidbody.velocity = ((wayPoints[nextWayPoint].position - transform.position).normalized * moveSpeed);
-    }
-
-    //rotateTowardsNext
-    //rotates towards next waypoint if enemy patrol is stationary
-    public IEnumerator rotateTowardsNext()
-    {
-        float waitTime = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitTime;
-        float waitToRotate = wayPoints[nextWayPoint].gameObject.GetComponent<WaypointNode>().waitToRotate;
-        yield return RotateTo(wayPoints[nextWayPoint].transform.position, 0);
-
-        if (nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1)
-        {
-            patrolDirection = !patrolDirection;
-        }
-
-        if (patrolDirection)
-            ++nextWayPoint;
-        else
-            --nextWayPoint;
-
-        yield return new WaitForSeconds(waitToRotate);
-        messageReceiver = new Message<Vector3>(message_type.nextWaypoint);
-    }
-
-    //disableWaypoints
-    //disables all waypoints
-    public void disableWaypoints()
-    {
-        foreach (Transform waypoint in wayPoints)
-        {
-            waypoint.gameObject.SetActive(false);
-        }
-    }
-
-    //reenableWaypoints
-    //reenables all waypoints at end of chain
-    public void reenableWaypoints()
-    {
-        foreach(Transform waypoint in wayPoints)
-        {
-            waypoint.gameObject.SetActive(true);
-        }
-    }
-
-    //OnTriggerEnter2D
-    //determines whether waypoint is waypoint or endpoint
-    //reverses direction on collision with endpoint
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.transform.tag == "Waypoint")
-        {
-            if(GameObject.ReferenceEquals(other.transform.gameObject, wayPoints[nextWayPoint].gameObject))
-            {
-                if ((nextWayPoint == waypointControl.transform.childCount || nextWayPoint == 1) && !patrolLoop)
-                {
-                    reenableWaypoints();
-                    patrolDirection = !patrolDirection;
-                }
-                else if(nextWayPoint == waypointControl.transform.childCount && patrolLoop)
-                {
-                    reenableWaypoints();
-                    nextWayPoint = 0;
-                }
-                else
-                    other.transform.gameObject.SetActive(false);
-
-                if (patrolDirection)
-                    ++nextWayPoint;
-                else
-                    --nextWayPoint;
-                messageReceiver = new Message<int>(message_type.nextWaypoint);
-            }
-        }
     }
 
     public void playAttackSound()

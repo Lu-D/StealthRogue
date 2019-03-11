@@ -109,7 +109,7 @@ public class Task
     TaskManager.TaskState task;
 }
 
-public class TaskManager : MonoBehaviour
+class TaskManager : MonoBehaviour
 {
     public class TaskState
     {
@@ -222,32 +222,32 @@ public class TaskList : MonoBehaviour
 
     public bool Running(string key)
     {
-        return taskList[key].Paused;
+        return getTask(key).Running;
     }
 
     public bool Paused(string key)
     {
-        return taskList[key].Running;
+        return getTask(key).Paused;
     }
 
     public void Pause(string key)
     {
-        taskList[key].Pause();
+        getTask(key).Pause();
     }
 
     public void Unpause(string key)
     {
-        taskList[key].Unpause();
+        getTask(key).Unpause();
     }
 
     public void Start(string key)
     {
-        taskList[key].Start();
+        getTask(key).Start();
     }
 
     public void Stop(string key)
     {
-        taskList[key].Stop();
+        getTask(key).Stop();
         taskList.Remove(key);
     }
 

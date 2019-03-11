@@ -33,11 +33,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3048607231322895345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1817958319340010, guid: a18fe572172c8f249a0ea0e9f08ae09f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3046862665581791771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3046124617346574991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4120148233740436, guid: a18fe572172c8f249a0ea0e9f08ae09f,
     type: 3}
   m_PrefabInstance: {fileID: 3046862665581791771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1464725562289049631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048607231322895345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a5bbed73e5a7246b892f11871d74b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  waitTime: 0
+  waitToRotate: 0
+  visited: 0
+--- !u!1 &6597175486590582846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1817958319340010, guid: a18fe572172c8f249a0ea0e9f08ae09f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6596530227243039188}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6594736647862376768 stripped
 Transform:
@@ -45,12 +73,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6596530227243039188}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4967115534371604356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6597175486590582846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a5bbed73e5a7246b892f11871d74b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  waitTime: 0
+  waitToRotate: 0
+  visited: 0
+--- !u!1 &8644372940377103979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1817958319340010, guid: a18fe572172c8f249a0ea0e9f08ae09f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8642563883606353793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8646398152277935893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4120148233740436, guid: a18fe572172c8f249a0ea0e9f08ae09f,
     type: 3}
   m_PrefabInstance: {fileID: 8642563883606353793}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5948870918556067068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644372940377103979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a5bbed73e5a7246b892f11871d74b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  waitTime: 0
+  waitToRotate: 0
+  visited: 0
 --- !u!1001 &3046862665581791771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,7 +172,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: WayPoint (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114508702963045440, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
 --- !u!1001 &6596530227243039188
 PrefabInstance:
@@ -163,7 +230,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Endpoint
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114508702963045440, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
 --- !u!1001 &8642563883606353793
 PrefabInstance:
@@ -220,5 +288,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Endpoint
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114508702963045440, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a18fe572172c8f249a0ea0e9f08ae09f, type: 3}
