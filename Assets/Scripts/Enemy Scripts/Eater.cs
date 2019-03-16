@@ -1,61 +1,38 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
+public class Eater : BEnemy{
+    NavigateRoom testGoal;
 
-//EnemyControl
-//class to control enemy behavior
-public class EnemyPatrol : BEnemy {
-
-    //enemy children gameobject
-    public GameObject waypointControl;
-    private GameObject front;
-
-    //helper variables
-    [HideInInspector]
+    //All filler animation stuff
     private Quaternion up; //to keep texture upright
-
-    //animDirection
-    //Struct for keeping track of directions for animator
+    private GameObject front;
     private struct animDirection
     {
         public static float x;
         public static float y;
     }
 
-    //Awake
-    //on start script
     protected override void myAwake()
     {
-        enemyVision = new EnemyVision(this);
-
+        //For filler animation
         up = transform.rotation;
         front = new GameObject("front");
         front.transform.position = Vector3.up + transform.position;
         front.transform.parent = gameObject.transform;
 
-        //initialize state machine and enter first state
-        mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
-        mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
 
-        waypointNav.setWaypoints(waypointControl);
+        testGoal = new NavigateRoom(this);
+
     }
 
-    //Update
-    //called once per frame
-    void Update()
+    public void Update()
     {
-        mainFSM.stateUpdate();
+        testGoal.Process();
     }
 
-    //LateUpdate
-    //draws enemies fieldOfView for player
-    private void LateUpdate()
-    {
-        enemyVision.drawFOV();
-    }
-
-    //updateVision
-    //update animator with direction state
+    //FILLER animation for now, REPLACE
     protected override void updateAnim()
     {
         Animator anim = transform.Find("Texture").GetComponent<Animator>();
@@ -91,12 +68,12 @@ public class EnemyPatrol : BEnemy {
 
         //keeps animation texture upright
         Transform texture = transform.Find("Texture");
-        if(texture.rotation != up)
+        if (texture.rotation != up)
             texture.rotation = up;
-        
+
 
         //determines whether or not to play idle animation
-        if (transform.GetComponent<Rigidbody2D>().velocity != new Vector2(0,0) || pathFinder.canMove)
+        if (transform.GetComponent<Rigidbody2D>().velocity != new Vector2(0, 0) || pathFinder.canMove)
             anim.SetBool("isMoving", true);
         else
             anim.SetBool("isMoving", false);

@@ -212,7 +212,7 @@ TaskList["Task Key"] = new Task(--coroutine);
 */
 
 /// TaskList allows for the instantiation and deletion of coroutines, organized by dictionary keys
-public class TaskList : MonoBehaviour
+public class TaskList
 {
     private Dictionary<string, Task> taskList;
 
@@ -249,6 +249,19 @@ public class TaskList : MonoBehaviour
     {
         getTask(key).Stop();
         taskList.Remove(key);
+    }
+
+    public void StopAllTasks()
+    {
+        if (taskList.Count > 0)
+        {
+            foreach (Task i in taskList.Values)
+            {
+                i.Stop();
+            }
+
+            taskList.Clear();
+        }
     }
 
     public Task this[string key]

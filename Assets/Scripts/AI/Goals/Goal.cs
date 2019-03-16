@@ -30,7 +30,10 @@ public abstract class Goal
 
     }
 
-
+    public virtual bool HandleMessage()
+    {
+        return false;
+    }
 //public
     public Goal(BEnemy _owner){
         owner = _owner;

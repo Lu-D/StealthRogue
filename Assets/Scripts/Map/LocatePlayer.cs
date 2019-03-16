@@ -18,16 +18,14 @@ public class LocatePlayer : MonoBehaviour {
             player.mapLocation = transform.parent.name;
             player.changingLocation = false;
         }
-
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
         if (collision.tag == "Enemy")
         {
             collision.GetComponent<BEnemy>().mapLocation = transform.parent.name;
         }
+    }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -36,6 +34,10 @@ public class LocatePlayer : MonoBehaviour {
         {
             player.mapLocation = "";
             player.changingLocation = true;
+        }
+        if (collision.tag == "Enemy")
+        {
+            collision.GetComponent<BEnemy>().mapLocation = "";
         }
     }
 }

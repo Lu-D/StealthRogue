@@ -11,17 +11,10 @@ public class BEnemy : MonoBehaviour
     public float moveSpeed;
     public float rotateSpeed;
     public float fovResolution;
-    public float distToFire;
     public bool playerSpotted = false;
-    public int currAmmo;
-    public int maxAmmo;
-    public float reloadTime;
     public string mapLocation;
-    public bool movingPatrol;
-    public bool patrolLoop;
     public int health = 1;
     public bool isDead = false;
-    public bool patrolDirection = true; //false when going backwards
     public GameObject itemDrop;
 
     //Finite State Machines
@@ -50,7 +43,7 @@ public class BEnemy : MonoBehaviour
     public TaskList taskList;
 
 //private stuff
-    private void Awake()
+    public void Awake()
     {
         taskList = new TaskList();
         messageReceiver = new MessageReceiver();
@@ -58,7 +51,6 @@ public class BEnemy : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
 
-        enemyVision = new EnemyVision(this);
         pathFinder = GetComponent<Pathfinding.AIPath>();
 
         //initialize state machines
