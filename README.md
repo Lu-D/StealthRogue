@@ -56,9 +56,9 @@ can't turn effectively, meant to be avoided with rolling.
 
 ## Current Task List
 
-David - Unifying / encapsulating waypoint system
+David - Replace existing systems with activatable monobehaviors
 
-Don - Enemy behavior
+Don - Enemy goal system
 
 Jack - Art Prototyping
 
@@ -67,7 +67,7 @@ Jesse - Music Prototyping
 
 ## Next Meeting
 
-3:00 PM Saturday, February 9
+4:00 PM Saturday, March 23
 
 Lewis 408
 
