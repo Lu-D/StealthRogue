@@ -22,14 +22,13 @@ public class BEnemy : MonoBehaviour
     public StateMachine mainFSM;
     [HideInInspector]
     public StateMachine attackFSM;
+
     [HideInInspector]
     public EnemyVision enemyVision;
     [HideInInspector]
     public AttackPatterns attackPatterns;
     [HideInInspector]
     public Pathfinding.AIPath pathFinder;
-    [HideInInspector]
-    public WaypointNav waypointNav;
 
     //Receives messages
     [HideInInspector]
@@ -56,8 +55,6 @@ public class BEnemy : MonoBehaviour
         //initialize state machines
         mainFSM = new StateMachine(this);
         attackFSM = new StateMachine(this);
-
-        waypointNav = new WaypointNav(this);
 
         myAwake(); //called from derived class
     }

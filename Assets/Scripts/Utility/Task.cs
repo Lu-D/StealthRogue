@@ -216,7 +216,7 @@ public class TaskList
 {
     private Dictionary<string, Task> taskList;
 
-    public TaskList(){
+    public TaskList() {
         taskList = new Dictionary<string, Task>();
     }
 
@@ -270,7 +270,7 @@ public class TaskList
         {
             createTask(value, key);
         }
-    }
+    }   
 
     private Task getTask(string key)
     {

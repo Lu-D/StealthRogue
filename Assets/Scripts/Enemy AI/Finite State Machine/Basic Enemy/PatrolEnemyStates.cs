@@ -16,13 +16,18 @@ public class PatrolWaypoint : State
         owner.viewMeshFilter.SetActive(true);
 
         owner.playerSpotted = false;
+
+        var patrolBehavior = owner.GetComponent<Pathfinding.PatrolBackAndForth>();
+        if (patrolBehavior != null)
+        {
+            patrolBehavior.enabled = true;
+        }
     }
 
     public override void Execute(BEnemy owner)
     {
         //check if player is spotted every udpate
         owner.playerSpotted = owner.enemyVision.checkVision();
-        owner.waypointNav.navForwardBack();
 
         //changes to attack state if enemy spots player
         if (owner.playerSpotted)
@@ -36,7 +41,9 @@ public class PatrolWaypoint : State
 
     public override void Exit(BEnemy owner)
     {
-        owner.waypointNav.stopNav();
+        //owner.waypointNav.stopNav();
+        var patrolBehavior = owner.GetComponent<Pathfinding.PatrolBackAndForth>();
+        if (patrolBehavior != null) patrolBehavior.enabled = false;
     }
 
     //singleton
@@ -97,6 +104,9 @@ public class LookAtMe : State
 
     public override void Enter(BEnemy owner)
     {
+        var ai = owner.GetComponent<Pathfinding.IAstarAI>();
+        if (ai != null) ai.isStopped = true;
+
         Vector3 bombPosition = owner.messageReceiver.getMessageContent<Vector3>();
         owner.taskList["LookAtMe"] = new Task(owner.RotateTo(bombPosition, 5f));
     }
@@ -123,6 +133,9 @@ public class LookAtMe : State
     public override void Exit(BEnemy owner)
     {
         owner.taskList.Stop("LookAtMe");
+
+        var ai = owner.GetComponent<Pathfinding.IAstarAI>();
+        if (ai != null) ai.isStopped = false;
     }
 
     //singleton

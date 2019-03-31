@@ -37,7 +37,8 @@ public class EnemyPatrol : BEnemy {
         mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
         mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
 
-        waypointNav.setWaypoints(waypointControl);
+        var patrolBehavior = GetComponent<Pathfinding.PatrolBackAndForth>();
+        if (patrolBehavior != null) patrolBehavior.setWaypoints(waypointControl);
     }
 
     //Update

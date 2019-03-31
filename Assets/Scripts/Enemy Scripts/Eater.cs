@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Eater : BEnemy{
-    NavigateRoom testGoal;
+    Goal testGoal;
 
     //All filler animation stuff
     private Quaternion up; //to keep texture upright
@@ -22,8 +22,7 @@ public class Eater : BEnemy{
         front.transform.position = Vector3.up + transform.position;
         front.transform.parent = gameObject.transform;
 
-
-        testGoal = new NavigateRoom(this);
+        testGoal = new EaterThinkG(this);
 
     }
 

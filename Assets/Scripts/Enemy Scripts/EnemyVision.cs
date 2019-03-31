@@ -119,8 +119,8 @@ public class EnemyVision {
     {
         Vector3 dir = dirFromAngle(angle);
 
-        //visualization ignores other guards - 11 and projectiles - 12
-        LayerMask viewCastLayer = ~((1 << LayerMask.NameToLayer("Projectile")) | (1 << LayerMask.NameToLayer("Enemy")));
+        //visualization ignores projectiles and enemies
+        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Projectile") | 1 << LayerMask.NameToLayer("Enemy"));
 
 
         RaycastHit2D hit = Physics2D.Raycast(enemyTransform.position, dir, detectionDistance, viewCastLayer);
