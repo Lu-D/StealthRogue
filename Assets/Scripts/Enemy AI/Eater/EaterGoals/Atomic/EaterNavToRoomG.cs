@@ -15,13 +15,14 @@ public class EaterNavToRoomG : Goal
 
     public override void Activate()
     {
+        status = goalStatus.active;
         if (navigateToRoom != null) navigateToRoom.enabled = true;
     }
 
     public override goalStatus Process()
     {
         ActivateIfInactive();
-
+        
         if (navigateToRoom != null && navigateToRoom.roomReached)
             status = goalStatus.completed;
         else if (owner.mapLocation == owner.player.mapLocation)

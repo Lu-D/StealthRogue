@@ -15,10 +15,8 @@ public class EaterPatrolRoomG : CompositeGoal
 
     public override void Activate()
     {
-        if (checkCanChargePlayer())
-            addSubgoal(new EaterChargeG(owner));
-        else
-            addSubgoal(new EaterSetRoomWaypointsG(owner));
+        addSubgoal(new EaterChargeG(owner));
+        addSubgoal(new EaterSetRoomWaypointsG(owner));
     }
     public override goalStatus Process()
     {
@@ -27,7 +25,15 @@ public class EaterPatrolRoomG : CompositeGoal
         status = processSubgoals();
 
         if (owner.mapLocation != owner.player.mapLocation)
+        {
+            removeAllSubgoals();
             status = goalStatus.completed;
+        } 
+        else if(isCompleted())
+        {
+            removeAllSubgoals();
+            status = goalStatus.inactive;
+        }
 
         return status;
     }
@@ -35,14 +41,5 @@ public class EaterPatrolRoomG : CompositeGoal
     public override void Terminate()
     {
         if (pathfinder != null) pathfinder.enabled = false;
-    }
-
-    private bool checkCanChargePlayer()
-    {
-        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Enemy"));
-        RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.player.transform.position - owner.transform.position, 4, viewCastLayer);
-
-        if (hit.collider != null && hit.collider.tag == "Player") return true;
-        else return false;
     }
 }

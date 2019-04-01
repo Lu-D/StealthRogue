@@ -14,13 +14,15 @@ class EaterChargeTarget : MonoBehaviour
     {
         get{ return timepassed; }
     }
+
     private bool canhittarget = false;
     public bool canHitTarget
     {
         get{ return canhittarget; }
     }
-    public float chargeSpeed = 2.5f;
-    public float chargeDistance = 3f;
+
+    private float chargeSpeed = 2.5f;
+    private float chargeDistance = 3f;
     public Transform target;
 
     private void OnEnable()
@@ -31,19 +33,24 @@ class EaterChargeTarget : MonoBehaviour
 
         startTime = Time.time;
         timepassed = 0;
-
         chargePlayer();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         target = null;
         ai.maxSpeed /= chargeSpeed;
+        canhittarget = false;
     }
 
     private void Update()
     {
         if (ai.reachedEndOfPath) timepassed = Time.time - startTime;
+
+        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, GetComponent<Eater>().player.transform.position - transform.position, chargeDistance, viewCastLayer);
+        if (hit.collider != null && hit.collider.tag == "Player") canhittarget = true;
+        else canhittarget = false;
     }
 
     private void chargePlayer()

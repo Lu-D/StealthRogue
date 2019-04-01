@@ -49,6 +49,11 @@ public abstract class Goal
     public bool isInactive(){return status == goalStatus.inactive;}
     public bool hasFailed(){return status == goalStatus.failed;}
 
+    public void Reactivate(){
+        Terminate();
+        Activate();
+    }
+
     public abstract void Activate();
     public abstract goalStatus Process();
     public abstract void Terminate();

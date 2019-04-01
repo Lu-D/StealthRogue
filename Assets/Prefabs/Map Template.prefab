@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 4756303219307026}
   - component: {fileID: 61201013112756482}
   - component: {fileID: 114197042667114150}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: PlayerLocator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

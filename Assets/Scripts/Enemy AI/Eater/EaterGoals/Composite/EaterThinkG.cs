@@ -17,7 +17,7 @@ public class EaterThinkG : CompositeGoal
 
         if (owner.mapLocation != owner.player.mapLocation)
             addSubgoal(new EaterNavToRoomG(owner));
-        else if(owner.mapLocation != "")
+        else if (owner.mapLocation != "")
             addSubgoal(new EaterPatrolRoomG(owner));
     }
 
@@ -31,8 +31,11 @@ public class EaterThinkG : CompositeGoal
         owner.BupdateAnim();
 
         if (isCompleted())
+        {
+            removeAllSubgoals();
             status = goalStatus.inactive;
-
+        }
+        Debug.Log(getCurrentSubgoal());
         return status;
     }
 

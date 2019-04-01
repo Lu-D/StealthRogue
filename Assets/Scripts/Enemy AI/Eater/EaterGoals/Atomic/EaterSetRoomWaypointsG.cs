@@ -20,7 +20,7 @@ public class EaterSetRoomWaypointsG : Goal
         if (pathfinder != null)
         {
             pathfinder.setRoomWaypoints();
-            if (!pathfinder.enabled) pathfinder.enabled = true;
+            pathfinder.enabled = true;
         }
     }
     public override goalStatus Process()
@@ -42,7 +42,6 @@ public class EaterSetRoomWaypointsG : Goal
     {
         LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Enemy"));
         RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.player.transform.position - owner.transform.position, 4, viewCastLayer);
-
         if (hit.collider != null && hit.collider.tag == "Player") return true;
         else return false;
     }

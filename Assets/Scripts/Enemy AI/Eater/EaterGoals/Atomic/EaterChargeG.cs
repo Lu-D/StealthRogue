@@ -28,10 +28,15 @@ public class EaterChargeG : Goal
     {
         ActivateIfInactive();
 
-        if (eaterChargeTarget.timePassed > 4f)
+        if (eaterChargeTarget != null &&
+        eaterChargeTarget.timePassed > 4f)
         {
-            if (eaterChargeTarget != null) eaterChargeTarget.enabled = false;
-            status = goalStatus.inactive;
+            if (eaterChargeTarget.canHitTarget)
+            {
+                Reactivate();
+            }
+            else
+                status = goalStatus.completed;
         }
 
         return status;

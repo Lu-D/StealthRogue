@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class CompositeGoal : Goal
 {
 //protected
-    LinkedList<Goal> subgoalList;
+    protected LinkedList<Goal> subgoalList;
 
     protected goalStatus processSubgoals()
     {
@@ -32,7 +32,7 @@ public abstract class CompositeGoal : Goal
             return goalStatus.completed;
     }
 
-    //public
+//public
     public CompositeGoal(BEnemy _owner) : base(_owner)
     {
         subgoalList = new LinkedList<Goal>();
@@ -51,6 +51,28 @@ public abstract class CompositeGoal : Goal
         }
 
         subgoalList.Clear();
+    }
+
+    public void forwardGoal(Goal passGoal)
+    {
+        if (subgoalList.First.Value is CompositeGoal)
+        {
+            CompositeGoal firstGoal = subgoalList.First.Value as CompositeGoal;
+            firstGoal.forwardGoal(passGoal);
+        }
+        else
+            addSubgoal(passGoal);
+    }
+
+    public Goal getCurrentSubgoal()
+    {
+        if (subgoalList.First.Value is CompositeGoal)
+        {
+            CompositeGoal firstGoal = subgoalList.First.Value as CompositeGoal;
+            return firstGoal.getCurrentSubgoal();
+        }
+        else
+            return subgoalList.First.Value;
     }
     
     public abstract override void Activate();
