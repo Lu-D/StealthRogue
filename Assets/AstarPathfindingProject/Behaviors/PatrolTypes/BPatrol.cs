@@ -25,11 +25,11 @@ namespace Pathfinding {
 		protected int index;
 
 		protected IAstarAI agent;
-		protected float switchTime = float.PositiveInfinity;
+		protected float switchTime;
 
         private NodePerimeterGen nodePerimeterGen;
         protected float startTime;
-        public float timePassed = float.PositiveInfinity;
+        public float timePassed;
 
         private void Awake()
         {
@@ -37,7 +37,8 @@ namespace Pathfinding {
             index = 0;
             nodePerimeterGen = new NodePerimeterGen(this);
             enabled = false;
-            startTime = Time.time;
+            timePassed = Mathf.NegativeInfinity;
+            switchTime = Mathf.Infinity;
         }
 
         private void Start()

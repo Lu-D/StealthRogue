@@ -15,6 +15,10 @@ namespace Pathfinding {
 	[UniqueComponent(tag = "ai.destination")]
 	[HelpURL("http://arongranberg.com/astar/docs/class_pathfinding_1_1_patrol.php")]
 	public class PatrolBackAndForth : BPatrol {
+        private void OnEnable()
+        {
+            startTime = Time.time;
+        }
         private void OnDisable()
         {
             if (index < 0)

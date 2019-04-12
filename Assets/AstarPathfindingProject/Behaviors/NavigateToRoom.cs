@@ -40,11 +40,6 @@ public class NavigateToRoom : MonoBehaviour
 
     public Vector3 findRandomRoom()
     {
-        //int randomMap = Random.Range(0, GameObject.Find("Maps").transform.childCount);
-        //roomTarget = GameObject.Find("Maps").transform.GetChild(randomMap).name;
-        //var roomBounds = GameObject.Find("Maps").transform.GetChild(randomMap).transform.position;
-        //return roomBounds;
-
         PlayerSearchableArea searchableMaps;
         if (enemy != null) searchableMaps = enemy.player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
         else return Vector3.positiveInfinity;

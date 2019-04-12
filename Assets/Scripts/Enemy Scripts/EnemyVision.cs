@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //enemy vision class held by enemy control script
-public class EnemyVision {
+public class EnemyVision
+{
 
     GameObject player;
     Transform enemyTransform;

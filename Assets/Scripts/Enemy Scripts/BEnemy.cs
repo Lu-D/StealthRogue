@@ -61,8 +61,6 @@ public class BEnemy : MonoBehaviour
     protected virtual void myAwake(){ }
 
 //public stuff
-    public void BupdateAnim(){ updateAnim(); }
-    protected virtual void updateAnim(){ }
 
     //RotateTo
     //rotates enemy to face target

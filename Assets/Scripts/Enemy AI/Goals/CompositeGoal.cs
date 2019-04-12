@@ -19,6 +19,7 @@ public abstract class CompositeGoal : Goal
         if (subgoalList.Count != 0)
         {
 
+
             goalStatus subgoalStatus = subgoalList.First.Value.Process();
 
             if (subgoalStatus == goalStatus.completed && subgoalList.Count > 1)
@@ -38,19 +39,27 @@ public abstract class CompositeGoal : Goal
         subgoalList = new LinkedList<Goal>();
     }
 
-    public override void addSubgoal(Goal g)
+    public override void pushSubgoalFront(Goal g)
     {
         subgoalList.AddFirst(g);
     }
 
+    public override void pushSubgoalBack(Goal g)
+    {
+        subgoalList.AddLast(g);
+    }
+
     public void removeAllSubgoals()
     {
-        foreach(Goal goal in subgoalList)
+        if (subgoalList.Count > 0)
         {
-            goal.Terminate();
-        }
+            foreach (Goal goal in subgoalList)
+            {
+                goal.Terminate();
+            }
 
-        subgoalList.Clear();
+            subgoalList.Clear();
+        }
     }
 
     public void forwardGoal(Goal passGoal)
@@ -61,18 +70,27 @@ public abstract class CompositeGoal : Goal
             firstGoal.forwardGoal(passGoal);
         }
         else
-            addSubgoal(passGoal);
+            pushSubgoalFront(passGoal);
     }
 
-    public Goal getCurrentSubgoal()
+    //for debugging purposes
+    public Goal getFrontMostSubgoal()
     {
         if (subgoalList.First.Value is CompositeGoal)
         {
             CompositeGoal firstGoal = subgoalList.First.Value as CompositeGoal;
-            return firstGoal.getCurrentSubgoal();
+            return firstGoal.getFrontMostSubgoal();
         }
         else
             return subgoalList.First.Value;
+    }
+
+    public Goal getCurrentSubgoal()
+    {
+        if (subgoalList.Count != 0)
+            return subgoalList.First.Value;
+        else
+            throw new System.Exception("Empty Subgoal List access attempted");
     }
     
     public abstract override void Activate();

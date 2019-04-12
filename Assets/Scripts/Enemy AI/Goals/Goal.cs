@@ -40,7 +40,12 @@ public abstract class Goal
         status = goalStatus.inactive;
     }
 
-    public virtual void addSubgoal(Goal g){
+    public virtual void pushSubgoalFront(Goal g){
+        throw new MethodAccessException("Cannot add goals to atomic goals");
+    }
+
+    public virtual void pushSubgoalBack(Goal g)
+    {
         throw new MethodAccessException("Cannot add goals to atomic goals");
     }
 

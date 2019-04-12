@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class EaterSetRoomWaypointsG : Goal
+public class ExploreRoom : Goal
 {
     private Pathfinding.PatrolLoop pathfinder;
 
-    public EaterSetRoomWaypointsG(BEnemy _owner) : base(_owner)
+    public ExploreRoom(BEnemy _owner) : base(_owner)
     {
         pathfinder = owner.GetComponent<Pathfinding.PatrolLoop>();
     }
@@ -27,7 +27,7 @@ public class EaterSetRoomWaypointsG : Goal
     {
         ActivateIfInactive();
 
-        if (checkCanChargePlayer())
+        if (pathfinder != null && pathfinder.timePassed > 20f)
             status = goalStatus.completed;
 
         return status;
@@ -36,13 +36,5 @@ public class EaterSetRoomWaypointsG : Goal
     public override void Terminate()
     {
         if (pathfinder != null) pathfinder.enabled = false;
-    }
-
-    private bool checkCanChargePlayer()
-    {
-        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Enemy"));
-        RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.player.transform.position - owner.transform.position, 4, viewCastLayer);
-        if (hit.collider != null && hit.collider.tag == "Player") return true;
-        else return false;
     }
 }

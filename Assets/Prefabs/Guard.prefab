@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 5021516232729313829}
   - component: {fileID: 6813730869123212655}
   - component: {fileID: 582661057980282398}
+  - component: {fileID: 5455219278041702597}
   m_Layer: 11
   m_Name: Guard
   m_TagString: Enemy
@@ -451,5 +452,17 @@ MonoBehaviour:
   thickRaycastRadius: 0
   use2DPhysics: 1
   raycastOffset: {x: 0, y: 0, z: 0}
-  useGraphRaycasting: 1
+  useGraphRaycasting: 0
   quality: 1
+--- !u!114 &5455219278041702597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186795025299142510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2dc573353ca7c44f861d519b4894241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

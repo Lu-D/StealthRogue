@@ -208,9 +208,6 @@ public class PatrolEnemyGlobal : State
 
     public override void Execute(BEnemy owner)
     {
-        if (owner.mainFSM.getCurrentState() != Die.Instance)
-            owner.BupdateAnim();
-
         if (owner.health <= 0 && owner.mainFSM.getCurrentState() != Die.Instance)
             owner.mainFSM.changeState(Die.Instance);
     }

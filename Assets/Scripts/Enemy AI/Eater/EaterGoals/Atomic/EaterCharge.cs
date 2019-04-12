@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class EaterChargeG : Goal
+public class EaterCharge : Goal
 {
     private EaterChargeTarget eaterChargeTarget;
 
-    public EaterChargeG(BEnemy _owner) : base(_owner)
+    public EaterCharge(BEnemy _owner) : base(_owner)
     {
         eaterChargeTarget = owner.GetComponent<EaterChargeTarget>();
     }
