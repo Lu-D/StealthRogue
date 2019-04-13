@@ -33,6 +33,7 @@ public class PlayerControl : MonoBehaviour {
 
     public int currStamina;
     public int currTimeFuel;
+    public PlayerSearchableArea searchableArea;
 
     public AudioClip[] audioClips;
 
@@ -47,7 +48,7 @@ public class PlayerControl : MonoBehaviour {
     private Renderer myRenderer;
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake () {
         lastMove.y = -1;
         isSpotted = false;
 
@@ -69,10 +70,12 @@ public class PlayerControl : MonoBehaviour {
         currTimeFuel = maxTimeFeul;
 
         moveSpeed = defaultSpeed;
+
+        searchableArea = transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
     }
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 
         if (gettingCaught)
         {
@@ -84,6 +87,11 @@ public class PlayerControl : MonoBehaviour {
         {
             rollOneShot = new Task(roll());
             currStamina -= 60;
+        }
+
+        if (Input.GetKeyDown("p"))
+        {
+            searchableArea.decreaseSearchArea();
         }
 
         if (Input.GetMouseButtonDown(0))

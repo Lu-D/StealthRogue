@@ -8,7 +8,11 @@ public class LookSideToSide : MonoBehaviour
 {
     private Pathfinding.IAstarAI ai;
     private EnemyPatrol enemy;
-    
+
+    private Vector3 turnLocationRight;
+    private Vector3 turnLocationLeft;
+    int dir = 0;
+
     public void Awake()
     {
         ai = GetComponent<Pathfinding.IAstarAI>();
@@ -17,22 +21,26 @@ public class LookSideToSide : MonoBehaviour
 
     public void OnEnable()
     {
-        if(ai != null) ai.isStopped = true;
-
-        Vector3 turnLocationRight = transform.forward + transform.right;
-        Vector3 turnLocationLeft = transform.forward + transform.right;
-
-        enemy.RotateTo(turnLocationRight, 1f);
-        //enemy.RotateTo(turnLocationLeft, 1f);
+        turnLocationRight = transform.position + transform.right + transform.up;
+        turnLocationLeft = transform.position - transform.right + transform.up;
     }
 
     public void OnDisable()
     {
-        if(ai != null) ai.isStopped = false;
     }
 
     public void Update()
     {
+        if(ai.reachedEndOfPath && dir == 0) 
+        {
+            ai.destination = turnLocationLeft;
+            ++dir;
+        }
+        else if(ai.reachedEndOfPath && dir == 1)
+        {
+            ai.destination = turnLocationRight;
+            --dir;
+        }
     }
 }
 

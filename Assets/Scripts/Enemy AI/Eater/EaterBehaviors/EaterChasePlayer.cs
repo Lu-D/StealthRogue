@@ -26,13 +26,7 @@ public class EaterChasePlayer : MonoBehaviour
     private void OnEnable()
     {
         if (ai != null && searchableArea != null)
-        {
-            searchableArea.gettingHunted = true;
-            searchableArea.zeroRadius();
-
             ai.destination = searchableArea.returnRandomPoint();
-        }
-
     }
 
     private void OnDisable()

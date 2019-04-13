@@ -17,26 +17,17 @@ public class EaterCharge : Goal
     {
         status = goalStatus.active;
 
-        if (eaterChargeTarget != null)
-        {
-            eaterChargeTarget.target = owner.player.transform;
-            eaterChargeTarget.enabled = true;
-        }
+        eaterChargeTarget.target = owner.player.transform;
+        eaterChargeTarget.enabled = true;
     }
 
     public override goalStatus Process()
     {
         ActivateIfInactive();
 
-        if (eaterChargeTarget != null &&
-        eaterChargeTarget.timePassed > 4f)
+        if (eaterChargeTarget.timePassed > 4f)
         {
-            if (eaterChargeTarget.canHitTarget)
-            {
-                Reactivate();
-            }
-            else
-                status = goalStatus.completed;
+            status = goalStatus.completed;
         }
 
         return status;
@@ -44,6 +35,6 @@ public class EaterCharge : Goal
 
     public override void Terminate()
     {
-        if(eaterChargeTarget != null) eaterChargeTarget.enabled = false;
+       eaterChargeTarget.enabled = false;
     }
 }

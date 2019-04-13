@@ -3,19 +3,16 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class PlayerSearchableArea : MonoBehaviour
+public class PlayerSearchableArea : MonoBehaviour
 {
     private CircleCollider2D circle;
-    private float originalRadius = 13f;
-    private float radius;
-    private float hintsUntilPlayerFound = 6;
-    private float decreaseStep;
-    public bool gettingHunted = true;
+    private float originalRadius = 26f;
+    public float radius;
+    public bool gettingHunted = false;
 
     private void Awake()
     {
         radius = originalRadius;
-        decreaseStep = radius / hintsUntilPlayerFound;
         circle = GetComponent<CircleCollider2D>();
     }
 
@@ -24,13 +21,13 @@ class PlayerSearchableArea : MonoBehaviour
         if(!gettingHunted)
         {
             DebugUtility.DrawCircle(transform.position, radius, Color.green);
-            if (circle != null) circle.radius = radius;
+            circle.radius = radius * (1/transform.parent.gameObject.transform.localScale.x);
         }
         else
         {
             radius += Time.deltaTime * .1f;
             DebugUtility.DrawCircle(transform.position, radius, Color.red);
-            if (circle != null) circle.radius = radius;
+            circle.radius = radius * (1 / transform.parent.gameObject.transform.localScale.x);
 
             if (radius > 10f) 
             {
@@ -43,7 +40,7 @@ class PlayerSearchableArea : MonoBehaviour
 
     public void decreaseSearchArea()
     {
-        radius -= decreaseStep;
+        radius -= 2f;
     }
 
     public void resetRadius()

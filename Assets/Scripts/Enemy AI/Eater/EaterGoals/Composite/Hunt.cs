@@ -6,6 +6,8 @@ using System.Text;
 
 public class Hunt : CompositeGoal
 {
+    private bool startHunt = false;    
+
     public Hunt(BEnemy _owner) : base(_owner)
     {
     }
@@ -16,6 +18,13 @@ public class Hunt : CompositeGoal
 
         removeAllSubgoals();
 
+        if (!startHunt)
+        {
+            owner.player.searchableArea.zeroRadius();
+            owner.player.searchableArea.gettingHunted = true;
+            startHunt = true;
+        }
+
         pushSubgoalBack(new TravelToSearchableArea(owner));
         pushSubgoalBack(new LookAround(owner));
     }
@@ -25,10 +34,14 @@ public class Hunt : CompositeGoal
 
         status = processSubgoals();
 
+        if (status == goalStatus.completed)
+            Activate();
+
         return status;
     }
 
     public override void Terminate()
     {
+        owner.player.searchableArea.resetRadius();
     }
 }

@@ -22,8 +22,7 @@ class TravelToSearchableArea : Goal
     {
         ActivateIfInactive();
 
-        if (chasePlayer.targetReached ||
-        owner.enemyVision.hasSeen("Player"))
+        if (chasePlayer.targetReached)
             status = goalStatus.completed;
 
         return status;

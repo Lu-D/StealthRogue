@@ -5,12 +5,9 @@ using System.Text;
 using UnityEngine;
 
 public class EaterThink : CompositeGoal
-{
-    
-    
+{ 
     public EaterThink(BEnemy _owner) : base(_owner)
     {
-        
     }
 
     public override void Activate()
@@ -29,8 +26,10 @@ public class EaterThink : CompositeGoal
 
         status = processSubgoals();
 
-        if (status == goalStatus.completed)
+        if (status == goalStatus.completed ||
+        Arbitrate().GetType() != getCurrentSubgoal().GetType())
             status = goalStatus.inactive;
+            
 
         Debug.Log("Goal Status: " + getFrontMostSubgoal());
         return status;
@@ -43,7 +42,10 @@ public class EaterThink : CompositeGoal
 
     public Goal Arbitrate() 
     {
-        return new Hunt(owner);
+        if (owner.player.searchableArea.radius > 6f)
+            return new Explore(owner);
+        else
+            return new Hunt(owner);
     }
 
 }

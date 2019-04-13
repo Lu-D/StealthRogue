@@ -28,8 +28,7 @@ public class LookAround : Goal
     {
         ActivateIfInactive();
 
-        if (owner.enemyVision.hasSeen("Player") ||
-        timer.getElapsedTime() > 4f)
+        if (timer.getElapsedTime() > 2f)
             status = goalStatus.completed;
 
         return status;
