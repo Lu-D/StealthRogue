@@ -15,7 +15,10 @@ public class Attack : CompositeGoal
 
         removeAllSubgoals();
 
-        throw new NotImplementedException();
+        owner.player.searchableArea.gettingHunted = true;
+
+        pushSubgoalBack(Arbitrate());
+
     }
     public override goalStatus Process()
     {
@@ -23,12 +26,22 @@ public class Attack : CompositeGoal
 
         status = processSubgoals();
 
+        owner.player.searchableArea.zeroRadius();
+
+        if (isCompleted())
+            Activate();
+
         return status;
     }
 
     public override void Terminate()
     {
-        throw new NotImplementedException();
+        owner.player.searchableArea.gettingHunted = false;
+    }
+
+    public Goal Arbitrate()
+    {
+        return new EaterCharge(owner);
     }
 }
 

@@ -8,22 +8,17 @@ class EaterChargeTarget : MonoBehaviour
 {
     private Pathfinding.IAstarAI ai;
     private float startTime;
-
-    private float timepassed = 0;
-    public float timePassed
-    {
-        get{ return timepassed; }
-    }
-
-    private bool canhittarget = false;
-    public bool canHitTarget
-    {
-        get{ return canhittarget; }
-    }
+    public Timer timer;
 
     private float chargeSpeed = 2.5f;
     private float chargeDistance = 3f;
+    private bool oneshot = true;
     public Transform target;
+
+    private void Awake()
+    {
+        timer = new Timer();
+    }
 
     private void OnEnable()
     {
@@ -32,7 +27,6 @@ class EaterChargeTarget : MonoBehaviour
         ai = GetComponent<Pathfinding.IAstarAI>();
 
         startTime = Time.time;
-        timepassed = 0;
         chargePlayer();
     }
 
@@ -40,30 +34,33 @@ class EaterChargeTarget : MonoBehaviour
     {
         target = null;
         ai.maxSpeed /= chargeSpeed;
-        canhittarget = false;
+        timer.endTimer();
+        oneshot = false;
     }
 
     private void Update()
     {
-        if (ai.reachedEndOfPath) timepassed = Time.time - startTime;
-
-        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Enemy"));
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, GetComponent<Eater>().player.transform.position - transform.position, chargeDistance, viewCastLayer);
-        if (hit.collider != null && hit.collider.tag == "Player") canhittarget = true;
-        else canhittarget = false;
+        if (ai.reachedEndOfPath && oneshot)
+        {
+            timer.startTimer();
+            oneshot = false;
+        }
     }
 
     private void chargePlayer()
     {
-        if (ai != null)
+        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("PlayerSceneColl") |
+        1 << LayerMask.NameToLayer("PlayerHurt") |
+        1 << LayerMask.NameToLayer("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, target.position - transform.position, chargeDistance, viewCastLayer);
+
+        ai.maxSpeed *= chargeSpeed;
+
+        if (hit.collider != null) ai.destination = hit.point;
+        else
         {
-            LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("PlayerSceneColl") |
-            1 << LayerMask.NameToLayer("PlayerHurt") |
-            1 << LayerMask.NameToLayer("Enemy"));
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, target.position - transform.position, chargeDistance, viewCastLayer);
-            ai.maxSpeed *= chargeSpeed;
-            if (hit.collider != null) ai.destination = hit.point;
-            else ai.destination = transform.position + (target.position - transform.position).normalized * chargeDistance;
+            ai.destination = transform.position + (target.position - transform.position).normalized * chargeDistance;
+            ai.SearchPath();
         }
     }
 }

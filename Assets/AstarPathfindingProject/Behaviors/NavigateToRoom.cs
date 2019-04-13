@@ -20,7 +20,8 @@ public class NavigateToRoom : MonoBehaviour
 
     private void OnEnable()
     {
-        if (ai != null) ai.destination = findRandomRoom();
+        ai.destination = findRandomRoom();
+        ai.SearchPath();
     }
 
     private void OnDisable()
@@ -31,11 +32,8 @@ public class NavigateToRoom : MonoBehaviour
 
     private void Update()
     {
-        if(enemy != null)
-        {
-            if (enemy.mapLocation == roomTarget)
-                roomreached = true;
-        }
+        if (enemy.mapLocation == roomTarget)
+            roomreached = true;
     }
 
     public Vector3 findRandomRoom()

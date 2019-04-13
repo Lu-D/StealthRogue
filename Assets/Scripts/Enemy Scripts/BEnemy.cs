@@ -46,7 +46,7 @@ public class BEnemy : MonoBehaviour
         messageReceiver = new MessageReceiver();
         attackPatterns = new AttackPatterns();
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        player = GameObject.Find("Player").GetComponent<PlayerControl>();
         enemyVision = GetComponent<EnemyVision>();
 
         pathFinder = GetComponent<Pathfinding.AIPath>();

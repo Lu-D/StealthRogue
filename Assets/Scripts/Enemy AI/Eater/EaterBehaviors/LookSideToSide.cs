@@ -34,11 +34,13 @@ public class LookSideToSide : MonoBehaviour
         if(ai.reachedEndOfPath && dir == 0) 
         {
             ai.destination = turnLocationLeft;
+            ai.SearchPath();
             ++dir;
         }
         else if(ai.reachedEndOfPath && dir == 1)
         {
             ai.destination = turnLocationRight;
+            ai.SearchPath();
             --dir;
         }
     }

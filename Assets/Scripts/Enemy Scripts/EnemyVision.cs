@@ -46,13 +46,19 @@ public class EnemyVision : MonoBehaviour
         createFOV();
     }
 
-    private void LateUpdate()
-    {
-        watchList.Clear();
-    }
-
     public bool hasSeen(string gameObjectTag)
     {
+        watchList.Clear();
+        int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
+        float stepAngle = detectionAngle / stepCount;
+
+        for (int i = 0; i <= stepCount; ++i)
+        {
+            float angle = enemy.transform.rotation.eulerAngles.z + 90f - detectionAngle / 2 + stepAngle * i;
+            ViewCastInfo newViewCast = ViewCast(angle);
+            updateVision(newViewCast);
+        }
+
         return watchList.ContainsKey(gameObjectTag);
     }
 
@@ -67,9 +73,14 @@ public class EnemyVision : MonoBehaviour
     //Debugging purposes
     public void logSeen()
     {
-        foreach(var x in watchList)
+        if (watchList.Count == 0)
+            Debug.Log("nothing seen");
+        else
         {
-            Debug.Log(x.Key + ": " + x.Value);
+            foreach (var x in watchList)
+            {
+                Debug.Log(x.Key + ": " + x.Value);
+            }
         }
     }
 

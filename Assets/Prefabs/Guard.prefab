@@ -245,7 +245,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
-  player: {fileID: 0}
+  player: {fileID: 6804158145412750525, guid: daa8204185e479e49b62426e223bde71, type: 3}
   waypointControl: {fileID: 0}
 --- !u!50 &153466477691211840
 Rigidbody2D:
@@ -391,7 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e6c29e32504465faa943c537d8029b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timePassed: Infinity
 --- !u!114 &1755366617415787148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a70c254be8534448f7ee3bfaf34d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timePassed: Infinity
 --- !u!114 &6813730869123212655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85cd50f9cd2f7a43936a62941c761b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timePassed: Infinity
 --- !u!114 &582661057980282398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,4 +476,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44683aa4010d78d4fb6b7dd3329f6fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seesPlayer: 0
+  detectionAngle: 90
+  detectionDistance: 2

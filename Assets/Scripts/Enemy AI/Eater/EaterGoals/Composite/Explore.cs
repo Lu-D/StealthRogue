@@ -30,6 +30,6 @@ public class Explore : CompositeGoal
 
     public override void Terminate()
     {
-        removeAllSubgoals();
+        
     }
 }

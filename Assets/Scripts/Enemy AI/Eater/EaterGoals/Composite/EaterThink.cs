@@ -13,19 +13,18 @@ public class EaterThink : CompositeGoal
     public override void Activate()
     {
         status = goalStatus.active;
+
         removeAllSubgoals();
 
-        Goal bestGoal = Arbitrate();
-
-        pushSubgoalFront(bestGoal);
+        pushSubgoalFront(Arbitrate());
     }
 
     public override goalStatus Process()
     {
         ActivateIfInactive();
-
         status = processSubgoals();
 
+        //owner.enemyVision.logSeen();
         if (status == goalStatus.completed ||
         Arbitrate().GetType() != getCurrentSubgoal().GetType())
             status = goalStatus.inactive;
@@ -42,7 +41,9 @@ public class EaterThink : CompositeGoal
 
     public Goal Arbitrate() 
     {
-        if (owner.player.searchableArea.radius > 6f)
+        if (owner.enemyVision.hasSeen("Player"))
+            return new Attack(owner);
+        else if (owner.player.searchableArea.radius > 6f)
             return new Explore(owner);
         else
             return new Hunt(owner);

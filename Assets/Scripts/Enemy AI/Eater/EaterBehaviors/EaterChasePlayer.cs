@@ -19,14 +19,14 @@ public class EaterChasePlayer : MonoBehaviour
     {
         ai = GetComponent<Pathfinding.IAstarAI>();
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
-        searchableArea = player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
+        player = GameObject.Find("Player").GetComponent<PlayerControl>();
+        searchableArea = player.searchableArea;
     }
 
     private void OnEnable()
     {
-        if (ai != null && searchableArea != null)
-            ai.destination = searchableArea.returnRandomPoint();
+        ai.destination = searchableArea.returnRandomPoint();
+        ai.SearchPath();
     }
 
     private void OnDisable()
