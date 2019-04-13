@@ -97,7 +97,6 @@ public class EnemyVision : MonoBehaviour
         {
             float angle = enemy.transform.rotation.eulerAngles.z + 90f - detectionAngle/2 + stepAngle * i;
             ViewCastInfo newViewCast = ViewCast(angle);
-            updateVision(newViewCast);
             viewPoints.Add(newViewCast.point);
         }
 

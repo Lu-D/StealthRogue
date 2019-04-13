@@ -16,14 +16,14 @@ public class NavToRoom : Goal
     public override void Activate()
     {
         status = goalStatus.active;
-        if (navigateToRoom != null) navigateToRoom.enabled = true;
+        navigateToRoom.enabled = true;
     }
 
     public override goalStatus Process()
     {
         ActivateIfInactive();
 
-        if (navigateToRoom != null && navigateToRoom.roomReached)
+        if (navigateToRoom.roomReached)
             status = goalStatus.completed;       
 
         return status;
@@ -31,7 +31,7 @@ public class NavToRoom : Goal
 
     public override void Terminate()
     {
-        if (navigateToRoom != null) navigateToRoom.enabled = false;
+        navigateToRoom.enabled = false;
     }
 }
 

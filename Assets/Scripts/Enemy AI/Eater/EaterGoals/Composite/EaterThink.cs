@@ -16,7 +16,7 @@ public class EaterThink : CompositeGoal
 
         removeAllSubgoals();
 
-        pushSubgoalFront(Arbitrate());
+        pushSubgoalBack(Arbitrate());
     }
 
     public override goalStatus Process()
@@ -27,7 +27,7 @@ public class EaterThink : CompositeGoal
         //owner.enemyVision.logSeen();
         if (status == goalStatus.completed ||
         Arbitrate().GetType() != getCurrentSubgoal().GetType())
-            status = goalStatus.inactive;
+            Activate();
             
 
         Debug.Log("Goal Status: " + getFrontMostSubgoal());

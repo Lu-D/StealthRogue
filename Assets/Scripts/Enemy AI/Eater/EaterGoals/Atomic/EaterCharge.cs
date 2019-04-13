@@ -24,7 +24,7 @@ public class EaterCharge : Goal
     public override goalStatus Process()
     {
         ActivateIfInactive();
-
+    
         if (eaterChargeTarget.timer.getElapsedTime() > 4f)
             status = goalStatus.completed;
 
@@ -33,6 +33,7 @@ public class EaterCharge : Goal
 
     public override void Terminate()
     {
+        Debug.Log("called");
        eaterChargeTarget.enabled = false;
     }
 }

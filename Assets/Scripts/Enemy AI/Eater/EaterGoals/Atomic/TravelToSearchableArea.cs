@@ -15,7 +15,7 @@ class TravelToSearchableArea : Goal
     public override void Activate()
     {
         status = goalStatus.active;
-        if (chasePlayer != null) chasePlayer.enabled = true;
+        chasePlayer.enabled = true;
     }
 
     public override goalStatus Process()
@@ -30,7 +30,7 @@ class TravelToSearchableArea : Goal
 
     public override void Terminate()
     {
-        if (chasePlayer != null) chasePlayer.enabled = false;
+        chasePlayer.enabled = false;
     }
 }
 

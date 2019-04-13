@@ -51,15 +51,15 @@ public abstract class CompositeGoal : Goal
 
     public void removeAllSubgoals()
     {
-        if (subgoalList.Count > 0)
+        foreach (Goal goal in subgoalList)
         {
-            foreach (Goal goal in subgoalList)
-            {
-                goal.Terminate();
-            }
+            if (goal is CompositeGoal)
+                (goal as CompositeGoal).removeAllSubgoals();
 
-            subgoalList.Clear();
+            goal.Terminate();
         }
+
+        subgoalList.Clear();
     }
 
     public void forwardGoal(Goal passGoal)
