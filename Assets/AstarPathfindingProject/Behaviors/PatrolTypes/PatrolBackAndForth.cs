@@ -17,7 +17,6 @@ namespace Pathfinding {
 	public class PatrolBackAndForth : BPatrol {
         private void OnEnable()
         {
-            startTime = Time.time;
         }
         private void OnDisable()
         {
@@ -31,7 +30,6 @@ namespace Pathfinding {
             if (targets.Count == 0) return;
 
             bool search = false;
-            timePassed = Time.time - startTime;
 
             if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime))
             {

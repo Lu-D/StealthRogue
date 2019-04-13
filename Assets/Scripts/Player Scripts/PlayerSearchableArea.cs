@@ -28,8 +28,9 @@ class PlayerSearchableArea : MonoBehaviour
         }
         else
         {
-            radius += Time.deltaTime;
+            radius += Time.deltaTime * .1f;
             DebugUtility.DrawCircle(transform.position, radius, Color.red);
+            if (circle != null) circle.radius = radius;
 
             if (radius > 10f) 
             {

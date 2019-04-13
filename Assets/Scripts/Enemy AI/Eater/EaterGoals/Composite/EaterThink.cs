@@ -15,7 +15,6 @@ public class EaterThink : CompositeGoal
 
     public override void Activate()
     {
-        Debug.Log("reactivated");
         status = goalStatus.active;
         removeAllSubgoals();
 
@@ -44,7 +43,7 @@ public class EaterThink : CompositeGoal
 
     public Goal Arbitrate() 
     {
-        return new Explore(owner);
+        return new Hunt(owner);
     }
 
 }

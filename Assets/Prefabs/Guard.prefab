@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 208670393633156400}
   - component: {fileID: 198571669045215206}
   m_Layer: 11
-  m_Name: FOV visual
+  m_Name: FOV Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 6813730869123212655}
   - component: {fileID: 582661057980282398}
   - component: {fileID: 5455219278041702597}
+  - component: {fileID: 5955848898273928095}
   m_Layer: 11
   m_Name: Guard
   m_TagString: Enemy
@@ -242,8 +243,8 @@ MonoBehaviour:
   health: 1
   isDead: 0
   itemDrop: {fileID: 0}
+  enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
-  viewMeshFilter: {fileID: 185128583096357276}
   player: {fileID: 0}
   waypointControl: {fileID: 0}
 --- !u!50 &153466477691211840
@@ -466,3 +467,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2dc573353ca7c44f861d519b4894241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5955848898273928095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186795025299142510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44683aa4010d78d4fb6b7dd3329f6fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seesPlayer: 0

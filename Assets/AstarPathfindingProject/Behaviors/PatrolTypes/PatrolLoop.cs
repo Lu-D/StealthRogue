@@ -17,13 +17,11 @@ namespace Pathfinding {
 	public class PatrolLoop : BPatrol {
         private void OnEnable()
         {
-            startTime = Time.time;
         }
 
         private void OnDisable()
         {
             targets.Clear();
-            timePassed = Mathf.NegativeInfinity;
         }
 
         void Update()
@@ -31,7 +29,6 @@ namespace Pathfinding {
             if (targets.Count == 0) return;
 
             bool search = false;
-            timePassed = Time.time - startTime;
 
             if (agent.reachedEndOfPath && !agent.pathPending && float.IsPositiveInfinity(switchTime))
             {

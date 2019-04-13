@@ -9,17 +9,18 @@ public class EaterChasePlayer : MonoBehaviour
     private PlayerControl player;
     private PlayerSearchableArea searchableArea;
     private Pathfinding.IAstarAI ai;
+
     public bool targetReached
     {
-        get { return ai.reachedEndOfPath; } 
-        private set { targetReached = value; }
+        get; set;
     }
 
     private void Awake()
     {
-        player = GetComponent<BEnemy>().player;
-        searchableArea = GetComponent<BEnemy>().player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
         ai = GetComponent<Pathfinding.IAstarAI>();
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        searchableArea = player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
     }
 
     private void OnEnable()
@@ -37,5 +38,10 @@ public class EaterChasePlayer : MonoBehaviour
     private void OnDisable()
     {
         targetReached = false;
+    }
+
+    private void Update()
+    {
+        targetReached = ai.reachedEndOfPath;
     }
 }

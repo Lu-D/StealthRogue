@@ -13,7 +13,7 @@ public class PatrolWaypoint : State
     public override void Enter(BEnemy owner)
     {
         //turn on FOV visualization
-        owner.viewMeshFilter.SetActive(true);
+        owner.GetComponent<EnemyVision>().enabled = true;
 
         owner.playerSpotted = false;
 
@@ -27,7 +27,7 @@ public class PatrolWaypoint : State
     public override void Execute(BEnemy owner)
     {
         //check if player is spotted every udpate
-        owner.playerSpotted = owner.enemyVision.checkVision();
+        owner.playerSpotted = owner.enemyVision.hasSeen("Player");
 
         //changes to attack state if enemy spots player
         if (owner.playerSpotted)
@@ -67,7 +67,7 @@ public class AttackPlayer : State
     public override void Enter(BEnemy owner)
     {
         //turn off FOV visualization
-        owner.viewMeshFilter.SetActive(false);
+        owner.GetComponent<EnemyVision>().enabled = false;
 
         owner.attackFSM.changeState(Search.Instance);
         owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
@@ -116,7 +116,7 @@ public class LookAtMe : State
         owner.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
 
         //check if player is spotted every udpate
-        owner.playerSpotted = owner.enemyVision.checkVision();
+        owner.playerSpotted = owner.enemyVision.hasSeen("Player");
 
         //Change to attack state if player is spotted
         if (owner.playerSpotted)
@@ -161,7 +161,7 @@ public class Die : State
         owner.isDead = true;
 
         //turn off FOV visualization
-        owner.viewMeshFilter.SetActive(false);
+        owner.GetComponent<EnemyVision>().enabled = false;
 
         //set velocity to zero
         owner.GetComponent<Rigidbody2D>().velocity = Vector3.zero;

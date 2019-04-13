@@ -26,8 +26,6 @@ public class EnemyPatrol : BEnemy {
     //on start script
     protected override void myAwake()
     {
-        enemyVision = new EnemyVision(this);
-
         up = transform.rotation;
         front = new GameObject("front");
         front.transform.position = Vector3.up + transform.position;
@@ -48,11 +46,5 @@ public class EnemyPatrol : BEnemy {
         mainFSM.stateUpdate();
     }
 
-    //LateUpdate
-    //draws enemies fieldOfView for player
-    private void LateUpdate()
-    {
-        enemyVision.drawFOV();
-    }
 
 }

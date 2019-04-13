@@ -16,7 +16,8 @@ public class Hunt : CompositeGoal
 
         removeAllSubgoals();
 
-        throw new NotImplementedException();
+        pushSubgoalBack(new TravelToSearchableArea(owner));
+        pushSubgoalBack(new LookAround(owner));
     }
     public override goalStatus Process()
     {
@@ -29,6 +30,5 @@ public class Hunt : CompositeGoal
 
     public override void Terminate()
     {
-        throw new NotImplementedException();
     }
 }

@@ -35,8 +35,6 @@ public class BEnemy : MonoBehaviour
     public MessageReceiver messageReceiver;
 
     [HideInInspector]
-    public GameObject viewMeshFilter;
-    [HideInInspector]
     public PlayerControl player;
     [HideInInspector]
     public TaskList taskList;
@@ -49,6 +47,7 @@ public class BEnemy : MonoBehaviour
         attackPatterns = new AttackPatterns();
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        enemyVision = GetComponent<EnemyVision>();
 
         pathFinder = GetComponent<Pathfinding.AIPath>();
 

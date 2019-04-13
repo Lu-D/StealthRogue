@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class ExploreRoom : Goal
+public class LookAround : Goal
 {
-    private Pathfinding.PatrolLoop pathfinder;
+    private LookSideToSide behavior;
     private Timer timer;
-
-    public ExploreRoom(BEnemy _owner) : base(_owner)
+    
+    public LookAround(BEnemy _owner) : base(_owner)
     {
-        pathfinder = owner.GetComponent<Pathfinding.PatrolLoop>();
+        behavior = owner.GetComponent<LookSideToSide>();
         timer = new Timer();
     }
 
@@ -19,19 +19,17 @@ public class ExploreRoom : Goal
     {
         status = goalStatus.active;
 
-        if (pathfinder != null)
-        {
-            pathfinder.setRoomWaypoints();
-            pathfinder.enabled = true;
-        }
+        if (behavior != null) behavior.enabled = true;
 
         timer.startTimer();
     }
+
     public override goalStatus Process()
     {
         ActivateIfInactive();
 
-        if (pathfinder != null && timer.getElapsedTime() > 20f)
+        if (owner.enemyVision.hasSeen("Player") ||
+        timer.getElapsedTime() > 4f)
             status = goalStatus.completed;
 
         return status;
@@ -39,7 +37,8 @@ public class ExploreRoom : Goal
 
     public override void Terminate()
     {
+        behavior.enabled = false;
         timer.endTimer();
-        if (pathfinder != null) pathfinder.enabled = false;
     }
 }
+

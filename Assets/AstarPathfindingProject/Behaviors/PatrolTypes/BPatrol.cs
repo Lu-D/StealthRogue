@@ -28,8 +28,6 @@ namespace Pathfinding {
 		protected float switchTime;
 
         private NodePerimeterGen nodePerimeterGen;
-        protected float startTime;
-        public float timePassed;
 
         private void Awake()
         {
@@ -37,7 +35,6 @@ namespace Pathfinding {
             index = 0;
             nodePerimeterGen = new NodePerimeterGen(this);
             enabled = false;
-            timePassed = Mathf.NegativeInfinity;
             switchTime = Mathf.Infinity;
         }
 

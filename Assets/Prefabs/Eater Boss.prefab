@@ -28,8 +28,8 @@ MonoBehaviour:
   health: 1
   isDead: 0
   itemDrop: {fileID: 0}
+  enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
-  viewMeshFilter: {fileID: 0}
   player: {fileID: 0}
 --- !u!114 &2682329434194643766
 MonoBehaviour:
@@ -43,8 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55a90b43c82fa194aa002a7667907cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeSpeed: 2.5
-  chargeDistance: 3
   target: {fileID: 0}
 --- !u!114 &9199594515763022707
 MonoBehaviour:
@@ -56,6 +54,18 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7325a09b8af5f45a07d841e61548c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8525354656261943628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554711982647276838}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2c703c9379fd54a97ff5eed5fa14dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7656149673745318472
