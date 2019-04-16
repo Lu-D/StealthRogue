@@ -11,7 +11,7 @@ public class Attack : CompositeGoal
 
     public override void Activate()
     {
-        status = goalStatus.active;
+        status = goalStatus.buffered;
 
         removeAllSubgoals();
 
@@ -27,9 +27,6 @@ public class Attack : CompositeGoal
         status = processSubgoals();
 
         owner.player.searchableArea.zeroRadius();
-
-        if (isCompleted())
-            Activate();
 
         return status;
     }

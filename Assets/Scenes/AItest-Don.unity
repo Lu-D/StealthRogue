@@ -4964,6 +4964,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eater Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 7585523686358231836, guid: 476cd2e20d13f024fa5ef973c7bd95fd,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 2.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 476cd2e20d13f024fa5ef973c7bd95fd, type: 3}
 --- !u!1001 &779603458
@@ -12613,12 +12618,12 @@ PrefabInstance:
     - target: {fileID: 6804158146340452165, guid: daa8204185e479e49b62426e223bde71,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.17
+      value: 7.54
       objectReference: {fileID: 0}
     - target: {fileID: 6804158146340452165, guid: daa8204185e479e49b62426e223bde71,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.11
+      value: 4.08
       objectReference: {fileID: 0}
     - target: {fileID: 6804158146340452165, guid: daa8204185e479e49b62426e223bde71,
         type: 3}

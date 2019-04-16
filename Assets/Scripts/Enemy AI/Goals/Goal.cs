@@ -10,7 +10,8 @@ public abstract class Goal
         inactive = 0,
         active,
         completed,
-        failed
+        failed,
+        buffered
     }
 
 //protected
@@ -52,6 +53,7 @@ public abstract class Goal
     public bool isCompleted(){return status == goalStatus.completed;}
     public bool isActive(){return status == goalStatus.active;}
     public bool isInactive(){return status == goalStatus.inactive;}
+    public bool isBuffered() { return status == goalStatus.buffered; }
     public bool hasFailed(){return status == goalStatus.failed;}
 
     public abstract void Activate();

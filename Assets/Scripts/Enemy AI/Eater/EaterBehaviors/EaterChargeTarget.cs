@@ -26,7 +26,6 @@ class EaterChargeTarget : MonoBehaviour
 
         ai = GetComponent<Pathfinding.IAstarAI>();
 
-        startTime = Time.time;
         chargePlayer();
     }
 
@@ -35,7 +34,7 @@ class EaterChargeTarget : MonoBehaviour
         target = null;
         ai.maxSpeed /= chargeSpeed;
         timer.endTimer();
-        oneshot = false;
+        oneshot = true;
     }
 
     private void Update()

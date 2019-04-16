@@ -18,14 +18,13 @@ public abstract class CompositeGoal : Goal
 
         if (subgoalList.Count != 0)
         {
-
-
             goalStatus subgoalStatus = subgoalList.First.Value.Process();
 
             if (subgoalStatus == goalStatus.completed && subgoalList.Count > 1)
-            {
-                return goalStatus.active;
-            }
+                subgoalStatus = goalStatus.active;
+
+            if (subgoalStatus == goalStatus.active && isBuffered())
+                subgoalStatus = goalStatus.buffered;
 
             return subgoalStatus;
         }

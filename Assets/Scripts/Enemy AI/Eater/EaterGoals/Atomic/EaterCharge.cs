@@ -25,7 +25,7 @@ public class EaterCharge : Goal
     {
         ActivateIfInactive();
     
-        if (eaterChargeTarget.timer.getElapsedTime() > 4f)
+        if (eaterChargeTarget.timer.getElapsedTime() > 2f)
             status = goalStatus.completed;
 
         return status;
