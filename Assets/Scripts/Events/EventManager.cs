@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 using System.Collections;
 
+/*
+ * Event manager queues 
+ * */
 namespace Events
 {
     public class EventManager : MonoBehaviour
@@ -21,56 +24,30 @@ namespace Events
             }
         }
 
-        private struct EventInfo
-        {
-            public Event mainEvent;
-            public float delay;
-
-            public EventInfo(Event _event, float _delay)
-            {
-                mainEvent = _event;
-                delay = _delay;
-            }
-        }
-
-        private Queue<EventInfo> eventQueue;
-        private Task currTask = null;
+        private Queue<Event> eventQueue;
 
         private EventManager()
         {
-            eventQueue = new Queue<EventInfo>();
+            eventQueue = new Queue<Event>();
         }
 
-        public void addEvent(Event newEvent, float delay = 0f)
+        public void addEvent(Event newEvent)
         {
             
-            eventQueue.Enqueue(new EventInfo(newEvent, delay));
+            eventQueue.Enqueue(newEvent);
         }
 
-        private IEnumerator Execute()
+        private void Dispatch()
         {
-            EventInfo firstEvent = eventQueue.First();
-            if (firstEvent.mainEvent != null)
-            {
-                firstEvent.mainEvent.execute();
-                yield return new WaitForSeconds(firstEvent.delay);
-            }
+            eventQueue.First().execute();
         }
 
         private void Update()
         {
-            if (currTask == null && eventQueue.Count() > 0)
+            if (eventQueue.Count() > 0)
             {
-                currTask = new Task(Execute());
-            }
-            else if (currTask != null)
-            {
-                if(!currTask.Running)
-                {
-                    eventQueue.Dequeue();
-                    currTask = null;
-                }
-                    
+                Dispatch();
+                eventQueue.Dequeue();
             }
         }
     }
