@@ -6,7 +6,6 @@ public class bomb : MonoBehaviour {
     public float blastRadius;
     public float enemyAlertRadius;
     public float fuseLength;
-    public Message<Vector3> lookAtMe;
 	
 	void Update () {
         fuseLength -= Time.deltaTime;
@@ -28,16 +27,23 @@ public class bomb : MonoBehaviour {
             }
         }
         Collider2D[] alertColliders = Physics2D.OverlapCircleAll(transform.position, enemyAlertRadius);
+        Events.lookAtMe newEvent = new Events.lookAtMe(transform.position);
 
         //alert nearby enemies
         foreach (Collider2D alert in alertColliders)
         {
-            if (alert.gameObject.tag == "Enemy")
+            //if (alert.gameObject.tag == "Enemy")
+            //{
+            //    lookAtMe = new Message<Vector3>(message_type.lookAtMe, gameObject.transform.position);
+            //    alert.gameObject.GetComponent<BEnemy>().messageReceiver = lookAtMe;
+            //}
+            if(alert.gameObject.tag == "Enemy")
             {
-                lookAtMe = new Message<Vector3>(message_type.lookAtMe, gameObject.transform.position);
-                alert.gameObject.GetComponent<BEnemy>().messageReceiver = lookAtMe;
+                newEvent.onLookAtMe += alert.gameObject.GetComponent<Events.EventHandler>().handleLookAtMe;
             }
         }
+        Events.EventManager.Instance.addEvent(newEvent);
+
         Destroy(this.gameObject);
     }
 }

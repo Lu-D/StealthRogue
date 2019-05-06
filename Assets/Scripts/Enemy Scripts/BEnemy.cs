@@ -30,10 +30,6 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public Pathfinding.AIPath pathFinder;
 
-    //Receives messages
-    [HideInInspector]
-    public MessageReceiver messageReceiver;
-
     [HideInInspector]
     public PlayerControl player;
     [HideInInspector]
@@ -43,7 +39,6 @@ public class BEnemy : MonoBehaviour
     public void Awake()
     {
         taskList = new TaskList();
-        messageReceiver = new MessageReceiver();
         attackPatterns = new AttackPatterns();
 
         player = GameObject.Find("Player").GetComponent<PlayerControl>();

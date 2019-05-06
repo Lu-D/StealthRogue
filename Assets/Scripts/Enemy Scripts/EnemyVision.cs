@@ -44,11 +44,14 @@ public class EnemyVision : MonoBehaviour
     private void Update()
     {
         createFOV();
+        new Task(scan());
     }
 
-    public bool hasSeen(string gameObjectTag)
+    private IEnumerator scan()
     {
+        yield return new WaitForEndOfFrame();
         watchList.Clear();
+
         int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
         float stepAngle = detectionAngle / stepCount;
 
@@ -58,7 +61,10 @@ public class EnemyVision : MonoBehaviour
             ViewCastInfo newViewCast = ViewCast(angle);
             updateVision(newViewCast);
         }
+    }
 
+    public bool hasSeen(string gameObjectTag)
+    {
         return watchList.ContainsKey(gameObjectTag);
     }
 

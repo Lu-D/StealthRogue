@@ -28,8 +28,6 @@ public class StateMachine{
             currentState.Exit(owner);
         currentState = newState;
         currentState.Enter(owner);
-        //clear messages before new current state execution begins
-        clearMessages();
     }
 
     public void changeGlobalState(State newState)
@@ -39,8 +37,6 @@ public class StateMachine{
             globalState.Exit(owner);
         globalState = newState;
         globalState.Enter(owner);
-        //clear messages before new current state execution begins
-        clearMessages();
     }
 
     public void revertToPrevState()
@@ -51,11 +47,6 @@ public class StateMachine{
     public void reenterState()
     {
         changeState(currentState);
-    }
-
-    public void clearMessages()
-    {
-        owner.messageReceiver.clearMessages();
     }
 
     public void stateUpdate()

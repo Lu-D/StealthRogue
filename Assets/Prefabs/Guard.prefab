@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 582661057980282398}
   - component: {fileID: 5455219278041702597}
   - component: {fileID: 5955848898273928095}
+  - component: {fileID: 9036220000327288005}
   m_Layer: 11
   m_Name: Guard
   m_TagString: Enemy
@@ -478,3 +479,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionAngle: 90
   detectionDistance: 2
+--- !u!114 &9036220000327288005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186795025299142510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e4b468ea9f1324582a584b77cbb835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

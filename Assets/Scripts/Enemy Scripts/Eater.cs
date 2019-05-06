@@ -11,7 +11,7 @@ public class Eater : BEnemy{
         testGoal = new EaterThink(this);
     }
 
-    public void Update()
+    private void Update()
     {
         testGoal.Process();
     }

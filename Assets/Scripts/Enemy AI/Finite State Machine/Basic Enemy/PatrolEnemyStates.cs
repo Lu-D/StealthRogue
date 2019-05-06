@@ -33,9 +33,9 @@ public class PatrolWaypoint : State
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
 
-        //changes to lookAtMe state when lookatme message is received
-        if(owner.messageReceiver.message == message_type.lookAtMe)
-            owner.mainFSM.changeState(LookAtMe.Instance);
+        ////changes to lookAtMe state when lookatme message is received
+        //if(owner.messageReceiver.message == message_type.lookAtMe)
+        //    owner.mainFSM.changeState(LookAtMe.Instance);
 
     }
 
@@ -100,15 +100,15 @@ public class LookAtMe : State
 {
     //singleton of state
     private static LookAtMe instance = null;
-        
+
+    public Vector3 lookPosition;
 
     public override void Enter(BEnemy owner)
     {
         var ai = owner.GetComponent<Pathfinding.IAstarAI>();
         if (ai != null) ai.isStopped = true;
 
-        Vector3 bombPosition = owner.messageReceiver.getMessageContent<Vector3>();
-        owner.taskList["LookAtMe"] = new Task(owner.RotateTo(bombPosition, 5f));
+        owner.taskList["LookAtMe"] = new Task(owner.RotateTo(lookPosition, 5f));
     }
 
     public override void Execute(BEnemy owner)
@@ -121,9 +121,6 @@ public class LookAtMe : State
         //Change to attack state if player is spotted
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AttackPlayer.Instance);
-        //overrides current state for a new lookatme
-        if (owner.messageReceiver.message == message_type.lookAtMe)
-            owner.mainFSM.reenterState();
         //Reverts back to patrol waypoint state after coroutine is done running
         if (!owner.taskList.Running("LookAtMe"))
             owner.mainFSM.changeState(PatrolWaypoint.Instance);

@@ -24,11 +24,12 @@ public class EaterThink : CompositeGoal
         ActivateIfInactive();
         status = processSubgoals();
 
-        //owner.enemyVision.logSeen();
         if (status == goalStatus.completed)
             Activate();
         else if (Arbitrate().GetType() != getCurrentSubgoal().GetType() && !isBuffered())
-            Activate();     
+            Activate();
+
+        //owner.enemyVision.logSeen();
 
         Debug.Log("Goal Status: " + getFrontMostSubgoal());
         return status;
