@@ -6,21 +6,33 @@ using UnityEngine;
 
 namespace Events
 {
-    public class lookAtMe : Event
+    public class lookAtMeEvent : Event
     {
         private Vector3 lookPos;
+        public Vector3 position{
+            get { return lookPos; }
+        }
 
-        public delegate void lookAtMeAction(Vector3 lookPosition);
+        public delegate void lookAtMeAction(lookAtMeEvent lookAtMe);
         public event lookAtMeAction onLookAtMe;
         
-        public lookAtMe(Vector3 pos)
+        public lookAtMeEvent(Vector3 pos)
         {
             lookPos = pos;
+            priority = Priority.P1;
         }
 
         public override void execute()
         {
-            onLookAtMe(lookPos);
+            if(onLookAtMe != null)
+                onLookAtMe(this);
+        }
+
+        public override void addListener(GameObject gameObject)
+        {
+            var eventHandler = gameObject.GetComponent<Events.EventHandler>();
+            if (eventHandler != null)
+                onLookAtMe += eventHandler.handleEvent;
         }
     }
 }

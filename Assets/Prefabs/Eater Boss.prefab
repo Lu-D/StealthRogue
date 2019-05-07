@@ -26,11 +26,11 @@ MonoBehaviour:
   playerSpotted: 0
   mapLocation: 
   health: 1
-  isDead: 0
   itemDrop: {fileID: 0}
   enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
   player: {fileID: 0}
+  priority: 0
 --- !u!114 &2682329434194643766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,4 +169,5 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 217427226905948386, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}
+    - {fileID: 9036220000327288005, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}

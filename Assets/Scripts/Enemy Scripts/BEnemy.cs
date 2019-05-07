@@ -14,7 +14,6 @@ public class BEnemy : MonoBehaviour
     public bool playerSpotted = false;
     public string mapLocation;
     public int health = 1;
-    public bool isDead = false;
     public GameObject itemDrop;
 
     //Finite State Machines
@@ -34,8 +33,10 @@ public class BEnemy : MonoBehaviour
     public PlayerControl player;
     [HideInInspector]
     public TaskList taskList;
+    [HideInInspector]
+    public Events.Priority priority = Events.Priority.P0;
 
-//private stuff
+    //private stuff
     public void Awake()
     {
         taskList = new TaskList();
@@ -74,6 +75,11 @@ public class BEnemy : MonoBehaviour
     public IEnumerator Wait(float delay)
     {
         yield return new WaitForSeconds(delay);
+    }
+
+    public void priorityReset()
+    {
+        priority = Events.Priority.P0;
     }
 
     public T castTo<T>() where T : BEnemy

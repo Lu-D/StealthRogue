@@ -58,7 +58,6 @@ public abstract class EquipmentController : MonoBehaviour {
         if (GetComponent<Rigidbody2D>().velocity.magnitude > 1f 
             && collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("success");
 
             collision.gameObject.GetComponent<BEnemy>().health = 0;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;

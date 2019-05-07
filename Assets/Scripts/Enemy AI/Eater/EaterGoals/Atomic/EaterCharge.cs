@@ -33,7 +33,6 @@ public class EaterCharge : Goal
 
     public override void Terminate()
     {
-        Debug.Log("called");
        eaterChargeTarget.enabled = false;
     }
 }

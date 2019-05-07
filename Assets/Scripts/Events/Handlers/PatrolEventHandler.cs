@@ -8,13 +8,34 @@ namespace Events
 {
     public class PatrolEventHandler : EventHandler
     {
-        public override void handleLookAtMe(Vector3 lookPosition)
+        protected BEnemy enemy;
+
+        private void Awake()
         {
-            BEnemy enemy = GetComponent<BEnemy>();
-            if (enemy.mainFSM.getCurrentState() == PatrolEnemyStates.PatrolWaypoint.Instance)
+            enemy = GetComponent<BEnemy>();
+        }
+
+        public override void handleEvent(lookAtMeEvent eventObj)
+        {
+            if ((enemy.mainFSM.getCurrentState() == PatrolEnemyStates.PatrolWaypoint.Instance ||
+            enemy.mainFSM.getCurrentState() == PatrolEnemyStates.LookAtMe.Instance) &&
+            enemy.priority <= eventObj.priority)
             {
-                PatrolEnemyStates.LookAtMe.Instance.lookPosition = lookPosition;
+                PatrolEnemyStates.LookAtMe.Instance.lookPosition = eventObj.position;
                 enemy.mainFSM.changeState(PatrolEnemyStates.LookAtMe.Instance);
+
+                enemy.priority = eventObj.priority;
+            }
+        }
+
+        public override void handleEvent(DieEvent eventObj)
+        {
+            if(enemy.priority <= eventObj.priority &&
+            enemy.mainFSM.getCurrentState() != PatrolEnemyStates.Die.Instance)
+            {
+                enemy.mainFSM.changeState(PatrolEnemyStates.Die.Instance);
+
+                enemy.priority = eventObj.priority;
             }
         }
     }

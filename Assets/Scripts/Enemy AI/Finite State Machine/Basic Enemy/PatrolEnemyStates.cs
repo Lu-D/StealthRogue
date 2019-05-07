@@ -131,6 +131,8 @@ public class LookAtMe : State
     {
         owner.taskList.Stop("LookAtMe");
 
+        owner.priorityReset();
+
         var ai = owner.GetComponent<Pathfinding.IAstarAI>();
         if (ai != null) ai.isStopped = false;
     }
@@ -155,7 +157,7 @@ public class Die : State
 
     public override void Enter(BEnemy owner)
     {
-        owner.isDead = true;
+        owner.pathFinder.canMove = false;
 
         //turn off FOV visualization
         owner.GetComponent<EnemyVision>().enabled = false;

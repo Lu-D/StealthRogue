@@ -11827,7 +11827,7 @@ PrefabInstance:
     - target: {fileID: 114001261090465020, guid: 23d85c991efca9b4b9160469858e3bec,
         type: 3}
       propertyPath: fuseLength
-      value: 2.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1024933416046808, guid: 23d85c991efca9b4b9160469858e3bec, type: 3}
       propertyPath: m_IsActive
@@ -11836,7 +11836,7 @@ PrefabInstance:
     - target: {fileID: 114001261090465020, guid: 23d85c991efca9b4b9160469858e3bec,
         type: 3}
       propertyPath: blastRadius
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23d85c991efca9b4b9160469858e3bec, type: 3}

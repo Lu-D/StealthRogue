@@ -44,12 +44,15 @@ public class EnemyVision : MonoBehaviour
     private void Update()
     {
         createFOV();
-        new Task(scan());
     }
 
-    private IEnumerator scan()
+    private void LateUpdate()
     {
-        yield return new WaitForEndOfFrame();
+        scan();
+    }
+
+    private void scan()
+    {
         watchList.Clear();
 
         int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);

@@ -19,30 +19,28 @@ public class bomb : MonoBehaviour {
     {
         //destroy objects in blastRadius
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
+        var dieEvent = new Events.DieEvent();
         foreach(Collider2D hit in hitColliders)
         {
             if(hit.gameObject.tag == "Enemy" || hit.gameObject.tag == "Obstacle")
             {
-                Destroy(hit.gameObject);
+                dieEvent.addListener(hit.gameObject);
             }
         }
-        Collider2D[] alertColliders = Physics2D.OverlapCircleAll(transform.position, enemyAlertRadius);
-        Events.lookAtMe newEvent = new Events.lookAtMe(transform.position);
 
+        Collider2D[] alertColliders = Physics2D.OverlapCircleAll(transform.position, enemyAlertRadius);
+        var lookEvent = new Events.lookAtMeEvent(transform.position);
         //alert nearby enemies
         foreach (Collider2D alert in alertColliders)
         {
-            //if (alert.gameObject.tag == "Enemy")
-            //{
-            //    lookAtMe = new Message<Vector3>(message_type.lookAtMe, gameObject.transform.position);
-            //    alert.gameObject.GetComponent<BEnemy>().messageReceiver = lookAtMe;
-            //}
             if(alert.gameObject.tag == "Enemy")
             {
-                newEvent.onLookAtMe += alert.gameObject.GetComponent<Events.EventHandler>().handleLookAtMe;
+                lookEvent.addListener(alert.gameObject);
             }
         }
-        Events.EventManager.Instance.addEvent(newEvent);
+
+        Events.EventManager.Instance.addEvent(lookEvent, 1);
+        Events.EventManager.Instance.addEvent(dieEvent, 5);
 
         Destroy(this.gameObject);
     }

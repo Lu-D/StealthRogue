@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 /*
  * Abstract interface that allows for events to be treated uniformly in EventManager
@@ -17,6 +18,10 @@ namespace Events
 {
     public abstract class Event
     {
+        public Priority priority;
         public abstract void execute();
+
+        //ensure event handler is not null
+        public abstract void addListener(GameObject gameObject);
     }
 }
