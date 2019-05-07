@@ -6,28 +6,28 @@ using UnityEngine;
 
 namespace Events
 {
-    public class DieEvent : Event
+    public class DamageEvent : Event
     {
 
-        public delegate void DieAction(DieEvent die);
-        public event DieAction onDie;
+        public delegate void DamageAction(DamageEvent die);
+        public event DamageAction onDamage;
 
-        public DieEvent()
+        public DamageEvent()
         {
             priority = Priority.P100;
         }
 
         public override void execute()
         {
-            if(onDie != null)
-                onDie(this);
+            if(onDamage != null)
+                onDamage(this);
         }
 
         public override void addListener(GameObject gameObject)
         {
             var eventHandler = gameObject.GetComponent<Events.EventHandler>();
             if (eventHandler != null)
-                onDie += eventHandler.handleEvent;
+                onDamage += eventHandler.handleEvent;
         }
     }
 }

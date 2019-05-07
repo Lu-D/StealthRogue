@@ -28,14 +28,11 @@ namespace Events
             }
         }
 
-        public override void handleEvent(DieEvent eventObj)
+        public override void handleEvent(DamageEvent eventObj)
         {
-            if(enemy.priority <= eventObj.priority &&
-            enemy.mainFSM.getCurrentState() != PatrolEnemyStates.Die.Instance)
+            if(enemy.mainFSM.getCurrentState() != PatrolEnemyStates.Die.Instance)
             {
-                enemy.mainFSM.changeState(PatrolEnemyStates.Die.Instance);
-
-                enemy.priority = eventObj.priority;
+                --enemy.health;
             }
         }
     }

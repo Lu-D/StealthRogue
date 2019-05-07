@@ -16,6 +16,6 @@ namespace Events
     public class EventHandler : MonoBehaviour
     {
         public virtual void handleEvent(lookAtMeEvent eventObj) { throw new NotImplementedException();  }
-        public virtual void handleEvent(DieEvent eventObj) { throw new NotImplementedException(); }
+        public virtual void handleEvent(DamageEvent eventObj) { throw new NotImplementedException(); }
     }
 }

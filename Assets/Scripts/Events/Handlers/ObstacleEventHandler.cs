@@ -8,7 +8,7 @@ namespace Events
 {
     public class ObstacleEventHandler : EventHandler
     {
-        public override void handleEvent(DieEvent eventObj)
+        public override void handleEvent(DamageEvent eventObj)
         {
             Destroy(gameObject);
         }
