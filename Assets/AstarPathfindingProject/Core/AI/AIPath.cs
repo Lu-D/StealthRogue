@@ -156,6 +156,12 @@ namespace Pathfinding {
 
 		#region IAstarAI implementation
 
+        public void CancelPath()
+        {
+            destination = GetFeetPosition();
+            SearchPath();
+        }
+
 		/** \copydoc Pathfinding::IAstarAI::Teleport */
 		public override void Teleport (Vector3 newPosition, bool clearPath = true) {
 			if (clearPath) interpolator.SetPath(null);
@@ -232,6 +238,8 @@ namespace Pathfinding {
 		 */
 		public virtual void OnTargetReached () {
 		}
+
+        
 
 		/** Called when a requested path has been calculated.
 		 * A path is first requested by #UpdatePath, it is then calculated, probably in the same or the next frame.

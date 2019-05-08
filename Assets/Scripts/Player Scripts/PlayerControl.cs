@@ -24,7 +24,6 @@ public class PlayerControl : MonoBehaviour {
     public GameObject bullet;
     public string mapLocation;
     public bool changingLocation;
-    public bool gettingCaught; //coroutine play once flag
     public int health;
     public int maxStamina;
     public int maxTimeFeul;
@@ -76,13 +75,6 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-
-        if (gettingCaught)
-        {
-            StartCoroutine(getCaught());
-            gettingCaught = false;
-        }
-
         if (Input.GetKeyDown("space") && (rollOneShot == null || !rollOneShot.Running) && currStamina > 60)
         {
             rollOneShot = new Task(roll());

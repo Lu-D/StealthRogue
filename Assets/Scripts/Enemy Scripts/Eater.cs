@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class Eater : BEnemy{
     
-    Goal testGoal;
+    public CompositeGoal mainGoal;
 
     protected override void myAwake()
     {
-        testGoal = new EaterThink(this);
+        mainGoal = new EaterThink(this);
+        health = 100;
     }
 
     private void Update()
     {
-        testGoal.Process();
+        mainGoal.Process();
     }
 }

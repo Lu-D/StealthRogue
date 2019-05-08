@@ -39,8 +39,8 @@ public class bomb : MonoBehaviour {
             }
         }
 
-        Events.EventManager.Instance.addEvent(lookEvent, 1);
-        Events.EventManager.Instance.addEvent(dieEvent, 5);
+        Events.EventManager.Instance.addEvent(lookEvent, 0);
+        Events.EventManager.Instance.addEvent(dieEvent, 0);
 
         Destroy(this.gameObject);
     }

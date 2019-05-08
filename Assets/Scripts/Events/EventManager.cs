@@ -34,10 +34,7 @@ namespace Events
 
         public void addEvent(Event newEvent, float delay = 0)
         {
-            if (delay == 0)
-                newEvent.execute();
-            else
-                eventQueue.Enqueue(delay + Time.time, newEvent);
+            eventQueue.Enqueue(delay + Time.time, newEvent);
         }
 
         private void Dispatch()
