@@ -165,6 +165,11 @@ namespace Pathfinding {
 		}
 		#endregion
 
+        public void CancelPath(){
+            destination = transform.position;
+            SearchPath();
+        }
+
 		public float remainingDistance {
 			get {
 				return Mathf.Max(interpolator.remainingDistance, 0);

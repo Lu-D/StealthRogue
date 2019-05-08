@@ -11,7 +11,7 @@ public abstract class Goal
         active,
         completed,
         failed,
-        buffered
+        noInterrupt
     }
 
 //protected
@@ -29,6 +29,11 @@ public abstract class Goal
         if (hasFailed())
             status = goalStatus.inactive; 
 
+    }
+
+    public void SetInactive()
+    {
+        status = goalStatus.inactive;
     }
 
     public virtual bool HandleMessage()
@@ -53,7 +58,7 @@ public abstract class Goal
     public bool isCompleted(){return status == goalStatus.completed;}
     public bool isActive(){return status == goalStatus.active;}
     public bool isInactive(){return status == goalStatus.inactive;}
-    public bool isBuffered() { return status == goalStatus.buffered; }
+    public bool isBuffered() { return status == goalStatus.noInterrupt; }
     public bool hasFailed(){return status == goalStatus.failed;}
 
     public abstract void Activate();

@@ -25,7 +25,7 @@ namespace Events
 
         public override void addListener(GameObject gameObject)
         {
-            var eventHandler = gameObject.GetComponent<Events.EventHandler>();
+            var eventHandler = gameObject.GetComponent<EventHandler>();
             if (eventHandler != null)
                 onDamage += eventHandler.handleEvent;
         }

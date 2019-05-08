@@ -24,7 +24,7 @@ public abstract class CompositeGoal : Goal
                 subgoalStatus = goalStatus.active;
 
             if (subgoalStatus == goalStatus.active && isBuffered())
-                subgoalStatus = goalStatus.buffered;
+                subgoalStatus = goalStatus.noInterrupt;
 
             return subgoalStatus;
         }
@@ -69,7 +69,11 @@ public abstract class CompositeGoal : Goal
             firstGoal.forwardGoal(passGoal);
         }
         else
+        {
+            subgoalList.First.Value.Terminate();
+            subgoalList.First.Value.SetInactive();
             pushSubgoalFront(passGoal);
+        }
     }
 
     //for debugging purposes

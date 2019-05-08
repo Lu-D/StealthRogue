@@ -22,7 +22,6 @@ public class NavToRoom : Goal
     public override goalStatus Process()
     {
         ActivateIfInactive();
-
         if (navigateToRoom.roomReached)
             status = goalStatus.completed;       
 

@@ -11,7 +11,7 @@ public class Attack : CompositeGoal
 
     public override void Activate()
     {
-        status = goalStatus.buffered;
+        status = goalStatus.noInterrupt;
 
         removeAllSubgoals();
 
