@@ -17,7 +17,7 @@ namespace Events
 
         public override void handleEvent(lookAtMeEvent eventObj)
         {
-            enemy.mainGoal.forwardGoal(new HandleLookAtMe(enemy, eventObj));
+            //enemy.mainGoal.forwardGoal(new HandleLookAtMe(enemy, eventObj));
         }
 
         public override void handleEvent(DamageEvent eventObj)

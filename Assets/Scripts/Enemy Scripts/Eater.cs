@@ -9,6 +9,7 @@ public class Eater : BEnemy{
     protected override void myAwake()
     {
         mainGoal = new EaterThink(this);
+        goalImpl = new EaterGoalImpl(this);
         health = 100;
     }
 

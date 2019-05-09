@@ -162,8 +162,8 @@ public class Die : State
         //turn off FOV visualization
         owner.GetComponent<EnemyVision>().enabled = false;
 
-        //set velocity to zero
-        owner.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        owner.pathFinder.canMove = false;
+        owner.pathFinder.canSearch = false;
 
         //drop item
         GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);

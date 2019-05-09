@@ -16,11 +16,13 @@ public class BEnemy : MonoBehaviour
     public int health = 1;
     public GameObject itemDrop;
 
-    //Finite State Machines
+    //Decision making logic
     [HideInInspector]
     public StateMachine mainFSM;
     [HideInInspector]
     public StateMachine attackFSM;
+    [HideInInspector]
+    public GoalImpl goalImpl;
 
     [HideInInspector]
     public EnemyVision enemyVision;

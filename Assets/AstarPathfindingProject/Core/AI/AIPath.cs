@@ -158,8 +158,8 @@ namespace Pathfinding {
 
         public void CancelPath()
         {
-            destination = GetFeetPosition();
-            SearchPath();
+            CancelCurrentPathRequest();
+            CancelInvoke();
         }
 
 		/** \copydoc Pathfinding::IAstarAI::Teleport */

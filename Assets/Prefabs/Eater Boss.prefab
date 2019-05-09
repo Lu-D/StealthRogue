@@ -43,7 +43,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55a90b43c82fa194aa002a7667907cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+--- !u!114 &5114394844099280416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554711982647276838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23c6f8d5d6b6f94ca1b25a21b028255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8276132758403497274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +178,16 @@ PrefabInstance:
         type: 3}
       propertyPath: maxAcceleration
       value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 217626380146420052, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: doDrawGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 219064718009316774, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: drawGizmos
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 217427226905948386, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}

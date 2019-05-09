@@ -242,11 +242,11 @@ MonoBehaviour:
   playerSpotted: 0
   mapLocation: 
   health: 1
-  isDead: 0
   itemDrop: {fileID: 0}
   enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
   player: {fileID: 6804158145412750525, guid: daa8204185e479e49b62426e223bde71, type: 3}
+  priority: 0
   waypointControl: {fileID: 0}
 --- !u!50 &153466477691211840
 Rigidbody2D:
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  drawGizmos: 1
+  drawGizmos: 0
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0

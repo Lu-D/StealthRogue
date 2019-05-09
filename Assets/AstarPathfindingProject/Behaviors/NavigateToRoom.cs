@@ -27,9 +27,7 @@ public class NavigateToRoom : MonoBehaviour
     private void OnDisable()
     {
         roomreached = false;
-        //ai.destination = transform.position;
-        //ai.SearchPath();
-        ai.CancelPath();
+        //ai.CancelPath();
         roomTarget = "empty";
     }
 
