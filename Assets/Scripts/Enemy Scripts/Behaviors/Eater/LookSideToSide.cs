@@ -21,13 +21,12 @@ public class LookSideToSide : MonoBehaviour
 
     public void OnEnable()
     {
-        turnLocationRight = transform.position + transform.right + transform.up;
-        turnLocationLeft = transform.position - transform.right + transform.up;
+        ai.isStopped = false;
     }
 
     public void OnDisable()
     {
-        //ai.CancelPath();
+        ai.isStopped = true;
     }
 
     public void Update()

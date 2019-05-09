@@ -356,7 +356,7 @@ namespace Pathfinding {
 
 		/** \copydoc Pathfinding::IAstarAI::SearchPath */
 		public virtual void SearchPath () {
-			if (float.IsPositiveInfinity(destination.x)) return;
+            if (float.IsPositiveInfinity(destination.x)) return;
 			if (onSearchPath != null) onSearchPath();
 
 			lastRepath = Time.time;

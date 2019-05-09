@@ -18,21 +18,21 @@ class EaterChargeTarget : MonoBehaviour
     private void Awake()
     {
         timer = new Timer();
+        ai = GetComponent<Pathfinding.IAstarAI>();
     }
 
     private void OnEnable()
     {
         if (target == Vector3.negativeInfinity) return;
 
-        ai = GetComponent<Pathfinding.IAstarAI>();
-
         chargePlayer();
 
-        //timer.startTimer();
+        ai.isStopped = false;
     }
 
     public void OnDisable()
     {
+        ai.isStopped = true;
         target = Vector3.negativeInfinity;
         ai.maxSpeed /= chargeSpeed;
         timer.endTimer();

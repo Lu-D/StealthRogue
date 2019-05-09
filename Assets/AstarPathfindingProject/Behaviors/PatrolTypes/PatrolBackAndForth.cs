@@ -17,11 +17,13 @@ namespace Pathfinding {
 	public class PatrolBackAndForth : BPatrol {
         private void OnEnable()
         {
+            agent.isStopped = false;
         }
         private void OnDisable()
         {
             if (index < 0)
                 index *= -1;
+            agent.isStopped = true;
         }
 
         /** Update is called once per frame */

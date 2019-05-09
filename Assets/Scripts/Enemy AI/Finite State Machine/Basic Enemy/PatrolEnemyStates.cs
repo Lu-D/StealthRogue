@@ -157,13 +157,10 @@ public class Die : State
 
     public override void Enter(BEnemy owner)
     {
-        owner.pathFinder.canMove = false;
-
         //turn off FOV visualization
         owner.GetComponent<EnemyVision>().enabled = false;
 
-        owner.pathFinder.canMove = false;
-        owner.pathFinder.canSearch = false;
+        owner.pathFinder.isStopped = true;
 
         //drop item
         GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);

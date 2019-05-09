@@ -20,6 +20,7 @@ public class NavigateToRoom : MonoBehaviour
 
     private void OnEnable()
     {
+        ai.isStopped = false;
         ai.destination = findRandomRoom();
         ai.SearchPath();
     }
@@ -27,7 +28,7 @@ public class NavigateToRoom : MonoBehaviour
     private void OnDisable()
     {
         roomreached = false;
-        //ai.CancelPath();
+        ai.isStopped = true;
         roomTarget = "empty";
     }
 

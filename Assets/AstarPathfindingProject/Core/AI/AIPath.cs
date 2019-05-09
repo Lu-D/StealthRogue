@@ -156,12 +156,6 @@ namespace Pathfinding {
 
 		#region IAstarAI implementation
 
-        public void CancelPath()
-        {
-            CancelCurrentPathRequest();
-            CancelInvoke();
-        }
-
 		/** \copydoc Pathfinding::IAstarAI::Teleport */
 		public override void Teleport (Vector3 newPosition, bool clearPath = true) {
 			if (clearPath) interpolator.SetPath(null);

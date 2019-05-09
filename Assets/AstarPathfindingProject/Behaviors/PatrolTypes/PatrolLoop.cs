@@ -17,10 +17,12 @@ namespace Pathfinding {
 	public class PatrolLoop : BPatrol {
         private void OnEnable()
         {
+            agent.isStopped = false;
         }
 
         private void OnDisable()
         {
+            agent.isStopped = true;
             targets.Clear();
         }
 

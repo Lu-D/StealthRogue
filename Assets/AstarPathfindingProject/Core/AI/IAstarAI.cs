@@ -142,8 +142,6 @@ namespace Pathfinding {
 		 */
 		System.Action onSearchPath { get; set; }
 
-        void CancelPath();
-
 		/** Recalculate the current path.
 		 * You can for example use this if you want very quick reaction times when you have changed the #destination
 		 * so that the agent does not have to wait until the next automatic path recalculation (see #canSearch).

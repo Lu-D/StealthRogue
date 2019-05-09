@@ -25,6 +25,7 @@ public class EaterChasePlayer : MonoBehaviour
 
     private void OnEnable()
     {
+        ai.isStopped = false;
         ai.destination = searchableArea.returnRandomPoint();
         ai.SearchPath();
     }
@@ -32,7 +33,7 @@ public class EaterChasePlayer : MonoBehaviour
     private void OnDisable()
     {
         targetReached = false;
-        //ai.CancelPath();
+        ai.isStopped = true;
     }
 
     private void Update()
