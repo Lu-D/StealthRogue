@@ -27,8 +27,8 @@ public class NavigateToRoom : MonoBehaviour
 
     private void OnDisable()
     {
-        roomreached = false;
         ai.isStopped = true;
+        roomreached = false;
         roomTarget = "empty";
     }
 
@@ -41,15 +41,10 @@ public class NavigateToRoom : MonoBehaviour
     public Vector3 findRandomRoom()
     {
         PlayerSearchableArea searchableMaps;
-        if (enemy != null) searchableMaps = enemy.player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
-        else return Vector3.positiveInfinity;
+        searchableMaps = enemy.player.transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
 
-        if (searchableMaps != null)
-        {
-            GameObject selectedRoom = searchableMaps.returnRandomRoom();
-            roomTarget = selectedRoom.transform.parent.name;
-            return selectedRoom.transform.position;
-        }
-        else return Vector3.positiveInfinity;
+        GameObject selectedRoom = searchableMaps.returnRandomRoom();
+        roomTarget = selectedRoom.transform.parent.name;
+        return selectedRoom.transform.position;
     }
 }

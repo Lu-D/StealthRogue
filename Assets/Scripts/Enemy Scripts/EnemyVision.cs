@@ -41,29 +41,9 @@ public class EnemyVision : MonoBehaviour
         visualObject.SetActive(false);
     }
 
-    private void Update()
-    {
-        createFOV();
-    }
-
     private void LateUpdate()
     {
         scan();
-    }
-
-    private void scan()
-    {
-        watchList.Clear();
-
-        int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
-        float stepAngle = detectionAngle / stepCount;
-
-        for (int i = 0; i <= stepCount; ++i)
-        {
-            float angle = enemy.transform.rotation.eulerAngles.z + 90f - detectionAngle / 2 + stepAngle * i;
-            ViewCastInfo newViewCast = ViewCast(angle);
-            updateVision(newViewCast);
-        }
     }
 
     public bool hasSeen(string gameObjectTag)
@@ -96,8 +76,9 @@ public class EnemyVision : MonoBehaviour
     //createFOV
     //draws enemy vision
     //creates 3d mesh with vertices made by raycast collisions
-    private void createFOV()
+    private void scan()
     {
+        watchList.Clear();
         int stepCount = Mathf.RoundToInt(fovResolution * detectionAngle);
         float stepAngle = detectionAngle / stepCount;
         List<Vector2> viewPoints = new List<Vector2>();
@@ -106,6 +87,7 @@ public class EnemyVision : MonoBehaviour
         {
             float angle = enemy.transform.rotation.eulerAngles.z + 90f - detectionAngle/2 + stepAngle * i;
             ViewCastInfo newViewCast = ViewCast(angle);
+            updateVision(newViewCast);
             viewPoints.Add(newViewCast.point);
         }
 

@@ -141,11 +141,9 @@ namespace Pathfinding {
 
             private void findReachablePoints(string mapLocation)
             {
-                if (mapLocation == "") return;    
+                if (mapLocation == "") return;
 
-                var roomBounds = GameObject.Find("Maps").transform.
-                Find(mapLocation).transform.
-                Find("PlayerLocator").GetComponent<Collider2D>().bounds;
+                Bounds roomBounds = GameObject.Find("Maps").GetComponent<MapContainer>().maps[mapLocation].mapBounds;
 
                 Vector3 min = roomBounds.min;
                 Vector3 max = roomBounds.max;
