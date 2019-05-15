@@ -15,7 +15,9 @@ public class Attack : CompositeGoal
 
         removeAllSubgoals();
 
-        owner.player.searchableArea.gettingHunted = true;
+        owner.player.searchableArea.zeroRadius();
+
+        owner.player.searchableArea.setIncreasing();
 
         owner.goalImpl.addSubgoals(this);
 
@@ -26,14 +28,11 @@ public class Attack : CompositeGoal
 
         status = processSubgoals();
 
-        owner.player.searchableArea.zeroRadius();
-
         return status;
     }
 
     public override void Terminate()
     {
-        owner.player.searchableArea.gettingHunted = false;
     }
 }
 

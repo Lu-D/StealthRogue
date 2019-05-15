@@ -17,6 +17,8 @@ public class Explore : CompositeGoal
         removeAllSubgoals();
 
         owner.goalImpl.addSubgoals(this);
+
+        owner.player.searchableArea.setDecreasing();
     }
     public override goalStatus Process()
     {

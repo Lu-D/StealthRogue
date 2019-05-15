@@ -6,9 +6,18 @@ using UnityEngine;
 public class PlayerSearchableArea : MonoBehaviour
 {
     private CircleCollider2D circle;
-    private float originalRadius = 26f;
+    private float originalRadius = 13f;
+    private float changeRate = 0;
+
+    public mode radiusMode = mode.same;
     public float radius;
-    public bool gettingHunted = false;
+
+    public enum mode
+    {
+        increasing = 0,
+        decreasing,
+        same
+    }
 
     private void Awake()
     {
@@ -18,24 +27,57 @@ public class PlayerSearchableArea : MonoBehaviour
 
     private void Update()
     {
-        if(!gettingHunted)
-        {
-            DebugUtility.DrawCircle(transform.position, radius, Color.green);
-            circle.radius = radius * (1/transform.parent.gameObject.transform.localScale.x);
+        switch(radiusMode){
+            case mode.increasing:
+                radius += Time.deltaTime * changeRate;
+                DebugUtility.DrawCircle(transform.position, radius, Color.red);
+                circle.radius = radius * (1 / transform.parent.gameObject.transform.localScale.x);
+                return;
+            case mode.decreasing:
+                radius -= Time.deltaTime * changeRate;
+                DebugUtility.DrawCircle(transform.position, radius, Color.yellow);
+                circle.radius = radius * (1 / transform.parent.gameObject.transform.localScale.x);
+                return;
+            case mode.same:
+                DebugUtility.DrawCircle(transform.position, radius, Color.green);
+                return;
         }
-        else
-        {
-            radius += Time.deltaTime * .1f;
-            DebugUtility.DrawCircle(transform.position, radius, Color.red);
-            circle.radius = radius * (1 / transform.parent.gameObject.transform.localScale.x);
+    }
 
-            if (radius > 10f) 
-            {
-                gettingHunted = false;
-                resetRadius();
-            }
+    public bool isIncreasing()
+    {
+        return radiusMode == mode.increasing;
+    }
 
-        }
+    public bool isDecreasing()
+    {
+        return radiusMode == mode.decreasing;
+    }
+
+    public bool isSame()
+    {
+        return radiusMode == mode.same;
+    }
+
+    public void setIncreasing(float rate = .1f)
+    {
+        changeRate = rate;
+
+        radiusMode = mode.increasing;
+    }
+
+    public void setDecreasing(float rate = .1f)
+    {
+        changeRate = rate;
+
+        radiusMode = mode.decreasing;
+    }
+
+    public void setSame()
+    {
+        changeRate = 0;
+
+        radiusMode = mode.same;
     }
 
     public void decreaseSearchArea()
@@ -43,9 +85,10 @@ public class PlayerSearchableArea : MonoBehaviour
         radius -= 2f;
     }
 
-    public void resetRadius()
+    public void reset()
     {
         radius = originalRadius;
+        radiusMode = mode.decreasing;
     }
 
     public void zeroRadius()
