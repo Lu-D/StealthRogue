@@ -11,9 +11,9 @@ public class Map : MonoBehaviour {
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+        player = GameObject.Find("Player").GetComponent<PlayerControl>();
 
-        mapBounds = transform.Find("MapTrigger").GetComponent<Collider2D>().bounds;
+        mapBounds = GetComponent<Collider2D>().bounds;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
