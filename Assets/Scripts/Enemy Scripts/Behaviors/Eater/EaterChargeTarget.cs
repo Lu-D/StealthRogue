@@ -11,8 +11,11 @@ class EaterChargeTarget : MonoBehaviour
 
     private float chargeSpeed = 2.5f;
     private float chargeDistance = 3f;
-    private bool oneshot = true;
+    private bool charging = true;
+    private bool hitPlayer = false;
+
     public Pathfinding.IAstarAI ai;
+    [HideInInspector]
     public Vector3 target;
 
     private void Awake()
@@ -36,15 +39,37 @@ class EaterChargeTarget : MonoBehaviour
         target = Vector3.negativeInfinity;
         ai.maxSpeed /= chargeSpeed;
         timer.endTimer();
-        oneshot = true;
+        charging = true;
+        hitPlayer = false;
     }
 
     private void Update()
     {
-        if (ai.reachedEndOfPath && oneshot)
+        if (ai.reachedEndOfPath && charging)
         {
             timer.startTimer();
-            oneshot = false;
+            charging = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (charging && collision.gameObject.tag == "Player" && !hitPlayer)
+        {
+            var player = collision.gameObject.GetComponent<PlayerControl>();
+            --player.health;
+            hitPlayer = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (charging && collision.gameObject.tag == "Player")
+        {
+            var player = collision.gameObject.GetComponent<PlayerControl>();
+
+            var rigidbody = player.transform.GetComponent<Rigidbody2D>();
+            rigidbody.transform.Translate((transform.right + transform.position + transform.up).normalized * Time.deltaTime * 6f);
         }
     }
 

@@ -16,6 +16,7 @@ public class PlayerControl : MonoBehaviour {
     public bool playerMoving;
     public bool isAttacking;
     public Vector2 lastMove;
+    private bool canControl = true; //set to false if you want to override player controls using stun(float)
 
     public int equip;
     public GameObject equipment;
@@ -31,7 +32,6 @@ public class PlayerControl : MonoBehaviour {
     public AttackPatterns attackPatterns;
 
     public int currStamina;
-    public int currTimeFuel;
     public PlayerSearchableArea searchableArea;
 
     public AudioClip[] audioClips;
@@ -41,8 +41,6 @@ public class PlayerControl : MonoBehaviour {
     private Rigidbody2D myRigidbody;
     private Animator anim;
     public AudioSource myAudioSource;
-    private Light playerLight;
-    private Light sceneLight;
     private float moveSpeed;
     private Renderer myRenderer;
 
@@ -62,11 +60,7 @@ public class PlayerControl : MonoBehaviour {
         capturedBullet = false;
         gun = transform.Find("Gun").gameObject;
 
-        playerLight = transform.Find("Player Light").gameObject.GetComponent<Light>();
-        sceneLight = GameObject.Find("Scene Light").gameObject.GetComponent<Light>();
-
         currStamina = maxStamina;
-        currTimeFuel = maxTimeFeul;
 
         moveSpeed = defaultSpeed;
 
@@ -112,8 +106,17 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
+    public IEnumerator stun(float stunTime)
+    {
+        canControl = false;
+        yield return new WaitForSeconds(stunTime);
+        canControl = true;
+    }
+
     private void playerMove()
     {
+        if (!canControl) return;
+
         playerMoving = false;
 
         //moves player left and right
@@ -166,18 +169,6 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("PlayerMoving", playerMoving);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
-    }
-
-    public IEnumerator getCaught()
-    {
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(0.5f);
-        myAudioSource.PlayOneShot(audioClips[1], .7f);
-        sceneLight.intensity = 2f;
-        yield return new WaitForSecondsRealtime(0.5f);
-        myAudioSource.PlayOneShot(audioClips[2], 1f);
-        yield return new WaitForSecondsRealtime(0.5f);
-        Time.timeScale = 1f;
     }
 
     private void playAttackSound()

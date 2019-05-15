@@ -13,7 +13,7 @@ public abstract class EquipmentController : MonoBehaviour {
     {
         player = GameObject.Find("Player");
         pControl = player.GetComponent<PlayerControl>();
-
+    
         //ignores collisions coming from player
         Collider2D sceneColl = player.transform.Find("SceneCollider").GetComponent<Collider2D>();
         Collider2D hurtbox = player.transform.Find("Hurtbox").GetComponent<Collider2D>();
@@ -48,7 +48,6 @@ public abstract class EquipmentController : MonoBehaviour {
             && pControl.equip == 0 
             && GetComponent<Rigidbody2D>().velocity.magnitude < .3f)
         {
-            Debug.Log("picking i[");
             pControl.equip = equipType;
             pControl.equipment = gameObject;
             GetComponent<SpriteRenderer>().enabled = false;
@@ -59,7 +58,7 @@ public abstract class EquipmentController : MonoBehaviour {
             && collision.gameObject.tag == "Enemy")
         {
 
-            collision.gameObject.GetComponent<BEnemy>().health = 0;
+            --collision.gameObject.GetComponent<BEnemy>().health;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }

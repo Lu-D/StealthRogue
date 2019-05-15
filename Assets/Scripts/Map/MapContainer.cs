@@ -11,10 +11,10 @@ public class MapContainer : MonoBehaviour
     private void Awake()
     {
         maps = new Dictionary<string, Map>();
-        Transform[] children = GetComponentsInChildren<Transform>();
-        foreach (Transform transform in children)
+        //Transform[] children = GetC
+        foreach (Transform child in transform)
         {
-            maps.Add(transform.gameObject.name, transform.GetComponentInChildren<Map>());
+            maps.Add(child.gameObject.name, child.GetComponentInChildren<Map>());
         }
     }
 }
