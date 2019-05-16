@@ -27,7 +27,8 @@ public class PlayerControl : MonoBehaviour {
     public bool changingLocation;
     public int health;
     public int maxStamina;
-    public int maxTimeFeul;
+    public float maxBowRange;
+    private GameObject crosshair;
 
     public AttackPatterns attackPatterns;
 
@@ -59,6 +60,7 @@ public class PlayerControl : MonoBehaviour {
         equip = 0;
         capturedBullet = false;
         gun = transform.Find("Gun").gameObject;
+        crosshair = transform.Find("Crosshair").gameObject;
 
         currStamina = maxStamina;
 
@@ -75,26 +77,51 @@ public class PlayerControl : MonoBehaviour {
             currStamina -= 60;
         }
 
-        if (Input.GetKeyDown("p"))
-        {
-            searchableArea.decreaseSearchArea();
-        }
+        //Inputs for equipment
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if(equip == 0)
+        //    {
+        //        anim.SetTrigger("IsAttacking");
+        //    }
+        //    else
+        //    {
+        //        equipment.GetComponent<EquipmentController>().onKeyDown();
+        //    }
+        //}
 
-        if (Input.GetMouseButtonDown(0))
+        //if(Input.GetMouseButtonDown(1) && equip != 0)
+        //{
+        //    equipment.GetComponent<EquipmentController>().throwEquip(equip);
+        //}
+
+        if(Input.GetMouseButtonDown(1))
         {
-            if(equip == 0)
+            crosshair.SetActive(true);
+        }
+        else if(Input.GetMouseButton(1))
+        {
+            //Push crosshair towards mouse
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = 0f;
+            Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+            mousePos = mousePos - objectPos;
+
+
+            if (mousePos.normalized != (crosshair.transform.position - transform.position).normalized)
             {
-                anim.SetTrigger("IsAttacking");
+                crosshair.transform.position = mousePos.normalized * (crosshair.transform.position - transform.position).magnitude + transform.position;
             }
-            else
+
+            if ((crosshair.transform.position - transform.position).magnitude < maxBowRange)
             {
-                equipment.GetComponent<EquipmentController>().onKeyDown();
+                crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * 2f);
             }
         }
-
-        if(Input.GetMouseButtonDown(1) && equip != 0)
+        else if(Input.GetMouseButtonUp(1))
         {
-            equipment.GetComponent<EquipmentController>().throwEquip(equip);
+            crosshair.SetActive(false);
+            crosshair.transform.position = transform.position;
         }
 
         playerMove();
