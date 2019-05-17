@@ -23,7 +23,7 @@ public class pistolControl : EquipmentController
     {
         if (bullets > 0 && (fireOneShot == null || !fireOneShot.Running))
         {
-            fireOneShot = new Task(pControl.attackPatterns.shootStraight(pControl.gun, pControl.bullet, 1, 1f));
+            fireOneShot = new Task(pControl.attackPatterns.shootStraight(pControl.gun.gameObject, pControl.bullet, 1, 1f));
             --bullets;
             pControl.myAudioSource.PlayOneShot(pControl.audioClips[3]);
         }

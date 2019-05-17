@@ -27,11 +27,11 @@ TagManager:
   - Gate
   - PlayerHurt
   - Enemy
-  - Projectile
+  - EnemyProjectile
   - PlayerSceneColl
   - Border
   - Room
-  - 
+  - PlayerProjectile
   - 
   - 
   - 

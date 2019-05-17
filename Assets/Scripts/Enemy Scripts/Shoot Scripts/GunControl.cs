@@ -7,18 +7,18 @@ public class GunControl : MonoBehaviour
 {
     private Transform gunBack;
     private Transform gunFront;
-    private Transform boss;
+    private Transform shooter;
     public float coolDown;
     private float maxCoolDown;
     public GameObject bullet;
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        gunBack = this.gameObject.transform.GetChild(0);
-        gunFront = this.gameObject.transform.GetChild(1);
-        boss = this.gameObject.transform.parent;
+        gunBack = gameObject.transform.GetChild(0);
+        gunFront = gameObject.transform.GetChild(1);
+        shooter = gameObject.transform.parent;
         maxCoolDown = coolDown;
     }
 
@@ -29,10 +29,9 @@ public class GunControl : MonoBehaviour
         transform.Rotate(0, 0, angle, Space.Self);
 
         //fire Projectile
-        GameObject projectile = Instantiate(bullet, gunFront.position, boss.rotation);
+        GameObject projectile = Instantiate(bullet, gunFront.position, transform.rotation);
 
         projectile.GetComponent<Rigidbody2D>().velocity = (gunFront.position - gunBack.position).normalized * projectile.GetComponent<BProjectile>().projSpeed;
-        projectile.GetComponent<BProjectile>().source = gameObject.transform.parent.gameObject;
         coolDown = maxCoolDown;
         transform.Rotate(0, 0, -angle, Space.Self);
 

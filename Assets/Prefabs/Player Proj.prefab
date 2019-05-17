@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 58619768351492732}
   - component: {fileID: 50809964978293978}
   - component: {fileID: 4532216023087712075}
-  m_Layer: 12
+  m_Layer: 16
   m_Name: Player Proj
   m_TagString: Player Projectile
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0070a717143784a4db555d8e366b3f5e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a91cc804163f344b903b06008fd71e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -131,6 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8deb5dc803253734092e2aaf0787e538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projSpeed: 8
+  projSpeed: 5
   damage: 1
   source: {fileID: 0}

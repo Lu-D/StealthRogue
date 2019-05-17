@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class PlayerProj : BProjectile
 {
+    GameObject crosshair;
+    float range;
+    
     // Start is called before the first frame update
-    private new void Start()
+    protected new void Awake()
     {
-        //ignores collisions coming from player
-        Collider2D sceneColl = source.transform.Find("SceneCollider").GetComponent<Collider2D>();
-        Collider2D hurtbox = source.transform.Find("Hurtbox").GetComponent<Collider2D>();
+        source = GameObject.Find("Player");
 
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), sceneColl);
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), hurtbox);
+        crosshair = source.transform.Find("Crosshair").transform.gameObject;
+
+        range = (crosshair.transform.position - source.transform.position).magnitude;
     }
 
     // Update is called once per frame
-    private new void Update()
+    protected new void Update()
     {
-
+        if ((transform.position - source.transform.position).magnitude > range)
+        {
+            Destroy(gameObject);
+        }
     }
 
     //collision method
-    private new void OnCollisionEnter2D(Collision2D collision)
-    {
-        base.OnCollisionEnter2D(collision);
-        
+    protected new void OnCollisionEnter2D(Collision2D collision)
+    {       
         if(collision.gameObject.tag == "Enemy")
         {
             BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
             --enemy.health;
+            Destroy(gameObject);
         }
     }
 }

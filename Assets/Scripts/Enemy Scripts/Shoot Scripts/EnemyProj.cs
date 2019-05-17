@@ -8,13 +8,14 @@ public class EnemyProj : BProjectile
     private Collider2D projCollider;
 
     //initialize fields
-    public override void Start()
+    protected new void Awake()
     {
+        base.Awake();
         projCollider = GetComponent<Collider2D>();
     }
 
     //executes every frame
-    private new void Update()
+    protected new void Update()
     {
         //Deactivate collider when player is invincible
         if (GameObject.Find("Player").GetComponent<PlayerControl>().invincible)
@@ -28,7 +29,7 @@ public class EnemyProj : BProjectile
     }
 
     //collision method
-    private new void OnCollisionEnter2D(Collision2D collision)
+    protected new void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
 

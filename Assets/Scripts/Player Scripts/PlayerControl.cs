@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour {
     public int equip;
     public GameObject equipment;
     public bool capturedBullet;
-    public GameObject gun;
+    public GunControl gun;
     public GameObject bullet;
     public string mapLocation;
     public bool changingLocation;
@@ -59,7 +59,7 @@ public class PlayerControl : MonoBehaviour {
 
         equip = 0;
         capturedBullet = false;
-        gun = transform.Find("Gun").gameObject;
+        gun = transform.Find("Gun").gameObject.GetComponent<GunControl>();
         crosshair = transform.Find("Crosshair").gameObject;
 
         currStamina = maxStamina;
@@ -112,10 +112,16 @@ public class PlayerControl : MonoBehaviour {
             {
                 crosshair.transform.position = mousePos.normalized * (crosshair.transform.position - transform.position).magnitude + transform.position;
             }
-
             if ((crosshair.transform.position - transform.position).magnitude < maxBowRange)
             {
                 crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * 2f);
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                gun.Fire(bullet, 0f);
+
+                crosshair.transform.position = transform.position;
             }
         }
         else if(Input.GetMouseButtonUp(1))
