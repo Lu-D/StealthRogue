@@ -33,6 +33,14 @@ public class PlayerProj : BProjectile
         {
             BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
             --enemy.health;
+
+            if(collision.gameObject.name == "Eater Boss")
+            {
+                var eventObj = new Events.ComeToMeEvent(source.transform.position);
+                eventObj.addListener(collision.gameObject);
+                Events.EventManager.Instance.addEvent(eventObj, 0f);
+            }
+
             Destroy(gameObject);
         }
     }

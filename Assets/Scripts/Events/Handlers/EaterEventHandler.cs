@@ -25,5 +25,10 @@ namespace Events
             if (enemy.health > 0)
                 --enemy.health;
         }
+
+        public override void handleEvent(ComeToMeEvent eventObj)
+        {
+            enemy.mainGoal.forwardGoal(new HandleComeToMe(enemy, eventObj));
+        }
     }
 }

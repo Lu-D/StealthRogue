@@ -163,7 +163,8 @@ public class Die : State
         owner.pathFinder.isStopped = true;
 
         //drop item
-        GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
+        if(owner.itemDrop != null)
+            GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
 
         //play animation
         owner.transform.Find("Texture").GetComponent<Animator>().SetTrigger("isDead");

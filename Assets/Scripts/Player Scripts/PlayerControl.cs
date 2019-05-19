@@ -26,13 +26,10 @@ public class PlayerControl : MonoBehaviour {
     public string mapLocation;
     public bool changingLocation;
     public int health;
-    public int maxStamina;
     public float maxBowRange;
     private GameObject crosshair;
 
     public AttackPatterns attackPatterns;
-
-    public int currStamina;
     public PlayerSearchableArea searchableArea;
 
     public AudioClip[] audioClips;
@@ -62,39 +59,20 @@ public class PlayerControl : MonoBehaviour {
         gun = transform.Find("Gun").gameObject.GetComponent<GunControl>();
         crosshair = transform.Find("Crosshair").gameObject;
 
-        currStamina = maxStamina;
-
         moveSpeed = defaultSpeed;
 
         searchableArea = transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
     }
 	
-	// Update is called once per frame
+	//Tracks player inputs
 	private void Update () {
-        if (Input.GetKeyDown("space") && (rollOneShot == null || !rollOneShot.Running) && currStamina > 60)
+        //Input for rolling
+        if (Input.GetKeyDown("space") && (rollOneShot == null || !rollOneShot.Running))
         {
             rollOneShot = new Task(roll());
-            currStamina -= 60;
         }
 
-        //Inputs for equipment
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if(equip == 0)
-        //    {
-        //        anim.SetTrigger("IsAttacking");
-        //    }
-        //    else
-        //    {
-        //        equipment.GetComponent<EquipmentController>().onKeyDown();
-        //    }
-        //}
-
-        //if(Input.GetMouseButtonDown(1) && equip != 0)
-        //{
-        //    equipment.GetComponent<EquipmentController>().throwEquip(equip);
-        //}
-
+        //Inputs for firing arrow
         if(Input.GetMouseButtonDown(1))
         {
             crosshair.SetActive(true);
@@ -114,7 +92,7 @@ public class PlayerControl : MonoBehaviour {
             }
             if ((crosshair.transform.position - transform.position).magnitude < maxBowRange)
             {
-                crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * 2f);
+                crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * 2.5f);
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -130,13 +108,8 @@ public class PlayerControl : MonoBehaviour {
             crosshair.transform.position = transform.position;
         }
 
+        //input for basic player movement
         playerMove();
-
-        if (currStamina != maxStamina)
-        {
-            ++currStamina;
-        }
-
     }
 
     public IEnumerator stun(float stunTime)
@@ -202,11 +175,6 @@ public class PlayerControl : MonoBehaviour {
         anim.SetBool("PlayerMoving", playerMoving);
         anim.SetFloat("LastMoveX", lastMove.x);
         anim.SetFloat("LastMoveY", lastMove.y);
-    }
-
-    private void playAttackSound()
-    {
-        myAudioSource.PlayOneShot(audioClips[0], 1f);
     }
 
     public IEnumerator roll()
