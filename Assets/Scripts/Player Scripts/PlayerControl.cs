@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour {
     public AttackPatterns attackPatterns;
     public PlayerSearchableArea searchableArea;
 
-    public AudioClip[] audioClips;
+    private SoundManager soundManager;
 
     Task rollOneShot;
 
@@ -59,6 +59,8 @@ public class PlayerControl : MonoBehaviour {
         gun = transform.Find("Gun").gameObject.GetComponent<GunControl>();
         crosshair = transform.Find("Crosshair").gameObject;
 
+        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+
         moveSpeed = defaultSpeed;
 
         searchableArea = transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
@@ -76,6 +78,8 @@ public class PlayerControl : MonoBehaviour {
         if(Input.GetMouseButtonDown(1))
         {
             crosshair.SetActive(true);
+
+            soundManager.Play("Pull_Bow_Back");
         }
         else if(Input.GetMouseButton(1))
         {
@@ -99,6 +103,11 @@ public class PlayerControl : MonoBehaviour {
             {
                 gun.Fire(bullet, 0f);
 
+                soundManager.PlayOneShot("Shoot_Bow");
+
+                soundManager.Stop("Pull_Bow_Back");
+                soundManager.Play("Pull_Bow_Back");
+
                 crosshair.transform.position = transform.position;
             }
         }
@@ -106,6 +115,7 @@ public class PlayerControl : MonoBehaviour {
         {
             crosshair.SetActive(false);
             crosshair.transform.position = transform.position;
+            soundManager.Stop("Pull_Bow_Back");
         }
 
         //input for basic player movement

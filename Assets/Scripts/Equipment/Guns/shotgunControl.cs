@@ -26,7 +26,6 @@ public class shotgunControl : EquipmentController
         {
             fireOneShot = new Task(pControl.attackPatterns.shotgun(pControl.gun.gameObject, pControl.bullet, 1, 1f));
             --bullets;
-            pControl.myAudioSource.PlayOneShot(pControl.audioClips[3]);
         }
     }
 
