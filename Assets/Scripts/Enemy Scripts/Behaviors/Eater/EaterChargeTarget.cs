@@ -66,10 +66,8 @@ class EaterChargeTarget : MonoBehaviour
     {
         if (charging && collision.gameObject.tag == "Player")
         {
-            var player = collision.gameObject.GetComponent<PlayerControl>();
-
-            var rigidbody = player.transform.GetComponent<Rigidbody2D>();
-            rigidbody.transform.Translate((transform.right + transform.position + transform.up).normalized * Time.deltaTime * 6f);
+            Rigidbody2D rigidbody = collision.gameObject.transform.GetComponent<Rigidbody2D>();
+            rigidbody.transform.Translate((transform.right + transform.position + transform.up).normalized * Time.deltaTime * 6f, Space.World);
         }
     }
 

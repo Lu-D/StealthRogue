@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -31,28 +32,57 @@ public class SoundManager : MonoBehaviour
         oneShotPlayer.PlayOneShot(audioClipDic[name], volume);
     }
 
-    public void Play(string name, float volume = 1f)
+    public AudioSource Play(string name, float volume = 1f, bool loop = false)
     {
-        GameObject audioObject;
+        if(!audioClipDic.ContainsKey(name))
+        {
+            Debug.LogError("audio clip not present in dic: " + name);
+            return null;
+        }
+            
+        Transform audioSearchResult = transform.Find(name);
+        AudioSource audioSource;
 
-        if (audioClipDic.ContainsKey(name)) {
+        if (audioSearchResult != null)
+        {
+            audioSource = audioSearchResult.GetComponent<AudioSource>();
+        }
+        else{
+            GameObject audioObject;
             audioObject = new GameObject(name);
             audioObject.transform.parent = transform;
-            AudioSource audioSource = audioObject.AddComponent<AudioSource>();
+            audioSource = audioObject.AddComponent<AudioSource>();
+        }
 
-            audioSource.clip = audioClipDic[name];
-            audioSource.volume = volume;
-            audioSource.Play();
-        }
-        else
+
+        audioSource.clip = audioClipDic[name];
+        audioSource.volume = volume;
+        audioSource.loop = loop;
+        audioSource.Play();
+        return audioSource;
+    }
+
+    private IEnumerator fadeInCoroutine(string name, float maxVolume = 1f, bool loop = false)
+    {
+        AudioSource player = Play(name, 0f, loop);
+
+        if (player != null)
         {
-            Debug.LogError("audio clip not present in dic");
+            while (player.volume < 2f)
+            {
+                player.volume += .005f;
+                yield return null;
+            }
         }
+    }
+    public void FadeIn(string name, float maxVolume = 1f, bool loop = false)
+    {
+        new Task(fadeInCoroutine(name, maxVolume, loop));
     }
 
     public void Pause(string name)
     {
-        GameObject audioObject = transform.Find(name).gameObject;
+        Transform audioObject = transform.Find(name);
         
         if(audioObject != null)
         {
@@ -64,7 +94,7 @@ public class SoundManager : MonoBehaviour
 
     public void Stop(string name)
     {
-        GameObject audioObject = transform.Find(name).gameObject;
+        Transform audioObject = transform.Find(name);
 
         if (audioObject != null)
         {
@@ -72,8 +102,35 @@ public class SoundManager : MonoBehaviour
 
             audioSource.Stop();
 
-            Destroy(audioObject);
+            Destroy(audioObject.gameObject);
         }
+    }
+
+    private IEnumerator fadeOutCoroutine(string name)
+    {
+        Transform audioObject = transform.Find(name);
+
+        if (audioObject != null)
+        {
+            AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+
+            while (audioSource.volume > 0f)
+            {
+                audioSource.volume -= .005f;
+                yield return null;
+            }
+        }
+
+        Stop(name);
+    }
+    public void FadeOut(string name)
+    {
+        new Task(fadeOutCoroutine(name));
+    }
+
+    public bool isPlaying(string name)
+    {
+        return transform.Find(name) != null;
     }
 }
 

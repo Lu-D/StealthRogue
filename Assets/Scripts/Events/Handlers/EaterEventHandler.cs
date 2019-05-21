@@ -28,7 +28,8 @@ namespace Events
 
         public override void handleEvent(ComeToMeEvent eventObj)
         {
-            enemy.mainGoal.forwardGoal(new HandleComeToMe(enemy, eventObj));
+            if(!(enemy.mainGoal.getFrontMostSubgoal() is HandleComeToMe))
+                enemy.mainGoal.forwardGoal(new HandleComeToMe(enemy, eventObj));
         }
     }
 }

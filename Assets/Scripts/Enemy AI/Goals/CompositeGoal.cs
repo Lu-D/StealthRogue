@@ -24,7 +24,7 @@ public abstract class CompositeGoal : Goal
                 subgoalStatus = goalStatus.active;
 
             if (subgoalStatus == goalStatus.active && isBuffered())
-                subgoalStatus = goalStatus.noInterrupt;
+                subgoalStatus = goalStatus.buffered;
 
             return subgoalStatus;
         }
@@ -70,9 +70,12 @@ public abstract class CompositeGoal : Goal
         }
         else
         {
-            subgoalList.First.Value.Terminate();
-            subgoalList.First.Value.SetInactive();
-            pushSubgoalFront(passGoal);
+            if (!subgoalList.First.Value.isBuffered())
+            {
+                subgoalList.First.Value.Terminate();
+                subgoalList.First.Value.SetInactive();
+                pushSubgoalFront(passGoal);
+            }
         }
     }
 

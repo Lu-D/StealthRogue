@@ -34,7 +34,12 @@ public class PlayerProj : BProjectile
             BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
             --enemy.health;
 
-            if(collision.gameObject.name == "Eater Boss")
+            GameObject.Find("Sound Manager").GetComponent<SoundManager>().PlayOneShot("Arrow_Hit");
+
+            Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
+            enemyRigidbody.transform.Translate((transform.position - source.transform.position).normalized * .2f, Space.World);
+
+            if (collision.gameObject.name == "Eater Boss")
             {
                 var eventObj = new Events.ComeToMeEvent(source.transform.position);
                 eventObj.addListener(collision.gameObject);

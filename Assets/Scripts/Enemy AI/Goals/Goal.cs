@@ -11,7 +11,7 @@ public abstract class Goal
         active,
         completed,
         failed,
-        noInterrupt
+        buffered
     }
 
 //protected
@@ -35,11 +35,6 @@ public abstract class Goal
     {
         status = goalStatus.inactive;
     }
-
-    public virtual bool HandleMessage()
-    {
-        return false;
-    }
 //public
     public Goal(BEnemy _owner){
         owner = _owner;
@@ -58,7 +53,7 @@ public abstract class Goal
     public bool isCompleted(){return status == goalStatus.completed;}
     public bool isActive(){return status == goalStatus.active;}
     public bool isInactive(){return status == goalStatus.inactive;}
-    public bool isBuffered() { return status == goalStatus.noInterrupt; }
+    public bool isBuffered() { return status == goalStatus.buffered; }
     public bool hasFailed(){return status == goalStatus.failed;}
 
     public abstract void Activate();
