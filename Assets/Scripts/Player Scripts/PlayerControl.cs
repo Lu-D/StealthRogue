@@ -202,8 +202,8 @@ public class PlayerControl : MonoBehaviour {
 
         //changes color to show player is invincible
         //save initial material and color
-        Material m = this.myRenderer.material;
-        Color32 c = this.myRenderer.material.color;
+        Material m = myRenderer.material;
+        Color32 c = myRenderer.material.color;
         //switch color to grey
         this.myRenderer.material = null;
         this.myRenderer.material.color = Color.white;
@@ -218,19 +218,7 @@ public class PlayerControl : MonoBehaviour {
         //player no longer invincible
         invincible = false;
         //set player back to original color
-        this.myRenderer.material = m;
-        this.myRenderer.material.color = c;
-    }
-
-    public void OnCollisionEnter2DKnife(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            collision.gameObject.GetComponent<BEnemy>().health = 0;
-        }
-        if(equipment != null)
-        {
-            equipment.GetComponent<EquipmentController>().onCollide(collision);
-        }
+        myRenderer.material = m;
+        myRenderer.material.color = c;
     }
 }
