@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
     public int health;
     public float maxBowRange;
     private GameObject crosshair;
+    public GameObject flashlight;
 
     public AttackPatterns attackPatterns;
     public PlayerSearchableArea searchableArea;
@@ -64,10 +65,30 @@ public class PlayerControl : MonoBehaviour {
         moveSpeed = defaultSpeed;
 
         searchableArea = transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
+
+        flashlight = transform.Find("Flashlight").gameObject;
     }
 	
 	//Tracks player inputs
 	private void Update () {
+        //Flashlight following mouse
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0f;
+
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        mousePos = mousePos - objectPos;
+
+        flashlight.transform.position = mousePos.normalized * (flashlight.transform.position - transform.position).magnitude + transform.position;
+
+        Quaternion lookMouse = Quaternion.LookRotation(mousePos, Vector3.back);
+
+        lookMouse.x = 0;
+
+        lookMouse.y = 0;
+
+        flashlight.transform.rotation = Quaternion.RotateTowards(transform.rotation, lookMouse, 360f);
+
         //Input for rolling
         if (Input.GetKeyDown("space") && (rollOneShot == null || !rollOneShot.Running))
         {
@@ -84,9 +105,9 @@ public class PlayerControl : MonoBehaviour {
         else if(Input.GetMouseButton(1))
         {
             //Push crosshair towards mouse
-            Vector3 mousePos = Input.mousePosition;
+            mousePos = Input.mousePosition;
             mousePos.z = 0f;
-            Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+            objectPos = Camera.main.WorldToScreenPoint(transform.position);
             mousePos = mousePos - objectPos;
 
 
