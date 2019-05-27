@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using SoundStates;
 
 public class Eater : BEnemy{
     
@@ -10,11 +11,18 @@ public class Eater : BEnemy{
     {
         mainGoal = new EaterThink(this);
         goalImpl = new EaterGoalImpl(this);
-        health = 100;
+        health = 50;
+    }
+
+    private void Start()
+    {
+        soundFSM.changeState(EnvironmentalCrickets.Instance);
     }
 
     private void Update()
     {
         mainGoal.Process();
+
+        soundFSM.stateUpdate();
     }
 }

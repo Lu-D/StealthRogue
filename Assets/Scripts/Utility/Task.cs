@@ -272,6 +272,11 @@ public class TaskList
         }
     }   
 
+    public bool contains(string key)
+    {
+        return taskList.ContainsKey(key);
+    }
+
     private Task getTask(string key)
     {
         if (!taskList.ContainsKey(key))

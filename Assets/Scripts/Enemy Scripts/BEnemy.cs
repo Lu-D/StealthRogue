@@ -30,13 +30,13 @@ public class BEnemy : MonoBehaviour
     public AttackPatterns attackPatterns;
     [HideInInspector]
     public Pathfinding.AIPath pathFinder;
+    public SoundManager soundManager;
+    public StateMachine soundFSM;
 
     [HideInInspector]
     public PlayerControl player;
     [HideInInspector]
     public TaskList taskList;
-    [HideInInspector]
-    public Events.Priority priority = Events.Priority.P0;
 
     //private stuff
     public void Awake()
@@ -52,6 +52,9 @@ public class BEnemy : MonoBehaviour
         //initialize state machines
         mainFSM = new StateMachine(this);
         attackFSM = new StateMachine(this);
+
+        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+        soundFSM = new StateMachine(this);
 
         myAwake(); //called from derived class
     }
@@ -77,11 +80,6 @@ public class BEnemy : MonoBehaviour
     public IEnumerator Wait(float delay)
     {
         yield return new WaitForSeconds(delay);
-    }
-
-    public void priorityReset()
-    {
-        priority = Events.Priority.P0;
     }
 
     public T castTo<T>() where T : BEnemy

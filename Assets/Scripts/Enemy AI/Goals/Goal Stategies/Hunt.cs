@@ -7,11 +7,9 @@ using UnityEngine;
 
 public class Hunt : CompositeGoal
 {
-    private SoundManager soundManager;
     
     public Hunt(BEnemy _owner) : base(_owner)
     {
-        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
     }
 
     public override void Activate()
@@ -25,11 +23,6 @@ public class Hunt : CompositeGoal
             owner.player.searchableArea.zeroRadius();
             owner.player.searchableArea.setIncreasing();
         }
-
-        soundManager.Pause("Environment_Ambience");
-
-        if(!soundManager.isPlaying("Chase_Theme_Loop"))
-            soundManager.FadeIn("Chase_Theme_Loop", 1f, true);
 
         owner.goalImpl.addSubgoals(this);
     }
@@ -48,7 +41,5 @@ public class Hunt : CompositeGoal
     public override void Terminate()
     {
         owner.player.searchableArea.reset();
-
-        soundManager.Play("Environment_Ambience");
     }
 }

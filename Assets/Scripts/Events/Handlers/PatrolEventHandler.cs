@@ -17,14 +17,11 @@ namespace Events
 
         public override void handleEvent(lookAtMeEvent eventObj)
         {
-            if ((enemy.mainFSM.getCurrentState() == PatrolEnemyStates.PatrolWaypoint.Instance ||
-            enemy.mainFSM.getCurrentState() == PatrolEnemyStates.LookAtMe.Instance) &&
-            enemy.priority <= eventObj.priority)
+            if (enemy.mainFSM.getCurrentState() == PatrolEnemyStates.PatrolWaypoint.Instance ||
+            enemy.mainFSM.getCurrentState() == PatrolEnemyStates.LookAtMe.Instance)
             {
                 PatrolEnemyStates.LookAtMe.Instance.lookPosition = eventObj.position;
                 enemy.mainFSM.changeState(PatrolEnemyStates.LookAtMe.Instance);
-
-                enemy.priority = eventObj.priority;
             }
         }
 

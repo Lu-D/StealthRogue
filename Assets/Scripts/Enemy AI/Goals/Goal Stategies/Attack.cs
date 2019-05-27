@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class Attack : CompositeGoal
 {
-    private SoundManager soundManager;
-
     public Attack(BEnemy _owner) : base(_owner)
     {
-        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
     }
 
     public override void Activate()
@@ -24,11 +21,6 @@ public class Attack : CompositeGoal
         owner.player.searchableArea.setIncreasing();
 
         owner.goalImpl.addSubgoals(this);
-
-        soundManager.Pause("Environment_Ambience");
-
-        if (!soundManager.isPlaying("Chase_Theme_Loop"))
-            soundManager.FadeIn("Chase_Theme_Loop", 1f, true);
     }
     public override goalStatus Process()
     {

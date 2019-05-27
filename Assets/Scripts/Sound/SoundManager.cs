@@ -14,11 +14,15 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<string, AudioClip> audioClipDic;
 
+    private TaskList taskList;
+
     private void Awake()
     {
         oneShotPlayer = GetComponent<AudioSource>();
 
         audioClipDic = new Dictionary<string, AudioClip>();
+
+        taskList = new TaskList();
 
         foreach (AudioClip i in audioClips)
         {
@@ -62,22 +66,25 @@ public class SoundManager : MonoBehaviour
         return audioSource;
     }
 
-    private IEnumerator fadeInCoroutine(string name, float maxVolume = 1f, bool loop = false)
+    private IEnumerator fadeInCoroutine(string name, float maxVolume = 1f, float stepSize = .005f, bool loop = false)
     {
         AudioSource player = Play(name, 0f, loop);
 
         if (player != null)
         {
-            while (player.volume < 2f)
+            while (player.volume < maxVolume)
             {
-                player.volume += .005f;
+                player.volume += stepSize;
                 yield return null;
             }
         }
     }
-    public void FadeIn(string name, float maxVolume = 1f, bool loop = false)
+    public void FadeIn(string name, float maxVolume = 1f, float stepSize = .005f, bool loop = false)
     {
-        new Task(fadeInCoroutine(name, maxVolume, loop));
+        if (taskList.contains(name))
+            taskList.Stop(name);
+
+        taskList[name] = new Task(fadeInCoroutine(name, maxVolume, stepSize, loop));
     }
 
     public void Pause(string name)
@@ -106,7 +113,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private IEnumerator fadeOutCoroutine(string name)
+    private IEnumerator fadeOutCoroutine(string name, float stepSize = .005f)
     {
         Transform audioObject = transform.Find(name);
 
@@ -116,16 +123,19 @@ public class SoundManager : MonoBehaviour
 
             while (audioSource.volume > 0f)
             {
-                audioSource.volume -= .005f;
+                audioSource.volume -= stepSize;
                 yield return null;
             }
         }
 
-        Stop(name);
+        Pause(name);
     }
-    public void FadeOut(string name)
+    public void FadeOut(string name, float stepSize = .005f)
     {
-        new Task(fadeOutCoroutine(name));
+        if (taskList.contains(name))
+            taskList.Stop(name);
+
+        taskList[name] = new Task(fadeOutCoroutine(name, stepSize));
     }
 
     public bool isPlaying(string name)

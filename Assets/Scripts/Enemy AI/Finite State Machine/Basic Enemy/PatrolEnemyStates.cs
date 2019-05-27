@@ -131,8 +131,6 @@ public class LookAtMe : State
     {
         owner.taskList.Stop("LookAtMe");
 
-        owner.priorityReset();
-
         var ai = owner.GetComponent<Pathfinding.IAstarAI>();
         if (ai != null) ai.isStopped = false;
     }
