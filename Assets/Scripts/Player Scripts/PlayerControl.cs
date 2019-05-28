@@ -25,13 +25,12 @@ public class PlayerControl : MonoBehaviour {
     public GameObject bullet;
     public string mapLocation;
     public bool changingLocation;
-    public int health;
-    public float maxBowRange;
+    public int health = 3;
     private GameObject crosshair;
     public GameObject flashlight;
 
-    public AttackPatterns attackPatterns;
     public PlayerSearchableArea searchableArea;
+    public BowData bowData;
 
     private SoundManager soundManager;
 
@@ -53,14 +52,14 @@ public class PlayerControl : MonoBehaviour {
         myAudioSource = GetComponent<AudioSource>();
         myRenderer = GetComponent<Renderer>();
 
-        attackPatterns = new AttackPatterns();
-
         equip = 0;
         capturedBullet = false;
         gun = transform.Find("Gun").gameObject.GetComponent<GunControl>();
         crosshair = transform.Find("Crosshair").gameObject;
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+
+        bowData = new BowData();
 
         moveSpeed = defaultSpeed;
 
@@ -115,14 +114,22 @@ public class PlayerControl : MonoBehaviour {
             {
                 crosshair.transform.position = mousePos.normalized * (crosshair.transform.position - transform.position).magnitude + transform.position;
             }
-            if ((crosshair.transform.position - transform.position).magnitude < maxBowRange)
+            if ((crosshair.transform.position - transform.position).magnitude < bowData.getRange())
             {
-                crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * 2.5f);
+                crosshair.transform.Translate(mousePos.normalized * Time.deltaTime * bowData.getAimSpeed());
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                gun.Fire(bullet, 0f);
+                float angleRestrictions = 40f;
+                float currAngle = angleRestrictions;
+                float angleStepCount = angleRestrictions * 2 / (bowData.getArrowShootCount()-1);
+                    
+                for(int i = 0; i < bowData.getArrowShootCount(); ++i)
+                {
+                    gun.Fire(bullet, currAngle, bowData.getDmg());
+                    currAngle -= angleStepCount;
+                }
 
                 soundManager.PlayOneShot("Shoot_Bow");
 

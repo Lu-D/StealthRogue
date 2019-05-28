@@ -32,14 +32,14 @@ public class PlayerProj : BProjectile
         if(collision.gameObject.tag == "Enemy")
         {
             BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
-            --enemy.health;
+            enemy.health -= damage;
 
             GameObject.Find("Sound Manager").GetComponent<SoundManager>().PlayOneShot("Arrow_Hit");
 
             Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
             enemyRigidbody.transform.Translate((transform.position - source.transform.position).normalized * .2f, Space.World);
 
-            if (collision.gameObject.name == "Eater Boss")
+            if (collision.gameObject.name == "Boss")
             {
                 var eventObj = new Events.ComeToMeEvent(source.transform.position);
                 eventObj.addListener(collision.gameObject);

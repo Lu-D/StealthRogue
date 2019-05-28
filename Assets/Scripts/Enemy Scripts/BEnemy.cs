@@ -27,8 +27,6 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public EnemyVision enemyVision;
     [HideInInspector]
-    public AttackPatterns attackPatterns;
-    [HideInInspector]
     public Pathfinding.AIPath pathFinder;
     public SoundManager soundManager;
     public StateMachine soundFSM;
@@ -42,7 +40,6 @@ public class BEnemy : MonoBehaviour
     public void Awake()
     {
         taskList = new TaskList();
-        attackPatterns = new AttackPatterns();
 
         player = GameObject.Find("Player").GetComponent<PlayerControl>();
         enemyVision = GetComponent<EnemyVision>();
@@ -60,7 +57,7 @@ public class BEnemy : MonoBehaviour
     }
     protected virtual void myAwake(){ }
 
-//public stuff
+//public
 
     //RotateTo
     //rotates enemy to face target

@@ -13,13 +13,11 @@ public class BProjectile : MonoBehaviour
     //initialize fields
     protected virtual void Awake()
     {
-        //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), source.GetComponent<Collider2D>());
     }
 
     //execute every frame
     protected virtual void Update()
     {
-
     }
 
     //collision methods

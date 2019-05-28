@@ -145,7 +145,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4cc4dbc5048704f46b675e7c92fc9d93, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,8 +245,8 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
+  soundManager: {fileID: 0}
   player: {fileID: 6804158145412750525, guid: daa8204185e479e49b62426e223bde71, type: 3}
-  priority: 0
   waypointControl: {fileID: 0}
 --- !u!50 &153466477691211840
 Rigidbody2D:

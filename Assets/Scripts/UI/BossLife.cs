@@ -15,7 +15,7 @@ public class BossLife : MonoBehaviour
     {
         slider = GetComponent<Slider>();
 
-        boss = GameObject.Find("Eater Boss").GetComponent<BEnemy>();
+        boss = GameObject.Find("Boss").GetComponent<BEnemy>();
         player = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 

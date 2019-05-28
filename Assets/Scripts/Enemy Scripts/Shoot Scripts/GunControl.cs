@@ -24,12 +24,14 @@ public class GunControl : MonoBehaviour
 
     //Fire()
     //fires projectile in the foward direction
-    public void Fire(GameObject proj, float angle)
+    public void Fire(GameObject proj, float angle, int dmg)
     {
         transform.Rotate(0, 0, angle, Space.Self);
 
         //fire Projectile
         GameObject projectile = Instantiate(bullet, gunFront.position, transform.rotation);
+
+        projectile.GetComponent<BProjectile>().damage = dmg;
 
         projectile.GetComponent<Rigidbody2D>().velocity = (gunFront.position - gunBack.position).normalized * projectile.GetComponent<BProjectile>().projSpeed;
         coolDown = maxCoolDown;
