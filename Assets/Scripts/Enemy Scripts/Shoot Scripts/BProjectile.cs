@@ -7,7 +7,7 @@ using UnityEngine;
 public class BProjectile : MonoBehaviour
 {
     public float projSpeed;
-    public int damage;
+    public float damage;
     public GameObject source;
 
     //initialize fields

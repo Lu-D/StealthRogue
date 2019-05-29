@@ -13,7 +13,7 @@ public class BEnemy : MonoBehaviour
     public float fovResolution;
     public bool playerSpotted = false;
     public string mapLocation;
-    public int health = 1;
+    public float health = 1;
     public GameObject itemDrop;
 
     //Decision making logic

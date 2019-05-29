@@ -124,11 +124,16 @@ public class PlayerControl : MonoBehaviour {
                 float angleRestrictions = 40f;
                 float currAngle = angleRestrictions;
                 float angleStepCount = angleRestrictions * 2 / (bowData.getArrowShootCount()-1);
-                    
-                for(int i = 0; i < bowData.getArrowShootCount(); ++i)
+
+                if (bowData.getArrowShootCount() == 1)
+                    gun.Fire(bullet, 0, bowData.getDmg());
+                else
                 {
-                    gun.Fire(bullet, currAngle, bowData.getDmg());
-                    currAngle -= angleStepCount;
+                    for (int i = 0; i < bowData.getArrowShootCount(); ++i)
+                    {
+                        gun.Fire(bullet, currAngle, bowData.getDmg());
+                        currAngle -= angleStepCount;
+                    }
                 }
 
                 soundManager.PlayOneShot("Shoot_Bow");

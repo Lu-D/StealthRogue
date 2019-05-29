@@ -26,7 +26,7 @@ public class BowData
         return baseRange + modifiers["Range"] * 1f;
     }
 
-    public int getDmg()
+    public float getDmg()
     {
         return baseDmg + modifiers["Dmg"] * 1;
     }
@@ -36,7 +36,7 @@ public class BowData
         return baseAimSpeed + modifiers["Aim Speed"] * 1f;
     }
 
-    public int getArrowShootCount()
+    public float getArrowShootCount()
     {
         return baseArrowShootCount + modifiers["Arrow Shoot Count"] * 1;
     }

@@ -24,7 +24,7 @@ public class GunControl : MonoBehaviour
 
     //Fire()
     //fires projectile in the foward direction
-    public void Fire(GameObject proj, float angle, int dmg)
+    public void Fire(GameObject proj, float angle, float dmg)
     {
         transform.Rotate(0, 0, angle, Space.Self);
 
