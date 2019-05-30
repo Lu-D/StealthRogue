@@ -131,7 +131,6 @@ public class PlayerControl : MonoBehaviour {
 
                 soundManager.PlayOneShot("Shoot_Bow");
 
-                soundManager.Stop("Pull_Bow_Back");
                 soundManager.Play("Pull_Bow_Back");
 
                 crosshair.transform.position = transform.position;

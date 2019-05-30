@@ -42,8 +42,7 @@ public class SoundManager : MonoBehaviour
         {
             Debug.LogError("audio clip not present in dic: " + name);
             return null;
-        }
-            
+        } 
         Transform audioSearchResult = transform.Find(name);
         AudioSource audioSource;
 
