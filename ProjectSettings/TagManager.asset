@@ -25,13 +25,13 @@ TagManager:
   - 
   - Obstacle
   - Gate
-  - PlayerHurt
   - Enemy
   - EnemyProjectile
-  - PlayerSceneColl
   - Border
   - Room
   - PlayerProjectile
+  - 
+  - 
   - 
   - 
   - 

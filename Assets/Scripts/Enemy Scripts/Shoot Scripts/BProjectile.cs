@@ -30,7 +30,7 @@ public class BProjectile : MonoBehaviour
         collision.gameObject.tag == "Enemy" ||
         collision.gameObject.tag == "Obstacle")
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

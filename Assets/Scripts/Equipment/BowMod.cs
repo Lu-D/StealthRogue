@@ -35,8 +35,8 @@ public class BowMod : MonoBehaviour
     private void Log(int modifier, string modifierName)
     {
         if (modifier > 0)
-            Debug.Log(modifierName + " raised");
+            Debug.Log(modifierName + " Raised");
         else if (modifier < 0)
-            Debug.Log(modifierName + " lowered");
+            Debug.Log(modifierName + " Lowered");
     }
 }

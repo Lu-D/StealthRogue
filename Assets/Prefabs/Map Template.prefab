@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4011488786786816}
   - component: {fileID: 212213728199064258}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: protoMap0_1
   m_TagString: Border
   m_Icon: {fileID: 0}

@@ -27,8 +27,10 @@ public class PlayerProj : BProjectile
     }
 
     //collision method
-    protected new void OnCollisionEnter2D(Collision2D collision)
-    {       
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);    
+
         if(collision.gameObject.tag == "Enemy")
         {
             BEnemy enemy = collision.gameObject.GetComponent<BEnemy>();
@@ -45,8 +47,6 @@ public class PlayerProj : BProjectile
                 eventObj.addListener(collision.gameObject);
                 Events.EventManager.Instance.addEvent(eventObj, 0f);
             }
-
-            Destroy(gameObject);
         }
     }
 }

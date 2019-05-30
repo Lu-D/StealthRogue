@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 58619768351492732}
   - component: {fileID: 50809964978293978}
   - component: {fileID: 4532216023087712075}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: Player Proj
   m_TagString: Player Projectile
   m_Icon: {fileID: 0}
@@ -96,8 +96,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2097607686433552290}
   - component: {fileID: 3440881247399699581}
-  m_Layer: 16
-  m_Name: GameObject
+  m_Layer: 14
+  m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
