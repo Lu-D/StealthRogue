@@ -19,11 +19,8 @@ public class ExploreRoom : Goal
     {
         status = goalStatus.active;
 
-        if (pathfinder != null)
-        {
-            pathfinder.setRoomWaypoints();
-            pathfinder.enabled = true;
-        }
+        pathfinder.setRoomWaypoints();
+        pathfinder.enabled = true;
 
         timer.startTimer();
     }

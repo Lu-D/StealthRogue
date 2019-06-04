@@ -112,7 +112,6 @@ public class PlayerSearchableArea : MonoBehaviour
         Physics2D.queriesHitTriggers = false;
 
         int randomIndex = Random.Range(0, hitColliders.Length);
-
         return hitColliders[randomIndex].transform.gameObject;
     }
 }

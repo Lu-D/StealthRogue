@@ -388,17 +388,14 @@ MonoBehaviour:
   invincible: 0
   dashDist: 0.7
   dashSpeed: 2.75
-  timeSlowFactor: 0.5
   playerMoving: 0
   isAttacking: 0
   lastMove: {x: 0, y: 0}
   equip: 0
   equipment: {fileID: 0}
-  capturedBullet: 0
   gun: {fileID: 0}
   bullet: {fileID: 1163696546615196, guid: d825e54e89a795e438b57d7361b3d379, type: 3}
   mapLocation: 
-  changingLocation: 0
   health: 3
   flashlight: {fileID: 0}
   searchableArea: {fileID: 0}
@@ -432,7 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6386346573987465153}
   - component: {fileID: 6386346573987465152}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Hurtbox
   m_TagString: Player
   m_Icon: {fileID: 0}

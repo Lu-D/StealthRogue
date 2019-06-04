@@ -82,6 +82,7 @@ namespace Pathfinding {
         public void setRoomWaypoints()
         {
             targets.Clear();
+            //Debug.Log(GetComponent<BEnemy>().mapLocation);
             nodePerimeterGen.createWaypoints(10, 1f, GetComponent<BEnemy>().mapLocation);
         }
 
@@ -149,17 +150,12 @@ namespace Pathfinding {
                 Vector3 max = roomBounds.max;
                 float xStep = (max.x - min.x) / resolution;
                 float yStep = (max.y - min.y) / resolution;
-                LayerMask viewCastLayer = ((1 << LayerMask.NameToLayer("Border")) | (1 << LayerMask.NameToLayer("Obstacle")));
 
                 for (float i = min.y + yStep; i < max.y; i += yStep)
                 {
                     for (float j = min.x + xStep; j < max.x; j += xStep)
                     {
-                        Vector2 testPoint = new Vector2(j, i);
-                        if (Physics2D.OverlapPoint(testPoint, viewCastLayer) == null)
-                        {
-                            reachablePoints.Add(testPoint);
-                        }
+                        reachablePoints.Add(new Vector2(j, i));
                     }
                 }
             }

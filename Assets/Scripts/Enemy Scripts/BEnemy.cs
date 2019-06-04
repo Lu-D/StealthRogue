@@ -20,8 +20,6 @@ public class BEnemy : MonoBehaviour
     [HideInInspector]
     public StateMachine mainFSM;
     [HideInInspector]
-    public StateMachine attackFSM;
-    [HideInInspector]
     public GoalImpl goalImpl;
 
     [HideInInspector]
@@ -48,7 +46,6 @@ public class BEnemy : MonoBehaviour
 
         //initialize state machines
         mainFSM = new StateMachine(this);
-        attackFSM = new StateMachine(this);
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
         soundFSM = new StateMachine(this);

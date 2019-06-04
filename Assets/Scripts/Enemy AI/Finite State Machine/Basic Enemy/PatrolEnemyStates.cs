@@ -17,10 +17,8 @@ public class PatrolWaypoint : State
         owner.playerSpotted = false;
 
         var patrolBehavior = owner.GetComponent<Pathfinding.PatrolBackAndForth>();
-        if (patrolBehavior != null)
-        {
-            patrolBehavior.enabled = true;
-        }
+        patrolBehavior.setRoomWaypoints();
+        patrolBehavior.enabled = true;
     }
 
     public override void Execute(BEnemy owner)
@@ -31,18 +29,12 @@ public class PatrolWaypoint : State
         //changes to attack state if enemy spots player
         if (owner.playerSpotted)
             owner.mainFSM.changeState(AlertBoss.Instance);
-
-        ////changes to lookAtMe state when lookatme message is received
-        //if(owner.messageReceiver.message == message_type.lookAtMe)
-        //    owner.mainFSM.changeState(LookAtMe.Instance);
-
     }
 
     public override void Exit(BEnemy owner)
     {
-        //owner.waypointNav.stopNav();
         var patrolBehavior = owner.GetComponent<Pathfinding.PatrolBackAndForth>();
-        if (patrolBehavior != null) patrolBehavior.enabled = false;
+        patrolBehavior.enabled = false;
     }
 
     //singleton
@@ -71,12 +63,12 @@ public class AlertBoss : State
 
     public override void Execute(BEnemy owner)
     {
-        owner.attackFSM.stateUpdate();
+        
     }
 
     public override void Exit(BEnemy owner)
     {
-        owner.attackFSM.getGlobalState().Exit(owner);
+        
     }
 
     //singleton

@@ -34,9 +34,6 @@ public class EnemyPatrol : BEnemy {
         //initialize state machine and enter first state
         mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
         mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
-
-        var patrolBehavior = GetComponent<Pathfinding.PatrolBackAndForth>();
-        if (patrolBehavior != null) patrolBehavior.setWaypoints(waypointControl);
     }
 
     //Update

@@ -11,7 +11,6 @@ public class PlayerControl : MonoBehaviour {
     public bool invincible;
     public float dashDist;
     public float dashSpeed;
-    public float timeSlowFactor;
 
     public bool playerMoving;
     public bool isAttacking;
@@ -20,11 +19,9 @@ public class PlayerControl : MonoBehaviour {
 
     public int equip;
     public GameObject equipment;
-    public bool capturedBullet;
     public GunControl gun;
     public GameObject bullet;
     public string mapLocation;
-    public bool changingLocation;
     public int health = 3;
     private GameObject crosshair;
     public GameObject flashlight;
@@ -53,7 +50,6 @@ public class PlayerControl : MonoBehaviour {
         myRenderer = GetComponent<Renderer>();
 
         equip = 0;
-        capturedBullet = false;
         gun = transform.Find("Gun").gameObject.GetComponent<GunControl>();
         crosshair = transform.Find("Crosshair").gameObject;
 

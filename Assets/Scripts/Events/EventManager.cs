@@ -18,7 +18,7 @@ namespace Events
             get{
                 if (instance == null)
                 {
-                    GameObject go = new GameObject("TaskManager");
+                    GameObject go = new GameObject("EventManager");
                     instance = go.AddComponent<EventManager>();
                 }
                 return instance;

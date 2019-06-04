@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 5212055608326444610}
   - component: {fileID: 1179231345252275289}
   - component: {fileID: 3489231704471696117}
-  m_Layer: 15
+  m_Layer: 13
   m_Name: MapTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

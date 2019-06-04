@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 188043658683931216}
   - component: {fileID: 208670393633156400}
   - component: {fileID: 198571669045215206}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: FOV Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 271340294804943034}
   - component: {fileID: 27573449693417790}
   - component: {fileID: 4558448826959688689}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 5455219278041702597}
   - component: {fileID: 5955848898273928095}
   - component: {fileID: 9036220000327288005}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Guard
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8695106541091609841}
   - component: {fileID: 8680517741854319846}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 2D Light Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}

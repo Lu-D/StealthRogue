@@ -14,6 +14,12 @@ public class Map : MonoBehaviour {
         player = GameObject.Find("Player").GetComponent<PlayerControl>();
 
         mapBounds = GetComponent<Collider2D>().bounds;
+
+        if (mapBounds.Contains(player.transform.position))
+        {
+            player.mapLocation = transform.parent.name;
+            Debug.Log("happens");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,28 +27,10 @@ public class Map : MonoBehaviour {
         if (collision.tag == "Player")
         {
             player.mapLocation = transform.parent.name;
-            player.changingLocation = false;
         }
         if (collision.tag == "Enemy")
         {
             collision.GetComponent<BEnemy>().mapLocation = transform.parent.name;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            player.mapLocation = "";
-            player.changingLocation = true;
-        }
-        if (collision.tag == "Enemy")
-        {
-            collision.GetComponent<BEnemy>().mapLocation = "";
         }
     }
 }

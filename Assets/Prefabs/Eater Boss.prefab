@@ -29,8 +29,8 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   enemyVision: {fileID: 0}
   pathFinder: {fileID: 0}
+  soundManager: {fileID: 0}
   player: {fileID: 0}
-  priority: 0
 --- !u!114 &2682329434194643766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +188,26 @@ PrefabInstance:
         type: 3}
       propertyPath: drawGizmos
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 27573449693417790, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 8680517741854319846, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: movement.updatePosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680517741854319846, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: movement.updatePosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8680517741854319846, guid: 771e6cb1afb62024da4dda65b77932ee,
+        type: 3}
+      propertyPath: movement.updatePosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 217427226905948386, guid: 771e6cb1afb62024da4dda65b77932ee, type: 3}
