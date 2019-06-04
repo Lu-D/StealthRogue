@@ -133,7 +133,9 @@ public class EnemyVision : MonoBehaviour
         Vector3 dir = dirFromAngle(angle);
 
         //visualization ignores projectiles and enemies
-        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("Projectile") | 1 << LayerMask.NameToLayer("Enemy"));
+        LayerMask viewCastLayer = ~(1 << LayerMask.NameToLayer("PlayerProjectile") 
+        | 1 << LayerMask.NameToLayer("Enemy")
+        | 1 << LayerMask.NameToLayer("EnemyProjectile"));
 
 
         RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, dir, detectionDistance, viewCastLayer);

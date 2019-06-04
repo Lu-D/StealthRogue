@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BasicEnemyAttackState;
 
 namespace PatrolEnemyStates
 {
@@ -31,7 +30,7 @@ public class PatrolWaypoint : State
 
         //changes to attack state if enemy spots player
         if (owner.playerSpotted)
-            owner.mainFSM.changeState(AttackPlayer.Instance);
+            owner.mainFSM.changeState(AlertBoss.Instance);
 
         ////changes to lookAtMe state when lookatme message is received
         //if(owner.messageReceiver.message == message_type.lookAtMe)
@@ -59,18 +58,15 @@ public class PatrolWaypoint : State
     }
 }
 
-public class AttackPlayer : State
+public class AlertBoss : State
 {
     //singleton of state
-    private static AttackPlayer instance = null;
+    private static AlertBoss instance = null;
 
     public override void Enter(BEnemy owner)
     {
         //turn off FOV visualization
         owner.GetComponent<EnemyVision>().enabled = false;
-
-        owner.attackFSM.changeState(Search.Instance);
-        owner.attackFSM.changeGlobalState(BasicEnemyAttackGlobal.Instance);
     }
 
     public override void Execute(BEnemy owner)
@@ -84,12 +80,12 @@ public class AttackPlayer : State
     }
 
     //singleton
-    public static AttackPlayer Instance
+    public static AlertBoss Instance
     {
         get
         {
             if (instance == null)
-                instance = new AttackPlayer();
+                instance = new AlertBoss();
 
             return instance;
         }
@@ -120,7 +116,7 @@ public class LookAtMe : State
 
         //Change to attack state if player is spotted
         if (owner.playerSpotted)
-            owner.mainFSM.changeState(AttackPlayer.Instance);
+            owner.mainFSM.changeState(AlertBoss.Instance);
         //Reverts back to patrol waypoint state after coroutine is done running
         if (!owner.taskList.Running("LookAtMe"))
             owner.mainFSM.changeState(PatrolWaypoint.Instance);

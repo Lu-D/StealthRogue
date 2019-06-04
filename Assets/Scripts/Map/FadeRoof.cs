@@ -20,27 +20,33 @@ public class FadeRoof : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(oneShot == null)
+        if (collision.tag == "Player")
         {
-            oneShot = new Task(FadeTo(sprite, .1f, .1f));
-        }
-        else
-        {
-            oneShot.Stop();
-            oneShot = new Task(FadeTo(sprite, .1f, .1f));
+            if (oneShot == null)
+            {
+                oneShot = new Task(FadeTo(sprite, .1f, .1f));
+            }
+            else
+            {
+                oneShot.Stop();
+                oneShot = new Task(FadeTo(sprite, .1f, .1f));
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (oneShot == null)
+        if (collision.tag == "Player")
         {
-            oneShot = new Task(FadeTo(sprite, 1f, .1f));
-        }
-        else
-        {
-            oneShot.Stop();
-            oneShot = new Task(FadeTo(sprite, 1f, .1f));
+            if (oneShot == null)
+            {
+                oneShot = new Task(FadeTo(sprite, 1f, .1f));
+            }
+            else
+            {
+                oneShot.Stop();
+                oneShot = new Task(FadeTo(sprite, 1f, .1f));
+            }
         }
     }
 

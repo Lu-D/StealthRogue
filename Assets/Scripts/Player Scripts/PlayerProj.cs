@@ -48,5 +48,9 @@ public class PlayerProj : BProjectile
                 Events.EventManager.Instance.addEvent(eventObj, 0f);
             }
         }
+        else if (collision != null)
+        {
+            GameObject.Find("Sound Manager").GetComponent<SoundManager>().PlayOneShot("Arrow_Hit_Obstacle");
+        }
     }
 }
