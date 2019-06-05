@@ -17,7 +17,7 @@ public class PatrolWaypoint : State
         owner.playerSpotted = false;
 
         var patrolBehavior = owner.GetComponent<Pathfinding.PatrolBackAndForth>();
-        patrolBehavior.setRoomWaypoints();
+        patrolBehavior.setRoomWaypoints(4, 1f);
         patrolBehavior.enabled = true;
     }
 
@@ -59,16 +59,21 @@ public class AlertBoss : State
     {
         //turn off FOV visualization
         owner.GetComponent<EnemyVision>().enabled = false;
+
+        owner.pathFinder.destination = owner.player.transform.position;
+        owner.pathFinder.isStopped = false;
+        //owner.GetComponent<Pathfinding.AIDestinationSetter>().enabled = true;
     }
 
     public override void Execute(BEnemy owner)
     {
-        
+        owner.pathFinder.destination = owner.player.transform.position;
     }
 
     public override void Exit(BEnemy owner)
     {
-        
+        //owner.GetComponent<Pathfinding.AIDestinationSetter>().enabled = false;
+        owner.pathFinder.isStopped = true;
     }
 
     //singleton

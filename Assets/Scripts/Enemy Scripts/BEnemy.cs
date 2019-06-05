@@ -12,7 +12,7 @@ public class BEnemy : MonoBehaviour
     public float rotateSpeed;
     public float fovResolution;
     public bool playerSpotted = false;
-    public string mapLocation;
+    public string mapLocation = "";
     public float health = 1;
     public GameObject itemDrop;
 

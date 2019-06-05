@@ -14,6 +14,12 @@ public class Map : MonoBehaviour {
         player = GameObject.Find("Player").GetComponent<PlayerControl>();
 
         mapBounds = GetComponent<Collider2D>().bounds;
+
+        if (mapBounds.min.x <= player.transform.position.x &&
+            mapBounds.max.x >= player.transform.position.x &&
+            mapBounds.min.y <= player.transform.position.y &&
+            mapBounds.max.y >= player.transform.position.y)
+            player.mapLocation = transform.parent.name;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

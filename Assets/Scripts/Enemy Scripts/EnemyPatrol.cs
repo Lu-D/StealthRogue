@@ -14,6 +14,8 @@ public class EnemyPatrol : BEnemy {
     [HideInInspector]
     private Quaternion up; //to keep texture upright
 
+    private bool lateInit = true;
+
     //animDirection
     //Struct for keeping track of directions for animator
     private struct animDirection
@@ -30,16 +32,22 @@ public class EnemyPatrol : BEnemy {
         front = new GameObject("front");
         front.transform.position = Vector3.up + transform.position;
         front.transform.parent = gameObject.transform;
-
-        //initialize state machine and enter first state
-        mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
-        mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
     }
 
     //Update
     //called once per frame
     void Update()
     {
+        if (lateInit)
+        {
+            //initialize state machine and enter first state
+            mainFSM.changeState(PatrolEnemyStates.PatrolWaypoint.Instance);
+            mainFSM.changeGlobalState(PatrolEnemyStates.PatrolEnemyGlobal.Instance);
+
+            lateInit = false;
+        }
+
+
         mainFSM.stateUpdate();
     }
 
