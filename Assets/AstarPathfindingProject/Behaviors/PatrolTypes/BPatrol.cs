@@ -79,11 +79,11 @@ namespace Pathfinding {
             }
         }
 
-        public void setRoomWaypoints()
+        public void setRoomWaypoints(int vertices = 10, float spacing = 1f)
         {
             targets.Clear();
             //Debug.Log(GetComponent<BEnemy>().mapLocation);
-            nodePerimeterGen.createWaypoints(10, 1f, GetComponent<BEnemy>().mapLocation);
+            nodePerimeterGen.createWaypoints(vertices, spacing, GetComponent<BEnemy>().mapLocation);
         }
 
         private class NodePerimeterGen
@@ -92,6 +92,8 @@ namespace Pathfinding {
             private List<Vector3> reachablePoints;
             private float desiredArea;
             private int resolution;
+            //private MapContainer mapContainer;
+
             public int Resolution
             {
                 set { resolution = value; }
@@ -103,6 +105,7 @@ namespace Pathfinding {
                 reachablePoints = new List<Vector3>();
                 waypointNav = _waypointNav;
                 resolution = 15;
+                //mapContainer = GameObject.Find("Maps").GetComponent<MapContainer>();
             }
 
 
@@ -142,9 +145,14 @@ namespace Pathfinding {
 
             private void findReachablePoints(string mapLocation)
             {
-                if (mapLocation == "") return;
+                if (mapLocation == "")
+                {
+                    Debug.LogError("Invalid Map Location");
+                    return;
+                }
 
-                Bounds roomBounds = GameObject.Find("Maps").GetComponent<MapContainer>().maps[mapLocation].mapBounds;
+                //Bounds roomBounds = mapContainer.maps[mapLocation].GetComponent<Map>().mapBounds;
+                Bounds roomBounds = GameObject.Find("Maps").transform.Find(mapLocation).Find("MapTrigger").GetComponent<Collider2D>().bounds;
 
                 Vector3 min = roomBounds.min;
                 Vector3 max = roomBounds.max;
