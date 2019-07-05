@@ -65,10 +65,10 @@ class GeneralAnimation : MonoBehaviour
         anim.SetFloat("MoveX", animDirection.x);
         anim.SetFloat("MoveY", animDirection.y);
 
-        //keeps animation texture upright
-        Transform texture = transform.Find("Texture");
-        if (texture.rotation != up)
-            texture.rotation = up;
+        ////keeps animation texture upright
+        //Transform texture = transform.Find("Texture");
+        //if (texture.rotation != up)
+        //    texture.rotation = up;
 
 
         //determines whether or not to play idle animation
