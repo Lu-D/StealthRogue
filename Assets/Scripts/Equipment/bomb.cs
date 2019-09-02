@@ -19,7 +19,7 @@ public class bomb : MonoBehaviour {
     {
         //destroy objects in blastRadius
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
-        var dieEvent = new Events.DamageEvent();
+        var dieEvent = new Events.DamageEvent(1);
         foreach(Collider2D hit in hitColliders)
         {
             if(hit.gameObject.tag == "Enemy" || hit.gameObject.tag == "Obstacle")

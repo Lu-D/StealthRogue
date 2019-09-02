@@ -19,7 +19,6 @@ namespace Events
         public lookAtMeEvent(Vector3 pos)
         {
             lookPos = pos;
-            priority = Priority.P1;
         }
 
         public override void execute()

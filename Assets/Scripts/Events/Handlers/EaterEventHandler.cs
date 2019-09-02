@@ -23,7 +23,7 @@ namespace Events
         public override void handleEvent(DamageEvent eventObj)
         {
             if (enemy.health > 0)
-                --enemy.health;
+                enemy.health -= eventObj.damage;
         }
 
         public override void handleEvent(ComeToMeEvent eventObj)

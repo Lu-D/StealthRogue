@@ -29,7 +29,7 @@ namespace Events
         {
             if(enemy.mainFSM.getCurrentState() != PatrolEnemyStates.Die.Instance)
             {
-                --enemy.health;
+                enemy.health -= eventObj.damage;
             }
         }
     }

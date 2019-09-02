@@ -18,7 +18,6 @@ namespace Events
 {
     public abstract class Event
     {
-        public Priority priority;
         public abstract void execute();
 
         //ensure event handler is not null

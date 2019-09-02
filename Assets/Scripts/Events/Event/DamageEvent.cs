@@ -8,13 +8,14 @@ namespace Events
 {
     public class DamageEvent : Event
     {
-
         public delegate void DamageAction(DamageEvent die);
         public event DamageAction onDamage;
 
-        public DamageEvent()
+        public int damage;
+
+        public DamageEvent(int damageNumber)
         {
-            priority = Priority.P100;
+            damage = damageNumber;
         }
 
         public override void execute()

@@ -20,7 +20,6 @@ namespace Events
         public ComeToMeEvent(Vector3 pos)
         {
             comePos = pos;
-            priority = Priority.P1;
         }
 
         public override void addListener(GameObject gameObject)
