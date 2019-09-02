@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 188177812610090550}
   - component: {fileID: 271340294804943034}
   - component: {fileID: 27573449693417790}
-  - component: {fileID: 4558448826959688689}
   m_Layer: 10
   m_Name: Texture
   m_TagString: Untagged
@@ -177,34 +176,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4558448826959688689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186339302891983578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d49409fd39a1d5647b5d964a9747d4b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightingMaskLayer: 0
-  lightingCollisionLayer: 0
-  maskMode: 0
-  shape:
-    colliderType: 2
-    maskType: 3
-  edgeCollider2D: 0
-  generateDayMask: 0
-  dayHeight: 0
-  height: 1
-  ambientOcclusion: 0
-  smoothOcclusionEdges: 0
-  occlusionSize: 1
-  disableWhenInvisible: 0
-  spriteRenderer: {fileID: 27573449693417790}
-  meshFilter: {fileID: 0}
 --- !u!1 &186795025299142510
 GameObject:
   m_ObjectHideFlags: 0
