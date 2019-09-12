@@ -22,7 +22,8 @@ public class PlayerControl : MonoBehaviour {
     public GunControl gun;
     public GameObject bullet;
     public string mapLocation;
-    public int health = 3;
+    public int maxHealth = 3;
+    public int health;
     private GameObject crosshair;
     public GameObject flashlight;
 
@@ -58,6 +59,8 @@ public class PlayerControl : MonoBehaviour {
         bowData = new BowData();
 
         moveSpeed = defaultSpeed;
+
+        health = maxHealth;
 
         searchableArea = transform.Find("Searchable Area").GetComponent<PlayerSearchableArea>();
 

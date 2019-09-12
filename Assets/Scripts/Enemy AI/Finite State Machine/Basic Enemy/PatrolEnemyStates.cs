@@ -167,6 +167,11 @@ public class Die : State
 
         //play animation
         owner.transform.Find("Texture").GetComponent<SpriteRenderer>().enabled = false;
+
+        //Give 1 health to player
+        var giveHealth = new HealEvent(1);
+        giveHealth.addListener(GameObject.Find("Player"));
+        EventManager.Instance.addEvent(giveHealth);
     }
 
     public override void Execute(BEnemy owner)
