@@ -62,12 +62,15 @@ public class AlertBoss : State
 
         owner.pathFinder.destination = owner.player.transform.position;
         owner.pathFinder.isStopped = false;
+        owner.soundManager.Play("Ghost_Screaming");
         //owner.GetComponent<Pathfinding.AIDestinationSetter>().enabled = true;
     }
 
     public override void Execute(BEnemy owner)
     {
         owner.pathFinder.destination = owner.player.transform.position;
+        if (!owner.soundManager.isPlaying("Ghost_Screaming"))
+            owner.mainFSM.reenterState();
     }
 
     public override void Exit(BEnemy owner)
@@ -158,7 +161,7 @@ public class Die : State
             GameObject.Instantiate(owner.itemDrop, owner.transform.position, Quaternion.identity);
 
         //play animation
-        owner.transform.Find("Texture").GetComponent<Animator>().SetTrigger("isDead");
+        owner.transform.Find("Texture").GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public override void Execute(BEnemy owner)
@@ -196,6 +199,7 @@ public class PatrolEnemyGlobal : State
 
     public override void Execute(BEnemy owner)
     {
+        Debug.Log(owner.mainFSM.getCurrentState());
         if (owner.health <= 0 && owner.mainFSM.getCurrentState() != Die.Instance)
             owner.mainFSM.changeState(Die.Instance);
     }

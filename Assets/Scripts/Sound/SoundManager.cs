@@ -139,7 +139,12 @@ public class SoundManager : MonoBehaviour
 
     public bool isPlaying(string name)
     {
-        return transform.Find(name) != null;
+        if (transform.Find(name) == null)
+            return false;
+        else if (transform.Find(name).GetComponent<AudioSource>().isPlaying)
+            return true;
+        else
+            return false;
     }
 }
 
