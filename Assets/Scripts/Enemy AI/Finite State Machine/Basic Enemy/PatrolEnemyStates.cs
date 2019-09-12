@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 namespace PatrolEnemyStates
 {
@@ -63,7 +64,11 @@ public class AlertBoss : State
         owner.pathFinder.destination = owner.player.transform.position;
         owner.pathFinder.isStopped = false;
         owner.soundManager.Play("Ghost_Screaming");
-        //owner.GetComponent<Pathfinding.AIDestinationSetter>().enabled = true;
+
+        //Alert boss player's whereabouts
+        var alertBoss = new ComeToMeEvent(owner.transform.position);
+        alertBoss.addListener(GameObject.Find("Boss"));
+            EventManager.Instance.addEvent(alertBoss, 0);
     }
 
     public override void Execute(BEnemy owner)
@@ -75,7 +80,7 @@ public class AlertBoss : State
 
     public override void Exit(BEnemy owner)
     {
-        //owner.GetComponent<Pathfinding.AIDestinationSetter>().enabled = false;
+        
         owner.pathFinder.isStopped = true;
     }
 
