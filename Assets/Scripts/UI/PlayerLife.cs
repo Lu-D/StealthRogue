@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour {
 
     public int healthNumber;
     private int playerHealth;
     private PlayerControl player;
+    private Image image;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Player").GetComponent<PlayerControl>();
+        image = GetComponent<Image>();
     }
 	
 	// Update is called once per frame
@@ -18,11 +21,11 @@ public class PlayerLife : MonoBehaviour {
         playerHealth = player.health;
         if (playerHealth < healthNumber)
         {
-            gameObject.SetActive(false);
+            image.enabled = false;
         }
-        else
+        else 
         {
-            gameObject.SetActive(true);
+            image.enabled = true;
         }
 	}
 }
