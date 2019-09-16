@@ -10,14 +10,23 @@ public class Spawner : MonoBehaviour
     private float desiredArea;
     private int resolution;
 
+    private Vector3 min;
+    private Vector3 max;
+
+    public GameObject[] gameObjects;
+
     public void Awake()
     {
         spawnablePoints = new List<Vector3>(); ;
         resolution = 15;
 
-        Debug.Log(spawnablePoints.Count);
+        Bounds roomBounds = GetComponent<Collider2D>().bounds;
+        min = roomBounds.min;
+        max = roomBounds.max;
+
         createGraphPoints();
-        Debug.Log(spawnablePoints.Count);
+
+        spawnObjects(15, 5, gameObjects);
     }
 
     public int Resolution
@@ -26,14 +35,30 @@ public class Spawner : MonoBehaviour
     }
 
     //replace spacing with actual spacing for each prefab
-    public void spawnObjects(int vertices, float spacing, string mapLocation)
+    public void spawnObjects(int objectCount, float spacing, GameObject[] objectsToCreate)
     {
         createGraphPoints();
 
-        for (int i = 0; i < vertices; ++i)
+        for (int i = 0; i < objectCount; ++i)
         {
-            Vector3 point = findRandomPoint();
-            //Spawn something
+            int randomNumTracker = UnityEngine.Random.Range(0, objectsToCreate.Length);
+            GameObject objectToCreate = objectsToCreate[randomNumTracker];
+
+            Bounds objectBounds = objectToCreate.GetComponent<Collider2D>().bounds;
+            Vector3 objectExtents = objectBounds.extents;
+
+            bool validPoint = false;
+            Vector3 point = Vector3.zero;
+            while (!validPoint)
+            {
+                point = findRandomPoint();
+                if (point.x - objectExtents.x > min.x &&
+                   point.y - objectExtents.y > min.y &&
+                   point.x + objectExtents.x < max.x &&
+                   point.y + objectExtents.y < max.y)
+                    validPoint = true;
+            }
+            Instantiate(objectToCreate, point, objectToCreate.transform.rotation);
 
             if (!removeWaypointsInProximity(point, spacing))
                 break;
@@ -62,11 +87,6 @@ public class Spawner : MonoBehaviour
 
     private void createGraphPoints()
     {
-        //Bounds roomBounds = mapContainer.maps[mapLocation].GetComponent<Map>().mapBounds;
-        Bounds roomBounds = GetComponent<Collider2D>().bounds;
-
-        Vector3 min = roomBounds.min;
-        Vector3 max = roomBounds.max;
         float xStep = (max.x - min.x) / resolution;
         float yStep = (max.y - min.y) / resolution;
 
