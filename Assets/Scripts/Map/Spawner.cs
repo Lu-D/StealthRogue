@@ -13,7 +13,9 @@ public class Spawner : MonoBehaviour
     private Vector3 min;
     private Vector3 max;
 
-    public GameObject[] gameObjects;
+    private string path = "General Map Objects";
+
+    public GameObject[] generalMapObjects;
 
     public void Awake()
     {
@@ -24,9 +26,11 @@ public class Spawner : MonoBehaviour
         min = roomBounds.min;
         max = roomBounds.max;
 
+        generalMapObjects = Resources.LoadAll<GameObject>(path);
+
         createGraphPoints();
 
-        spawnObjects(15, 5, gameObjects);
+        spawnObjects(15, 5, generalMapObjects);
     }
 
     public int Resolution
