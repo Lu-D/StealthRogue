@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3952338343996937190}
   - component: {fileID: 3952338343996937189}
   - component: {fileID: 3952338343996937188}
-  - component: {fileID: 6183690726457415364}
+  - component: {fileID: 4305614903989018658}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -121,7 +121,7 @@ PositionConstraint:
   m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources: []
---- !u!114 &6183690726457415364
+--- !u!114 &4305614903989018658
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3952338343996937185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9c29263a8ec08419526d57aec16df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 224bb0ff3506976469cba5278c75424b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3952338344688343254

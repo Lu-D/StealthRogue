@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 2055546118744055488}
   - component: {fileID: 402364417664163226}
   - component: {fileID: 3050356954035403456}
-  - component: {fileID: 8522535573955817517}
+  - component: {fileID: 2971561384553475510}
   m_Layer: 10
   m_Name: Ghost
   m_TagString: Enemy
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e4b468ea9f1324582a584b77cbb835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8522535573955817517
+--- !u!114 &2971561384553475510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6171532790147189099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9c29263a8ec08419526d57aec16df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 29838515abd367f4abb11181a253c0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8789870531755999278

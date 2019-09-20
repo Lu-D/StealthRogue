@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 7999481309947601992}
   - component: {fileID: 7999481309947601994}
   - component: {fileID: 7999481309947601993}
-  - component: {fileID: 7563733221012774558}
+  - component: {fileID: 1949507175546627018}
   m_Layer: 8
   m_Name: poplar_11_top
   m_TagString: Obstacle
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roof: {fileID: 7999481310552085953}
---- !u!114 &7563733221012774558
+--- !u!114 &1949507175546627018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7999481309947601998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a9c29263a8ec08419526d57aec16df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 224bb0ff3506976469cba5278c75424b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7999481310552085953

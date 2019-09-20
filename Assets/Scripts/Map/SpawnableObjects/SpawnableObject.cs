@@ -13,11 +13,21 @@ public class SpawnableObject : MonoBehaviour
      * obstacles
      * misc
      * */
-    public static Dictionary<string, int> objectCount = new Dictionary<string, int>();    
+    public static Dictionary<string, int> objectCount = new Dictionary<string, int>();
+
+    public void Awake()
+    {
+        if (!objectCount.ContainsKey("Enemies"))
+            objectCount.Add("Enemies", 0);
+        if (!objectCount.ContainsKey("Obstacles"))
+            objectCount.Add("Obstacles", 0);
+        if (!objectCount.ContainsKey("Misc"))
+            objectCount.Add("Misc", 0);
+    }
 
     public virtual void spawn(Vector3 position)
     {
         Instantiate(gameObject, position, transform.rotation);
-        //objectCount.Add("misc", 1);
+        ++objectCount["Misc"];
     }
 }

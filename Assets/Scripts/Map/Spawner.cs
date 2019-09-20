@@ -13,9 +13,11 @@ public class Spawner : MonoBehaviour
     private Vector3 min;
     private Vector3 max;
 
-    private string path = "General Map Objects";
+    private string path1 = "Enemies";
+    private string path2 = "Obstacles";
 
-    public GameObject[] generalMapObjects;
+    public GameObject[] enemyObjects;
+    public GameObject[] obstacleObjects;
 
     public void Awake()
     {
@@ -26,11 +28,14 @@ public class Spawner : MonoBehaviour
         min = roomBounds.min;
         max = roomBounds.max;
 
-        generalMapObjects = Resources.LoadAll<GameObject>(path);
+        enemyObjects = Resources.LoadAll<GameObject>(path1);
+        obstacleObjects = Resources.LoadAll<GameObject>(path2);
 
         createGraphPoints();
 
-        spawnObjects(15, 5, generalMapObjects);
+        spawnObjects(10, 5, 2, 8);
+        //Debug.Log(SpawnableObject.objectCount["Enemies"]);
+        //Debug.Log(SpawnableObject.objectCount["Obstacles"]);
     }
 
     public int Resolution
@@ -39,14 +44,30 @@ public class Spawner : MonoBehaviour
     }
 
     //replace spacing with actual spacing for each prefab
-    public void spawnObjects(int objectCount, float spacing, GameObject[] objectsToCreate)
+    public void spawnObjects(int objectCount, float spacing, int maxEnemies, int maxObstacles)
     {
         createGraphPoints();
 
         for (int i = 0; i < objectCount; ++i)
         {
-            int randomNumTracker = UnityEngine.Random.Range(0, objectsToCreate.Length);
-            GameObject objectToCreate = objectsToCreate[randomNumTracker];
+            GameObject[] objectsToCreate = null;
+            if (SpawnableObject.objectCount["Enemies"] > maxEnemies &&
+                SpawnableObject.objectCount["Obstacles"] < maxObstacles)
+                objectsToCreate = obstacleObjects;
+            else if (SpawnableObject.objectCount["Obstacles"] > maxObstacles &&
+                     SpawnableObject.objectCount["Enemies"] < maxEnemies)
+                objectsToCreate = enemyObjects;
+            else
+            {
+                int decideObjectType = UnityEngine.Random.Range(0, 2);
+                if (decideObjectType == 0)
+                    objectsToCreate = enemyObjects;
+                else
+                    objectsToCreate = obstacleObjects;
+            }
+
+            int decideObject = UnityEngine.Random.Range(0, objectsToCreate.Length);
+            GameObject objectToCreate = objectsToCreate[decideObject];
 
             Bounds objectBounds = objectToCreate.GetComponent<Collider2D>().bounds;
             Vector3 objectExtents = objectBounds.extents;
