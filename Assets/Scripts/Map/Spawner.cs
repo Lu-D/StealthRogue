@@ -62,7 +62,7 @@ public class Spawner : MonoBehaviour
                    point.y + objectExtents.y < max.y)
                     validPoint = true;
             }
-            Instantiate(objectToCreate, point, objectToCreate.transform.rotation);
+            objectToCreate.GetComponent<SpawnableObject>().spawn(point);
 
             if (!removeWaypointsInProximity(point, spacing))
                 break;
