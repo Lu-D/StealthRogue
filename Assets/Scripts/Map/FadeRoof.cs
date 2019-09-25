@@ -12,10 +12,12 @@ public class FadeRoof : MonoBehaviour
 
     private SpriteRenderer sprite;
     private Task oneShot = null;
+    private LightingCollider2D lightCollider = null;
 
     private void Awake()
     {
         sprite = roof.GetComponent<SpriteRenderer>();
+        lightCollider = GetComponent<LightingCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,6 +34,11 @@ public class FadeRoof : MonoBehaviour
                 oneShot = new Task(FadeTo(sprite, .1f, .1f));
             }
         }
+
+        if(lightCollider != null)
+        {
+            lightCollider.enabled = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -47,6 +54,11 @@ public class FadeRoof : MonoBehaviour
                 oneShot.Stop();
                 oneShot = new Task(FadeTo(sprite, 1f, .1f));
             }
+        }
+
+        if (lightCollider != null)
+        {
+            lightCollider.enabled = true;
         }
     }
 

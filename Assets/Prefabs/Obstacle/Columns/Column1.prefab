@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4867628511483332}
   - component: {fileID: 61138830903212540}
   - component: {fileID: 1944718064549834557}
+  - component: {fileID: 7672833084151016025}
   m_Layer: 8
   m_Name: Column1
   m_TagString: Obstacle
@@ -72,6 +73,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe9fd5e753340e4297b95aa85974c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7672833084151016025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104565623211434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49409fd39a1d5647b5d964a9747d4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightingMaskLayer: 0
+  lightingCollisionLayer: 0
+  maskMode: 0
+  shape:
+    colliderType: 1
+    maskType: 1
+  edgeCollider2D: 0
+  generateDayMask: 0
+  dayHeight: 0
+  height: 1
+  ambientOcclusion: 0
+  smoothOcclusionEdges: 0
+  occlusionSize: 1
+  disableWhenInvisible: 0
+  spriteRenderer: {fileID: 0}
+  meshFilter: {fileID: 0}
 --- !u!1 &1571043140068750
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +170,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5324a8329c852cc4ea58a6101a16c94c, type: 3}
-  m_Color: {r: 0.36078432, g: 0.36078432, b: 0.36078432, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -199,7 +228,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4cc4dbc5048704f46b675e7c92fc9d93, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -217,10 +246,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2042049539
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4f4d2a65993ef0f49812b324617c4d50, type: 3}
-  m_Color: {r: 0.36078432, g: 0.36078432, b: 0.36078432, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
