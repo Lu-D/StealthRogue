@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 60056610751864200}
   - component: {fileID: 2351406309612914744}
   - component: {fileID: 4701288862284767842}
+  - component: {fileID: 8037627731015776389}
   m_Layer: 8
   m_Name: 2Barrels
   m_TagString: Obstacle
@@ -151,3 +152,15 @@ MonoBehaviour:
   disableWhenInvisible: 0
   spriteRenderer: {fileID: 212493689089270684}
   meshFilter: {fileID: 0}
+--- !u!114 &8037627731015776389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862216550946334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9c29263a8ec08419526d57aec16df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

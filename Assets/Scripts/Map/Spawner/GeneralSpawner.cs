@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GeneralSpawner : MonoBehaviour
 {
-    public GameObject[] enemyObjects;
-    public GameObject[] obstacleObjects;
+    private GameObject[] enemyObjects;
+    private GameObject[] obstacleObjects;
 
     private string path1 = "Enemies";
     private string path2 = "Obstacles";
@@ -21,9 +21,9 @@ public class GeneralSpawner : MonoBehaviour
 
         mainSpawner = new Spawner(GetComponent<Collider2D>());
 
-        mainSpawner.loadObjects(enemyObjects);
+        //mainSpawner.loadObjects(enemyObjects);
         mainSpawner.loadObjects(obstacleObjects);
-        mainSpawner.spawnObjects(10, 5);
+        mainSpawner.spawnObjects(10, 2);
     }
 }
 

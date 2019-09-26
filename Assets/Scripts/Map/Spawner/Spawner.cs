@@ -22,8 +22,8 @@ public class Spawner
 
         //set room bounds
         Bounds roomBounds = boundaries.bounds;
-        min = roomBounds.min;
-        max = roomBounds.max;
+        min = roomBounds.center - roomBounds.extents;
+        max = roomBounds.center + roomBounds.extents;
 
         spawnablePoints = new List<Vector3>();
         spawnableObjects = new List<GameObject[]>();
@@ -72,6 +72,12 @@ public class Spawner
     //find random point in spawnablePoints list
     private Vector3 findRandomPoint()
     {
+        if(spawnablePoints.Count == 0)
+        {
+            Debug.LogError("No spawnable points");
+            return Vector3.zero;
+        }
+
         int randomNumTracker;
 
         randomNumTracker = UnityEngine.Random.Range(0, spawnablePoints.Count);

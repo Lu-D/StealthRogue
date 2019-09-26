@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 61138830903212540}
   - component: {fileID: 1944718064549834557}
   - component: {fileID: 7672833084151016025}
+  - component: {fileID: 7353518046468205878}
   m_Layer: 8
   m_Name: Column1
   m_TagString: Obstacle
@@ -48,7 +49,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02932465, y: 0.15139753}
+  m_Offset: {x: 0.02932465, y: 0.2792719}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -59,7 +60,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64077294, y: 0.69199955}
+  m_Size: {x: 0.64077294, y: 0.9477483}
   m_EdgeRadius: 0
 --- !u!114 &1944718064549834557
 MonoBehaviour:
@@ -90,7 +91,7 @@ MonoBehaviour:
   maskMode: 0
   shape:
     colliderType: 1
-    maskType: 1
+    maskType: 2
   edgeCollider2D: 0
   generateDayMask: 0
   dayHeight: 0
@@ -101,6 +102,18 @@ MonoBehaviour:
   disableWhenInvisible: 0
   spriteRenderer: {fileID: 0}
   meshFilter: {fileID: 0}
+--- !u!114 &7353518046468205878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104565623211434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9c29263a8ec08419526d57aec16df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1571043140068750
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,8 +258,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2042049539
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4f4d2a65993ef0f49812b324617c4d50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
