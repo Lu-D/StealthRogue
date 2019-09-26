@@ -15,7 +15,7 @@ public class SpawnableObject : MonoBehaviour
      * */
     public static Dictionary<string, int> objectCount = new Dictionary<string, int>();
 
-    public void Awake()
+    public virtual void Awake()
     {
         if (!objectCount.ContainsKey("Enemies"))
             objectCount.Add("Enemies", 0);
